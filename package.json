@@ -1,7 +1,7 @@
 {
-  "name": "tsumiki",
+  "name": "tsumiki-en",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.1",
   "description": "A CLI tool for install tsumiki commands",
   "keywords": [
     "cli",
@@ -16,12 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/classmethod/tsumiki.git"
+    "url": "git+https://github.com/classmethod/tsumiki.git"
   },
   "license": "MIT",
-  "author": {
-    "name": "classmethod"
-  },
+  "author": "classmethod",
   "type": "module",
   "exports": {
     ".": {
@@ -34,7 +32,7 @@
   "module": "./dist/cli.js",
   "types": "./dist/cli.d.ts",
   "bin": {
-    "tsumiki": "./dist/cli.js"
+    "tsumiki-en": "dist/cli.js"
   },
   "files": [
     "dist"
