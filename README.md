@@ -7,7 +7,7 @@ Tsumiki is a framework for AI-driven development. It provides an efficient devel
 To use Tsumiki, install it with the following npx command:
 
 ```bash
-npx tsumiki install
+npx https://github.com/dovanhuy2298/tsumiki-en.git install
 ```
 
 Running this command installs Tsumiki’s Claude Code slash commands into `.claude/commands/`.
