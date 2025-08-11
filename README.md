@@ -2,6 +2,10 @@
 
 Tsumiki is a framework for AI-driven development. It provides an efficient development process leveraging AI, from requirements definition to implementation.
 
+## Origin and Attribution
+
+This repository is an English translation/adaptation of the original Tsumiki project by Classmethod Inc. The upstream (Japanese) source is available at [classmethod/tsumiki](https://github.com/classmethod/tsumiki). Credit for the original concept, content, and implementation belongs to the upstream authors; this repository focuses on making the documentation and command templates accessible in English.
+
 ## Installation
 
 To use Tsumiki, install it with the following npx command:

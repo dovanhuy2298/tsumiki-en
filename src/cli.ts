@@ -8,7 +8,7 @@ import { uninstallCommand } from "./commands/uninstall.js";
 const program = new Command();
 
 program
-  .name("tsumiki")
+  .name("tsumiki-en")
   .description("CLI tool for installing Claude Code command templates")
   .version("1.0.0");
 

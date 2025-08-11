@@ -32,7 +32,7 @@
   "module": "./dist/cli.js",
   "types": "./dist/cli.d.ts",
   "bin": {
-    "tsumiki": "dist/cli.js"
+    "tsumiki-en": "dist/cli.js"
   },
   "files": [
     "dist"
