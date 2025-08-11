@@ -1,74 +1,77 @@
-# Tsumiki - AI駆動開発支援フレームワーク
+# Tsumiki - AI-Driven Development Support Framework
 
-TsumikiはAI駆動開発のためのフレームワークです。要件定義から実装まで、AIを活用した効率的な開発プロセスを提供します。
+Tsumiki is a framework for AI-driven development. It provides an efficient development process leveraging AI, from requirements definition to implementation.
 
-## インストール
+## Installation
 
-Tsumikiを使用するには、次のnpxコマンドでインストールしてください：
+To use Tsumiki, install it with the following npx command:
 
 ```bash
 npx tsumiki install
 ```
 
-このコマンドを実行すると、`.claude/commands/` にTsumikiのClaude Codeスラッシュコマンドがインストールされます。
+Running this command installs Tsumiki’s Claude Code slash commands into `.claude/commands/`.
 
-## 概要
+## Overview
 
-Tsumikiは以下の2つのコマンドで構成されています：
+Tsumiki consists of the following two command groups:
 
-- **kairo** - 要件定義から実装までの包括的な開発フロー
-- **tdd** - テスト駆動開発（TDD）の個別実行
+- **kairo** - A comprehensive development flow from requirements to implementation
+- **tdd** - Standalone execution of Test-Driven Development (TDD)
 
-### Kairoコマンド
+### Kairo Commands
 
-Kairoは要件定義から実装までの開発プロセスを自動化・支援します。以下の開発フローを支援します：
+Kairo automates and supports the development process from requirements to implementation. It supports the following flow:
 
-1. **要件定義** - 概要から詳細な要件定義書を生成
-2. **設計** - 技術設計文書を自動生成
-3. **タスク分割** - 実装タスクを適切に分割・順序付け
-4. **TDD実装** - テスト駆動開発による品質の高い実装
+1. **Requirements Definition** - Generate a detailed requirements document from a high-level summary
+2. **Design** - Automatically generate a technical design document
+3. **Task Decomposition** - Split and order implementation tasks appropriately
+4. **TDD Implementation** - High-quality implementation via Test-Driven Development
 
-## 利用可能なコマンド
+## Available Commands
 
-### Kairoコマンド（包括的開発フロー）
-- `kairo-requirements` - 要件定義
-- `kairo-design` - 設計文書生成
-- `kairo-tasks` - タスク分割
-- `kairo-implement` - 実装実行
+### Kairo Commands (End-to-End Development Flow)
 
-### TDDコマンド（個別実行）
-- `tdd-requirements` - TDD要件定義
-- `tdd-testcases` - テストケース作成
-- `tdd-red` - テスト実装（Red）
-- `tdd-green` - 最小実装（Green）
-- `tdd-refactor` - リファクタリング
-- `tdd-verify-complete` - TDD完了確認
+- `kairo-requirements` - Requirements definition
+- `kairo-design` - Generate design documentation
+- `kairo-tasks` - Task decomposition
+- `kairo-implement` - Execute implementation
 
-### リバースエンジニアリングコマンド
-- `rev-tasks` - 既存コードからタスク一覧を逆生成
-- `rev-design` - 既存コードから設計文書を逆生成
-- `rev-specs` - 既存コードからテスト仕様書を逆生成
-- `rev-requirements` - 既存コードから要件定義書を逆生成
+### TDD Commands (Run Individually)
 
-## クイックスタート
+- `tdd-requirements` - TDD requirements definition
+- `tdd-testcases` - Create test cases
+- `tdd-red` - Test implementation (Red)
+- `tdd-green` - Minimal implementation (Green)
+- `tdd-refactor` - Refactoring
+- `tdd-verify-complete` - Verify TDD completion
 
-### 包括的な開発フロー
+### Reverse Engineering Commands
+
+- `rev-tasks` - Reverse-generate a task list from existing code
+- `rev-design` - Reverse-generate design documents from existing code
+- `rev-specs` - Reverse-generate test specifications from existing code
+- `rev-requirements` - Reverse-generate a requirements document from existing code
+
+## Quick Start
+
+### End-to-End Development Flow
 
 ```bash
-# 1. 要件定義
+# 1. Requirements
 /kairo-requirements
 
-# 2. 設計
+# 2. Design
 /kairo-design
 
-# 3. タスク分割
+# 3. Task decomposition
 /kairo-tasks
 
-# 4. 実装
+# 4. Implementation
 /kairo-implement
 ```
 
-### 個別TDDプロセス
+### Individual TDD Process
 
 ```bash
 /tdd-requirements
@@ -79,29 +82,29 @@ Kairoは要件定義から実装までの開発プロセスを自動化・支援
 /tdd-verify-complete
 ```
 
-### リバースエンジニアリング
+### Reverse Engineering
 
 ```bash
-# 1. 既存コードからタスク構造を分析
+# 1. Analyze task structure from existing code
 /rev-tasks
 
-# 2. 設計文書の逆生成（タスク分析後推奨）
+# 2. Reverse-generate design documents (recommended after task analysis)
 /rev-design
 
-# 3. テスト仕様書の逆生成（設計文書後推奨）
+# 3. Reverse-generate test specifications (recommended after design documents)
 /rev-specs
 
-# 4. 要件定義書の逆生成（全分析完了後推奨）
+# 4. Reverse-generate requirements (recommended after all analyses)
 /rev-requirements
 ```
 
-### 開発環境のクリーンアップ
+### Clean Up the Development Environment
 
 ```bash
-# 開発環境をクリーンアップ
+# Clean up the development environment
 /clear
 ```
 
-## 詳細なマニュアル
+## Detailed Manual
 
-使用方法の詳細、ディレクトリ構造、ワークフロー例、トラブルシューティングについては [MANUAL.md](./MANUAL.md) を参照してください。
+For detailed usage, directory structure, workflow examples, and troubleshooting, see [MANUAL.md](./MANUAL.md).

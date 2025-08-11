@@ -1,54 +1,56 @@
-# TDD テストケース完全性検証
+# TDD Test Case Completeness Verification
 
-TDD開発でテストケースの実装が完全に完了しているかを検証します。
+Verify whether test case implementation is completely finished in TDD development.
 
-## 検証の目的
+## Purpose of Verification
 
-リファクタリング後に、予定していたテストケースがすべて実装されているかを確認し、実装漏れを防ぎます。
+After refactoring, confirm that all planned test cases have been implemented to prevent implementation gaps.
 
-## 重要な原則
+## Important Principles
 
-**⚠️ この工程では修正を行わない**
-- この検証フェーズではコードやテストの修正は一切行わない
-- 問題を発見した場合は内容をmemoファイルに記載する
-- 修正作業は後の工程（次のTDDサイクルや別のタスク）に委ねる
-- 検証・記録・報告に専念する
+**⚠️ No modifications in this process**
 
-## 検証手順
+- Do not make any code or test modifications in this verification phase
+- If problems are discovered, record them in the memo file
+- Leave modification work to later processes (next TDD cycle or separate tasks)
+- Focus on verification, recording, and reporting
 
-### 1. 既存テストのグリーン状態確認
+## Verification Procedure
 
-- **必須**: 全ての既存テストが成功していることを確認
-- `npm test` または `jest` を実行してテスト結果を確認
-- **テスト失敗がある場合**: memoファイルに記載し、後の工程で修正対応
-- **この工程では修正禁止**: テスト失敗を発見してもここでは修正しない
-- テスト状態を記録し、次のステップに進む
+### 1. Confirm Green State of Existing Tests
 
-### 2. 事前準備
+- **Required**: Confirm that all existing tests are successful
+- Execute `npm test` or `jest` to check test results
+- **If test failures exist**: Record in memo file and handle fixes in later processes
+- **Modification prohibited in this process**: Do not fix test failures even if discovered here
+- Record test state and proceed to next step
 
-検証コンテキストの準備を行います：
+### 2. Preliminary Preparation
 
-1. **@agent-symbol-searcher で検証関連情報を検索し、見つかったファイルを読み込み**
-   - 完了予定のテストケースや機能を検索し、該当ファイルをReadツールで読み込み
-   - 既存のテストカバレッジや品質基準を確認し、関連ファイルをReadツールで読み込み
-   - 実装完了タスクのマーキングパターンを特定し、タスクファイルをReadツールで読み込み
+Prepare verification context:
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - テストケース定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-refactor-phase.md` - Refactorフェーズの結果を確認
-   - 元タスクファイル (`docs/tasks/{taskfile}.md`) - タスクの完了状態を確認
+1. **Search for verification-related information using @agent-symbol-searcher and read found files**
 
-読み込み完了後、準備されたコンテキスト情報を基にテストケース完全性検証を開始します。
+   - Search for planned test cases and features for completion, and read corresponding files with Read tool
+   - Check existing test coverage and quality standards, and read related files with Read tool
+   - Identify marking patterns for implementation completion tasks, and read task files with Read tool
 
-### 2. 実装済みテストケースの確認
+2. **Direct reading of related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check test case definition
+   - `docs/implements/{{task_id}}/{feature_name}-refactor-phase.md` - Check Refactor phase results
+   - Original task file (`docs/tasks/{taskfile}.md`) - Check task completion status
 
-- 現在のテストファイルを確認
-- 実装済みテストケース数をカウント
-- 各テストケースの内容を予定と照合
+After loading completion, start test case completeness verification based on prepared context information.
 
-### 3. 実装状況の分析とTODO.md更新判定
+### 2. Check Implemented Test Cases
+
+- Check current test files
+- Count number of implemented test cases
+- Compare each test case content with plans
+
+### 3. 実装状況の分析と TODO.md 更新判定
 
 以下の形式で分析結果を提供してください：
 
@@ -125,14 +127,14 @@ TDD開発でテストケースの実装が完全に完了しているかを検�
 - 要件充実度に品質リスクあり
 ```
 
-### 5. 検証結果のメモファイル記録とTODO.md更新
+### 5. 検証結果のメモファイル記録と TODO.md 更新
 
 #### メモファイルの統合更新
 
 検証完了後、`docs/implements/{{task_id}}/{feature_name}-memo.md` の既存内容を整理・統合し、以下の情報に更新：
 
 ```markdown
-# [機能名] TDD開発完了記録
+# [機能名] TDD 開発完了記録
 
 ## 確認すべきドキュメント
 
@@ -141,46 +143,58 @@ TDD開発でテストケースの実装が完全に完了しているかを検�
 - `docs/implements/{{task_id}}/{feature_name}-testcases.md`
 
 ## 🎯 最終結果 ([日時])
+
 - **実装率**: [数]% ([実装数]/[予定数]テストケース)
-- **品質判定**: [合格/不合格] 
-- **TODO更新**: [✅完了マーク追加/要改善]
+- **品質判定**: [合格/不合格]
+- **TODO 更新**: [✅ 完了マーク追加/要改善]
 
 ## 💡 重要な技術学習
+
 ### 実装パターン
+
 [今後再利用できる重要な実装手法]
 
 ### テスト設計
+
 [効果的だったテストアプローチ]
 
 ### 品質保証
+
 [品質確保で重要だった観点]
 
 ## ⚠️ 注意点・修正が必要な項目（該当時のみ）
+
 [実装時の重要な注意事項や未完了項目]
 
 ### 🔧 後工程での修正対象
+
 #### テスト失敗
+
 - [失敗しているテストケース名]
 - **失敗内容**: [具体的な失敗内容]
 - **修正方針**: [推奨される修正方法]
 
 #### 実装不足
+
 - [未実装の機能や要件]
 - **不足内容**: [具体的な不足内容]
 - **対応方針**: [推奨される対応方法]
 
 #### 品質改善
+
 - [品質向上が必要な箇所]
 - **改善内容**: [具体的な改善内容]
 - **改善方針**: [推奨される改善方法]
 
 ---
-*既存のメモ内容から重要な情報を統合し、重複・詳細な経過記録は削除*
+
+_既存のメモ内容から重要な情報を統合し、重複・詳細な経過記録は削除_
 ```
 
 **統合更新ルール:**
+
 1. **重要情報保持**: 既存メモの技術的学習ポイント・再利用可能パターンを統合
-2. **重複削除**: 類似の記録・詳細な経過は最新情報に集約  
+2. **重複削除**: 類似の記録・詳細な経過は最新情報に集約
 3. **簡潔化**: 日付・数値などの詳細は最終結果のみ保持
 4. **再利用重視**: 今後の開発で参考になる情報を優先して残す
 5. **関連情報重視**: 仕様情報などの情報は優先して残す
@@ -189,7 +203,7 @@ TDD開発でテストケースの実装が完全に完了しているかを検�
 
 検証が完了した場合、以下の手順で元タスクファイルを自動更新：
 
-1. **完了タスクの特定**: 現在のTDD開発対象タスクを元タスクファイルから特定
+1. **完了タスクの特定**: 現在の TDD 開発対象タスクを元タスクファイルから特定
 2. **完了マーク追加**: 該当タスクに `✅ **完了**` マークを追加
 3. **完了理由記載**: `(TDD開発完了 - [テスト数]テストケース全通過)` を追記
 4. **サブタスク更新**: 関連するサブタスクにも `[x]` チェックマークを追加
@@ -197,10 +211,10 @@ TDD開発でテストケースの実装が完全に完了しているかを検�
 例：
 
 ```markdown
-### 1. JSONファイルパス引数処理機能 ✅ **完了** (TDD開発完了 - 15テストケース全通過)
+### 1. JSON ファイルパス引数処理機能 ✅ **完了** (TDD 開発完了 - 15 テストケース全通過)
 
-- [x] コマンドライン引数でJSONファイルパスを受け取る機能を追加
-- [x] 複数のJSONファイルパスに対応（sample/ディレクトリ全体の読み込み）
+- [x] コマンドライン引数で JSON ファイルパスを受け取る機能を追加
+- [x] 複数の JSON ファイルパスに対応（sample/ディレクトリ全体の読み込み）
 - [x] 引数バリデーション機能
 ```
 
@@ -220,7 +234,7 @@ TDD開発でテストケースの実装が完全に完了しているかを検�
 ```
 
 **メモファイル記録**: 検証結果をメモファイルに自動追記する。
-**元タスクファイル更新**: 完了したタスクに✅完了マークを自動追加する。
+**元タスクファイル更新**: 完了したタスクに ✅ 完了マークを自動追加する。
 
 #### 実装不足がある場合
 
@@ -262,7 +276,7 @@ TDD開発でテストケースの実装が完全に完了しているかを検�
 - `src/*.ts`
 - `src/*.js`
 
-### Gitで変更されたファイル
+### Git で変更されたファイル
 
 - `git status` で変更されたファイル
 - `git diff --name-only` で変更されたファイル
@@ -349,51 +363,51 @@ TDD開発でテストケースの実装が完全に完了しているかを検�
 /tdd-cycle
 ```
 
-## 出力形式
+## Output Format
 
-実装状況に応じて以下のいずれかの形式で出力：
+Output in one of the following formats depending on implementation status:
 
-### 完全実装の場合
-
-```
-✅ **テストケース完全性検証: 合格**
-
-📊 今回のタスク要件充実度:
-- 対象要件項目: [数]個
-- 実装・テスト済み: [数]個 / 未実装: [数]個
-- 要件網羅率: 100%
-- 要件充実度: 完全達成
-
-📊 全体のテスト状況:
-- 全テストケース総数: [数]個  
-- 成功: [数]個 / 失敗: [数]個
-- 全体テスト成功率: [数]%
-
-🚀 要件定義に対する完全な充実度を達成しました。
-自動で次のTDDサイクルに進みます。
-```
-
-### 実装不足の場合
+### For Complete Implementation
 
 ```
-⚠️ **テストケース実装不足を検出**
+✅ **Test Case Completeness Verification: Pass**
 
-📊 今回のタスク要件充実度:
-- 対象要件項目: [数]個
-- 実装・テスト済み: [数]個 / 未実装: [数]個  
-- 要件網羅率: [数]%
-- 要件充実度: [充実度レベル]
+📊 Current Task Requirements Fulfillment:
+- Target requirement items: [number] items
+- Implemented & tested: [number] items / Unimplemented: [number] items
+- Requirements coverage: 100%
+- Requirements fulfillment: Complete achievement
 
-📊 全体のテスト状況:
-- 全テストケース総数: [数]個
-- 成功: [数]個 / 失敗: [数]個
-- 全体テスト成功率: [数]%
+📊 Overall Test Status:
+- Total test cases: [number] cases
+- Success: [number] cases / Failure: [number] cases
+- Overall test success rate: [number]%
 
-❌ 未実装テストケース:
-[未実装テストケースの詳細リスト]
-
-📝 **修正内容をmemoファイルに記録済み**
-後の工程で対応予定です。この工程では修正を行いません。
+🚀 Complete fulfillment of requirements definition achieved.
+Automatically proceeding to next TDD cycle.
 ```
 
-この検証により、TDD開発の品質と完全性を確保します。
+### For Insufficient Implementation
+
+```
+⚠️ **Test Case Implementation Insufficiency Detected**
+
+📊 Current Task Requirements Fulfillment:
+- Target requirement items: [number] items
+- Implemented & tested: [number] items / Unimplemented: [number] items
+- Requirements coverage: [number]%
+- Requirements fulfillment: [fulfillment level]
+
+📊 Overall Test Status:
+- Total test cases: [number] cases
+- Success: [number] cases / Failure: [number] cases
+- Overall test success rate: [number]%
+
+❌ Unimplemented Test Cases:
+[Detailed list of unimplemented test cases]
+
+📝 **Correction content recorded in memo file**
+Will be addressed in later processes. No corrections made in this process.
+```
+
+This verification ensures the quality and completeness of TDD development.

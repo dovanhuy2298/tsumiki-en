@@ -1,120 +1,124 @@
 # kairo-requirements
 
-## 目的
+## Purpose
 
-ユーザから提供された要件の概要を分析し、EARS（Easy Approach to Requirements Syntax）記法を使用して詳細な受け入れ基準を含む要件定義書を作成する。
+Analyze requirement overviews provided by users and create detailed requirements definition documents including acceptance criteria using EARS (Easy Approach to Requirements Syntax) notation.
 
-## 前提条件
+## Prerequisites
 
-- ユーザから要件の概要が提供されている
-- `docs/spec/` ディレクトリが存在する（なければ作成）
+- Requirement overview has been provided by the user
+- `docs/spec/` directory exists (create if it doesn't exist)
 
-## 実行内容
+## Execution Content
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
+- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
 
-1. **要件の分析**
-   - ユーザから提供された要件の概要を理解する
-   - @agent-symbol-searcher で関連する既存要件・設計文書を検索し、見つかったファイルをReadツールで読み込み
-   - 関連するドメイン知識を適用する
-   - 不明確な点がある場合は、一般的なベストプラクティスに基づいて補完する
+1. **Requirements Analysis**
 
-2. **ユーザストーリーの作成**
-   - WHO（誰が）、WHAT（何を）、WHY（なぜ）の形式で記述
-   - 各機能の価値を明確にする
+   - Understand the requirement overview provided by the user
+   - Search for related existing requirements and design documents using @agent-symbol-searcher, and read found files with Read tool
+   - Apply related domain knowledge
+   - If there are unclear points, supplement based on general best practices
 
-3. **EARS記法による要件定義**
-   - **通常要件（SHALL）**: システムが通常実行すべき動作
-   - **条件付き要件（WHEN/IF-THEN）**: 特定の条件下での動作
-   - **不要要件（WHERE）**: 特定の状態での動作
-   - **オプション要件（MAY）**: 任意の機能
-   - **制約要件（MUST）**: システムの制約事項
+2. **User Story Creation**
 
-4. **Edgeケースの定義**
-   - 異常系の処理
-   - 境界値の処理
-   - エラーハンドリング
-   - パフォーマンス要件
+   - Describe in WHO (who), WHAT (what), WHY (why) format
+   - Clarify the value of each feature
 
-5. **ファイルの作成**
-   - `docs/spec/{要件名}-requirements.md`: 機能要件と関連文書へのリンク
-   - `docs/spec/{要件名}-user-stories.md`: 詳細なユーザストーリー
-   - `docs/spec/{要件名}-acceptance-criteria.md`: 受け入れ基準とテスト項目
-   - マークダウン形式で構造化された文書を作成
+3. **Requirements Definition Using EARS Notation**
 
-## 出力フォーマット例
+   - **Normal Requirements (SHALL)**: Actions the system should normally perform
+   - **Conditional Requirements (WHEN/IF-THEN)**: Actions under specific conditions
+   - **State Requirements (WHERE)**: Actions in specific states
+   - **Optional Requirements (MAY)**: Optional features
+   - **Constraint Requirements (MUST)**: System constraints
 
-### 1. requirements.md（メインファイル）
+4. **Edge Case Definition**
+
+   - Exception handling
+   - Boundary value processing
+   - Error handling
+   - Performance requirements
+
+5. **File Creation**
+   - `docs/spec/{requirement-name}-requirements.md`: Functional requirements and links to related documents
+   - `docs/spec/{requirement-name}-user-stories.md`: Detailed user stories
+   - `docs/spec/{requirement-name}-acceptance-criteria.md`: Acceptance criteria and test items
+   - Create structured documents in markdown format
+
+## Output Format Examples
+
+### 1. requirements.md (Main File)
 
 ```markdown
-# {要件名} 要件定義書
+# {requirement-name} Requirements Definition Document
 
-## 概要
+## Overview
 
-{要件の概要}
+{requirement overview}
 
-## 関連文書
+## Related Documents
 
-- **ユーザストーリー**: [📖 {要件名}-user-stories.md]({要件名}-user-stories.md)
-- **受け入れ基準**: [✅ {要件名}-acceptance-criteria.md]({要件名}-acceptance-criteria.md)
+- **User Stories**: [📖 {requirement-name}-user-stories.md]({requirement-name}-user-stories.md)
+- **Acceptance Criteria**: [✅ {requirement-name}-acceptance-criteria.md]({requirement-name}-acceptance-criteria.md)
 
-## 機能要件（EARS記法）
+## Functional Requirements (EARS Notation)
 
-### 通常要件
+### Normal Requirements
 
-- REQ-001: システムは {通常の動作} しなければならない
-- REQ-002: システムは {通常の動作} しなければならない
+- REQ-001: The system shall {normal operation}
+- REQ-002: The system shall {normal operation}
 
-### 条件付き要件
+### Conditional Requirements
 
-- REQ-101: {条件} の場合、システムは {動作} しなければならない
-- REQ-102: {条件} の場合、システムは {動作} しなければならない
+- REQ-101: When {condition}, the system shall {operation}
+- REQ-102: When {condition}, the system shall {operation}
 
-### 状態要件
+### State Requirements
 
-- REQ-201: {状態} にある場合、システムは {動作} しなければならない
+- REQ-201: Where {state}, the system shall {operation}
 
-### オプション要件
+### Optional Requirements
 
-- REQ-301: システムは {オプション機能} してもよい
+- REQ-301: The system may {optional feature}
 
-### 制約要件
+### Constraint Requirements
 
-- REQ-401: システムは {制約事項} しなければならない
+- REQ-401: The system must {constraint}
 
-## 非機能要件
+## Non-functional Requirements
 
-### パフォーマンス
+### Performance
 
-- NFR-001: {パフォーマンス要件}
+- NFR-001: {performance requirement}
 
-### セキュリティ
+### Security
 
-- NFR-101: {セキュリティ要件}
+- NFR-101: {security requirement}
 
-### ユーザビリティ
+### Usability
 
-- NFR-201: {ユーザビリティ要件}
+- NFR-201: {usability requirement}
 
-## Edgeケース
+## Edge Cases
 
-### エラー処理
+### Error Handling
 
-- EDGE-001: {エラーケース}
+- EDGE-001: {error case}
 
-### 境界値
+### Boundary Values
 
-- EDGE-101: {境界値ケース}
+- EDGE-101: {boundary value case}
 ```
 
 ### 2. user-stories.md（詳細なユーザストーリー）
 
-```markdown
+````markdown
 # {要件名} ユーザストーリー
 
 ## 概要
@@ -136,17 +140,19 @@
 
 ## ユーザストーリー
 
-### 📚 エピック1: {大きな機能グループ}
+### 📚 エピック 1: {大きな機能グループ}
 
-#### ストーリー1.1: {具体的なストーリー名}
+#### ストーリー 1.1: {具体的なストーリー名}
 
 **ユーザストーリー**:
+
 - **私は** {ユーザー種別} **として**
 - **{具体的な状況・コンテキスト} において**
 - **{実現したい行動・操作} をしたい**
 - **そうすることで** {得られる価値・解決される問題}
 
 **詳細説明**:
+
 - **背景**: {なぜこの機能が必要なのか}
 - **前提条件**: {このストーリーの前提となる状況}
 - **利用シーン**: {具体的な利用場面の例}
@@ -158,17 +164,17 @@
 
 **見積もり**: {ストーリーポイントまたは工数}
 
-#### ストーリー1.2: {具体的なストーリー名}
+#### ストーリー 1.2: {具体的なストーリー名}
 
 {同様の形式で記載}
 
-### 📚 エピック2: {大きな機能グループ}
+### 📚 エピック 2: {大きな機能グループ}
 
 {同様の形式で記載}
 
 ## ユーザージャーニー
 
-### ジャーニー1: {代表的な利用フロー}
+### ジャーニー 1: {代表的な利用フロー}
 
 ```mermaid
 journey
@@ -180,14 +186,16 @@ journey
       {アクション3}: 4: {ユーザー種別}
       {アクション4}: 5: {ユーザー種別}
 ```
+````
 
 **詳細**:
-1. **{アクション1}**: {詳細な説明}
-2. **{アクション2}**: {詳細な説明}
+
+1. **{アクション 1}**: {詳細な説明}
+2. **{アクション 2}**: {詳細な説明}
 
 ## ペルソナ定義
 
-### ペルソナ1: {代表的ユーザー名}
+### ペルソナ 1: {代表的ユーザー名}
 
 - **基本情報**: {年齢、職業、技術レベル等}
 - **ゴール**: {このユーザーが達成したいこと}
@@ -211,7 +219,8 @@ journey
 - **聴覚**: {聴覚障害者への配慮}
 - **運動**: {運動機能障害者への配慮}
 - **認知**: {認知障害者への配慮}
-```
+
+````
 
 ### 3. acceptance-criteria.md（受け入れ基準）
 
@@ -339,15 +348,15 @@ journey
 - [ ] 残存問題の整理
 - [ ] 受け入れ可否の判定
 - [ ] ステークホルダーへの報告
-```
+````
 
-## 実行後の確認
+## Post-execution Verification
 
-- @agent-symbol-searcher で作成した要件との関連性を確認
-- 作成した3つのファイルのパスを表示
-  - `docs/spec/{要件名}-requirements.md`
-  - `docs/spec/{要件名}-user-stories.md` 
-  - `docs/spec/{要件名}-acceptance-criteria.md`
-- 主要な要件の数とユーザストーリー数を報告
-- 各ファイル内のリンクが正しく設定されていることを確認
-- ユーザに確認を促すメッセージを表示
+- Verify relevance of created requirements using @agent-symbol-searcher
+- Display paths of the 3 created files
+  - `docs/spec/{requirement-name}-requirements.md`
+  - `docs/spec/{requirement-name}-user-stories.md`
+  - `docs/spec/{requirement-name}-acceptance-criteria.md`
+- Report the number of main requirements and user stories
+- Verify that links within each file are correctly set
+- Display message prompting user confirmation

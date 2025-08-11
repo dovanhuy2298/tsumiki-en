@@ -1,53 +1,54 @@
-# TDDテストケースの洗い出し
+# TDD Test Case Identification
 
-先ほど整理した要件に基づいて、テストケースを洗い出します。
+Identify test cases based on the requirements organized earlier.
 
-## 事前準備
+## Preliminary Preparation
 
-開発コンテキストの準備を行います：
+Prepare development context:
 
-1. **@agent-symbol-searcher でテスト関連情報を検索し、見つかったファイルを読み込み**
-   - 既存のテストパターンやテストケースを検索し、該当テストファイルをReadツールで読み込み
-   - 類似機能のテスト方法やモック戦略を特定し、関連ファイルをReadツールで読み込み
-   - テストフレームワークの使用方法を確認し、設定ファイルをReadツールで読み込み
+1. **Search for test-related information using @agent-symbol-searcher and read found files**
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - 既存のテストケースを確認
-   - 関連する設計文書やタスクファイルも必要に応じて読み込み
+   - Search for existing test patterns and test cases, and read corresponding test files with Read tool
+   - Identify testing methods and mock strategies for similar features, and read related files with Read tool
+   - Check test framework usage and read configuration files with Read tool
 
-読み込み完了後、準備されたコンテキスト情報を基にテストケースの洗い出しを行います。
+2. **Direct reading of related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check existing test cases
+   - Read related design documents and task files as needed
 
-## 信頼性レベル指示
+After loading completion, identify test cases based on prepared context information.
 
-各テストケースの作成時には、元の資料（要件定義、既存実装、ライブラリドキュメント等）との照合状況を以下の信号で必ずコメントしてください：
+## Reliability Level Instructions
 
-- 🟢 **青信号**: 元の資料を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: 元の資料から妥当な推測の場合
-- 🔴 **赤信号**: 元の資料にない推測の場合
+When creating each test case, always comment on the verification status with original materials (requirements definition, existing implementation, library documentation, etc.) using the following signals:
 
-## テストケースの分類
+- 🟢 **Green Signal**: When referring to original materials with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on original materials
+- 🔴 **Red Signal**: When speculation is not based on original materials
 
-### 1. 正常系テストケース（基本的な動作）
+## Test Case Classification
 
-以下の形式で記載してください：
+### 1. Normal System Test Cases (Basic Operations)
 
-- **テスト名**: [わかりやすい日本語名]
-  - **何をテストするか**: [このテストで確認したい具体的な動作や機能]
-  - **期待される動作**: [どのような処理が正常に実行されるべきか]
-- **入力値**: [具体的な値]
-  - **入力データの意味**: [なぜこの入力値を選んだか、何を代表しているか]
-- **期待される結果**: [具体的な期待値]
-  - **期待結果の理由**: [なぜこの結果が正しいとされるか]
-- **テストの目的**: [何を確認するか]
-  - **確認ポイント**: [特に注意して検証すべき点]
-- 🟢🟡🔴 このテストケースの信頼性レベルを記載
+Please describe in the following format:
 
-### 2. 異常系テストケース（エラーハンドリング）
+- **Test Name**: [Easy-to-understand Japanese name]
+  - **What to Test**: [Specific operations or features to verify in this test]
+  - **Expected Behavior**: [What processes should execute normally]
+- **Input Values**: [Specific values]
+  - **Meaning of Input Data**: [Why this input value was chosen, what it represents]
+- **Expected Results**: [Specific expected values]
+  - **Reason for Expected Results**: [Why this result is considered correct]
+- **Test Purpose**: [What to verify]
+  - **Verification Points**: [Points to pay special attention to during verification]
+- 🟢🟡🔴 State reliability level of this test case
 
-- **テスト名**: [わかりやすい日本語名]
-  - **エラーケースの概要**: [どのような異常状況を想定しているか]
+### 2. Abnormal System Test Cases (Error Handling)
+
+- **Test Name**: [Easy-to-understand Japanese name]
+  - **Error Case Overview**: [What abnormal situation is anticipated]
   - **エラー処理の重要性**: [なぜこのエラーハンドリングが必要か]
 - **入力値**: [不正な値や境界を超えた値]
   - **不正な理由**: [なぜこの入力値が不正とされるか]
@@ -59,7 +60,7 @@
   - **品質保証の観点**: [このテストがシステム品質にどう貢献するか]
 - 🟢🟡🔴 このテストケースの信頼性レベルを記載
 
-### 3. 境界値テストケース（最小値、最大値、null等）
+### 3. 境界値テストケース（最小値、最大値、null 等）
 
 - **テスト名**: [わかりやすい日本語名]
   - **境界値の意味**: [なぜこの値が境界として重要か]
@@ -123,13 +124,13 @@
 // 【品質保証】: [この検証がシステム品質にどう貢献するかを説明]
 ```
 
-### 各expectステートメントのコメント
+### 各 expect ステートメントのコメント
 
 ```javascript
 // 【検証項目】: [この検証で確認している具体的な項目]
 // 🟢🟡🔴 この内容の信頼性レベルを記載
 expect(result.validPaths).toHaveLength(2); // 【確認内容】: 有効なパスが正確に2つ検出されることを確認
-expect(result.invalidPaths).toContain('nonexistent.json'); // 【確認内容】: 存在しないファイルが無効パスとして適切に分類されることを確認
+expect(result.invalidPaths).toContain("nonexistent.json"); // 【確認内容】: 存在しないファイルが無効パスとして適切に分類されることを確認
 ```
 
 ### セットアップ・クリーンアップのコメント
@@ -146,46 +147,46 @@ afterEach(() => {
 });
 ```
 
-すべて洗い出したら以下を実行してください：
+After identifying everything, execute the following:
 
-1. テストケース一覧をdocs/implements/{{task_id}}/{feature_name}-testcases.mdに保存（既存ファイルがある場合は追記）
-2. TODOステータスを更新（テストケース洗い出し完了をマーク）
-3. **品質判定**: テストケースの品質を以下の基準で判定
-   - テストケース分類: 正常系・異常系・境界値が網羅されている
-   - 期待値定義: 各テストケースの期待値が明確
-   - 技術選択: プログラミング言語・テストフレームワークが確定
-   - 実装可能性: 現在の技術スタックで実現可能
-4. **次のステップ表示**: 判定結果に関わらず、次のお勧めコマンドを表示
-   - 「次のお勧めステップ: `/tdd-red` でRedフェーズ（失敗テスト作成）を開始します。」
+1. Save test case list to docs/implements/{{task_id}}/{feature_name}-testcases.md (append if existing file exists)
+2. Update TODO status (mark test case identification completion)
+3. **Quality Assessment**: Assess test case quality based on the following criteria
+   - Test case classification: Normal, abnormal, and boundary value cases are covered
+   - Expected value definition: Expected values for each test case are clear
+   - Technology selection: Programming language and test framework are determined
+   - Implementation feasibility: Achievable with current technology stack
+4. **Next Step Display**: Regardless of assessment results, display the next recommended command
+   - "Next recommended step: Start Red phase (failing test creation) with `/tdd-red`."
 
-## 品質判定基準
+## Quality Assessment Criteria
 
-以下の基準でテストケースの品質を判定します：
-
-```
-✅ 高品質:
-- テストケース分類: 正常系・異常系・境界値が網羅されている
-- 期待値定義: 各テストケースの期待値が明確
-- 技術選択: プログラミング言語・テストフレームワークが確定
-- 実装可能性: 現在の技術スタックで実現可能
-
-⚠️ 要改善:
-- テストケースに漏れや重複がある
-- 期待値が曖昧または不十分
-- 技術選択に迷いがある
-- 複雑すぎて実装困難
-
-❌ 不適切:
-- 要件との整合性が取れていない
-- テストケースが不足している
-- 技術的実現性に問題がある
-```
-
-## TODO更新パターン
+Assess test case quality based on the following criteria:
 
 ```
-- 現在のTODO「テストケース洗い出し」を「completed」にマーク
-- テストケース定義フェーズの完了をTODO内容に反映
-- 品質判定結果をTODO内容に記録
-- 次のフェーズ「Redフェーズ（失敗テスト作成）」をTODOに追加
+✅ High Quality:
+- Test case classification: Normal, abnormal, and boundary value cases are covered
+- Expected value definition: Expected values for each test case are clear
+- Technology selection: Programming language and test framework are determined
+- Implementation feasibility: Achievable with current technology stack
+
+⚠️ Needs Improvement:
+- Test cases have gaps or duplicates
+- Expected values are ambiguous or insufficient
+- Technology selection is uncertain
+- Too complex to implement
+
+❌ Inappropriate:
+- Inconsistent with requirements
+- Insufficient test cases
+- Technical feasibility issues
+```
+
+## TODO Update Pattern
+
+```
+- Mark current TODO "Test case identification" as "completed"
+- Reflect test case definition phase completion in TODO content
+- Record quality assessment results in TODO content
+- Add next phase "Red phase (failing test creation)" to TODO
 ```

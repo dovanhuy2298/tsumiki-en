@@ -1,57 +1,58 @@
-# TDD Redフェーズ（失敗するテストを書く）
+# TDD Red Phase (Write Failing Tests)
 
-TDDのRedフェーズを実行します。
+Execute the Red phase of TDD.
 
-## 事前準備
+## Preliminary Preparation
 
-開発コンテキストの準備を行います：
+Prepare development context:
 
-1. **@agent-symbol-searcher でテスト実装関連情報を検索し、見つかったファイルを読み込み**
-   - 既存のテストファイルやテスト関数を検索し、該当ファイルをReadツールで読み込み
-   - テストセットアップやモックの使用パターンを特定し、関連ファイルをReadツールで読み込み
-   - Jest/Mochaなどのテストフレームワークの設定を確認し、設定ファイルをReadツールで読み込み
+1. **Search for test implementation-related information using @agent-symbol-searcher and read found files**
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - テストケース定義を確認
-   - 関連する設計文書やタスクファイルも必要に応じて読み込み
+   - Search for existing test files and test functions, and read corresponding files with Read tool
+   - Identify test setup and mock usage patterns, and read related files with Read tool
+   - Check Jest/Mocha and other test framework configurations, and read configuration files with Read tool
 
-読み込み完了後、準備されたコンテキスト情報を基にRedフェーズ（失敗テスト作成）の作業を開始します。
+2. **Direct reading of related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check test case definition
+   - Read related design documents and task files as needed
 
-## 対象テストケース
+After loading completion, start Red phase (failing test creation) work based on prepared context information.
 
-**【対象テストケース】**: {{test_case_name}}
+## Target Test Cases
 
-## テストケース追加目標数
+**【Target Test Cases】**: {{test_case_name}}
 
-**テストケース追加目標数**: 10以上（利用可能なテストケースが10未満の場合は全て追加）
+## Test Case Addition Target Count
 
-未実装のテストケースから10個以上のテストケースを選択して実装してください。利用可能なテストケースが10個未満の場合は、利用可能な全てのテストケースを実装対象とします。
-既にテストケースが実装済みの場合はテストケース定義に書かれているテストケースからテストを追加します。
+**Test Case Addition Target Count**: 10 or more (add all if less than 10 available test cases)
 
-## 信頼性レベル指示
+Please select and implement 10 or more test cases from unimplemented test cases. If less than 10 test cases are available, target all available test cases for implementation.
+If test cases are already implemented, add tests from test cases written in the test case definition.
 
-テストコード作成時には、各テストケースの内容について元の資料との照合状況を以下の信号でコメントしてください：
+## Reliability Level Instructions
 
-- 🟢 **青信号**: 元の資料を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: 元の資料から妥当な推測の場合
-- 🔴 **赤信号**: 元の資料にない推測の場合
+When creating test code, comment on the verification status with original materials for each test case content using the following signals:
 
-## 要件
+- 🟢 **Green Signal**: When referring to original materials with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on original materials
+- 🔴 **Red Signal**: When speculation is not based on original materials
 
-- **使用言語/フレームワーク**: {{language_framework}}
-- テストは必ず失敗する状態で作成
-- テスト名は分かりやすく日本語で記述
-- アサーション（期待値の検証）を明確に記述
-- まだ実装されていない関数・メソッドを呼び出す形で作成
+## Requirements
 
-## テストコード作成指針
+- **Language/Framework Used**: {{language_framework}}
+- Tests must be created in a failing state
+- Test names should be clearly written in Japanese
+- Assertions (expected value verification) should be clearly described
+- Create by calling functions/methods that are not yet implemented
 
-- Given-When-Then パターンを意識した構造
-- テストデータの準備（Given）
-- 実際の処理の実行（When）
-- 結果の検証（Then）
+## Test Code Creation Guidelines
+
+- Structure following Given-When-Then pattern
+- Test data preparation (Given)
+- Actual process execution (When)
+- Result verification (Then)
 
 ## 日本語コメント必須要件
 
@@ -96,14 +97,14 @@ afterEach(() => {
 });
 ```
 
-### 各expectステートメントのコメント
+### 各 expect ステートメントのコメント
 
-各expectステートメントには必ず日本語コメントを付けてください：
+各 expect ステートメントには必ず日本語コメントを付けてください：
 
 ```javascript
 expect(result.property).toBe(expectedValue); // 【確認内容】: [この検証で確認している具体的な項目と理由]
 expect(result.array).toHaveLength(3); // 【確認内容】: [配列の長さが期待値と一致することを確認する理由]
-expect(result.errors).toContain('error message'); // 【確認内容】: [特定のエラーメッセージが含まれることを確認する理由]
+expect(result.errors).toContain("error message"); // 【確認内容】: [特定のエラーメッセージが含まれることを確認する理由]
 ```
 
 ## 作成するテストコードの例
@@ -151,25 +152,25 @@ describe('{{feature_name}}', () => {
 
 テストコード作成後、以下を実行してください：
 
-1. **メモファイル作成・更新**: docs/implements/{{task_id}}/{feature_name}-memo.mdファイルにRedフェーズの内容を作成または追記
-   - 既存のメモファイルがある場合は、Redフェーズセクションを更新
+1. **メモファイル作成・更新**: docs/implements/{{task_id}}/{feature_name}-memo.md ファイルに Red フェーズの内容を作成または追記
+   - 既存のメモファイルがある場合は、Red フェーズセクションを更新
    - メモファイルが存在しない場合は新規作成
-2. テストコードの設計内容をdocs/implements/{{task_id}}/{feature_name}-red-phase.mdに保存（既存ファイルがある場合は追記）
-3. TODOステータスを更新（Redフェーズ完了をマーク）
+2. テストコードの設計内容を docs/implements/{{task_id}}/{feature_name}-red-phase.md に保存（既存ファイルがある場合は追記）
+3. TODO ステータスを更新（Red フェーズ完了をマーク）
 4. **品質判定**: テストコードの品質を以下の基準で判定
    - テスト実行: 実行可能で失敗することを確認済み
    - 期待値: 明確で具体的
    - アサーション: 適切
    - 実装方針: 明確
 5. **次のステップ表示**: 判定結果に関わらず、次のお勧めコマンドを表示
-   - 「次のお勧めステップ: `/tdd-green` でGreenフェーズ（最小実装）を開始します。」
+   - 「次のお勧めステップ: `/tdd-green` で Green フェーズ（最小実装）を開始します。」
 
-## TDDメモファイル形式
+## TDD メモファイル形式
 
-docs/implements/{{task_id}}/{feature_name}-memo.mdファイルの形式：
+docs/implements/{{task_id}}/{feature_name}-memo.md ファイルの形式：
 
 ```markdown
-# TDD開発メモ: {feature_name}
+# TDD 開発メモ: {feature_name}
 
 ## 概要
 
@@ -185,7 +186,7 @@ docs/implements/{{task_id}}/{feature_name}-memo.mdファイルの形式：
 - 実装ファイル: `[実装ファイルのパス]`
 - テストファイル: `[テストファイルのパス]`
 
-## Redフェーズ（失敗するテスト作成）
+## Red フェーズ（失敗するテスト作成）
 
 ### 作成日時
 
@@ -205,9 +206,9 @@ docs/implements/{{task_id}}/{feature_name}-memo.mdファイルの形式：
 
 ### 次のフェーズへの要求事項
 
-[Greenフェーズで実装すべき内容]
+[Green フェーズで実装すべき内容]
 
-## Greenフェーズ（最小実装）
+## Green フェーズ（最小実装）
 
 ### 実装日時
 
@@ -227,9 +228,9 @@ docs/implements/{{task_id}}/{feature_name}-memo.mdファイルの形式：
 
 ### 課題・改善点
 
-[Refactorフェーズで改善すべき点]
+[Refactor フェーズで改善すべき点]
 
-## Refactorフェーズ（品質改善）
+## Refactor フェーズ（品質改善）
 
 ### リファクタ日時
 
@@ -256,29 +257,29 @@ docs/implements/{{task_id}}/{feature_name}-memo.mdファイルの形式：
 [最終的な品質評価]
 ```
 
-## 品質判定基準
+## Quality Assessment Criteria
 
 ```
-✅ 高品質:
-- テスト実行: 成功（失敗することを確認）
-- 期待値: 明確で具体的
-- アサーション: 適切
-- 実装方針: 明確
+✅ High Quality:
+- Test execution: Success (confirm that it fails)
+- Expected values: Clear and specific
+- Assertions: Appropriate
+- Implementation approach: Clear
 
-⚠️ 要改善:
-- テストが実行できない
-- 期待値が曖昧
-- 実装アプローチが不明
-- 複雑なテストケース
+⚠️ Needs Improvement:
+- Tests cannot be executed
+- Expected values are ambiguous
+- Implementation approach is unclear
+- Complex test cases
 ```
 
-## TODO更新パターン
+## TODO Update Pattern
 
 ```
-- 現在のTODO「Redフェーズ（失敗テスト作成）」を「completed」にマーク
-- 失敗テスト作成フェーズの完了をTODO内容に反映
-- 品質判定結果をTODO内容に記録
-- 次のフェーズ「Greenフェーズ（最小実装）」をTODOに追加
+- Mark current TODO "Red Phase (Failing Test Creation)" as "completed"
+- Reflect failing test creation phase completion in TODO content
+- Record quality assessment results in TODO content
+- Add next phase "Green Phase (Minimal Implementation)" to TODO
 ```
 
-次のステップ: `/tdd-green` でテストを通すための最小限の実装を行います。
+Next step: Use `/tdd-green` to perform minimal implementation to make tests pass.

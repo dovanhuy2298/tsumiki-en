@@ -1,178 +1,195 @@
 # rev-design
 
-## 目的
+## Purpose
 
-既存のコードベースから技術設計文書を逆生成する。実装されたアーキテクチャ、データフロー、API仕様、データベーススキーマ、TypeScriptインターフェースを分析し、設計書として文書化する。
+Reverse-generate technical design documents from an existing codebase. Analyze implemented architecture, data flows, API specifications, database schema, and TypeScript interfaces, and document them as design artifacts.
 
-## 前提条件
+## Prerequisites
 
-- 分析対象のコードベースが存在する
-- `docs/reverse/` ディレクトリが存在する（なければ作成）
-- 可能であれば事前に `rev-tasks.md` を実行済み
+- The target codebase to analyze exists
+- The `docs/reverse/` directory exists (create it if it does not)
+- Preferably, `rev-tasks.md` has been executed beforehand
 
-## 実行内容
+## Execution Content
 
-1. **アーキテクチャの分析**
-   - プロジェクト構造からアーキテクチャパターンを特定
-   - レイヤー構成の確認（MVC、Clean Architecture等）
-   - マイクロサービス構成の有無
-   - フロントエンド/バックエンドの分離状況
+1. **Architecture Analysis**
 
-2. **データフローの抽出**
-   - ユーザーインタラクションの流れ
-   - API呼び出しの流れ
-   - データベースアクセスパターン
-   - 状態管理の流れ
+   - Identify architecture patterns from the project structure
+   - Check layer composition (e.g., MVC, Clean Architecture)
+   - Determine whether microservices are used
+   - Check separation between frontend/backend
 
-3. **API仕様の抽出**
-   - エンドポイント一覧の生成
-   - リクエスト/レスポンス構造の分析
-   - 認証・認可方式の確認
-   - エラーレスポンス形式
+2. **Data Flow Extraction**
 
-4. **データベーススキーマの逆生成**
-   - テーブル定義の抽出
-   - リレーションシップの分析
-   - インデックス設定の確認
-   - 制約条件の抽出
+   - User interaction flows
+   - API call flows
+   - Database access patterns
+   - State management flows
 
-5. **TypeScript型定義の整理**
-   - エンティティ型の抽出
-   - API型の抽出
-   - 共通型の整理
-   - 型の依存関係分析
+3. **API Specification Extraction**
 
-6. **コンポーネント設計の分析**
-   - UIコンポーネント階層
-   - Propsインターフェース
-   - 状態管理の設計
-   - ルーティング設計
+   - Generate a list of endpoints
+   - Analyze request/response structures
+   - Confirm authentication/authorization methods
+   - Error response formats
 
-7. **ファイルの作成**
-   - `docs/reverse/{プロジェクト名}-architecture.md` - アーキテクチャ概要
-   - `docs/reverse/{プロジェクト名}-dataflow.md` - データフロー図
-   - `docs/reverse/{プロジェクト名}-api-specs.md` - API仕様
-   - `docs/reverse/{プロジェクト名}-database.md` - DB設計
-   - `docs/reverse/{プロジェクト名}-interfaces.ts` - 型定義集約
+4. **Reverse-generate Database Schema**
 
-## 出力フォーマット例
+   - Extract table definitions
+   - Analyze relationships
+   - Check index settings
+   - Extract constraints
+
+5. **Organize TypeScript Type Definitions**
+
+   - Extract entity types
+   - Extract API types
+   - Organize common types
+   - Analyze type dependencies
+
+6. **Component Design Analysis**
+
+   - UI component hierarchy
+   - Props interfaces
+   - State management design
+   - Routing design
+
+7. **File Creation**
+   - `docs/reverse/{project-name}-architecture.md` - Architecture overview
+   - `docs/reverse/{project-name}-dataflow.md` - Data flow diagrams
+   - `docs/reverse/{project-name}-api-specs.md` - API specifications
+   - `docs/reverse/{project-name}-database.md` - Database design
+   - `docs/reverse/{project-name}-interfaces.ts` - Aggregated type definitions
+
+## Output Format Examples
 
 ### architecture.md
 
 ```markdown
-# {プロジェクト名} アーキテクチャ設計（逆生成）
+# {project-name} Architecture Design (Reverse-Generated)
 
-## 分析日時
-{実行日時}
+## Analysis Date/Time
 
-## システム概要
+{execution timestamp}
 
-### 実装されたアーキテクチャ
-- **パターン**: {特定されたアーキテクチャパターン}
-- **フレームワーク**: {使用フレームワーク}
-- **構成**: {発見された構成}
+## System Overview
 
-### 技術スタック
+### Implemented Architecture
 
-#### フロントエンド
-- **フレームワーク**: {React/Vue/Angular等}
-- **状態管理**: {Redux/Zustand/Pinia等}
-- **UI ライブラリ**: {Material-UI/Ant Design等}
-- **スタイリング**: {CSS Modules/styled-components等}
+- **Pattern**: {identified architecture pattern}
+- **Framework**: {frameworks used}
+- **Composition**: {observed composition}
 
-#### バックエンド
-- **フレームワーク**: {Express/NestJS/FastAPI等}
-- **認証方式**: {JWT/Session/OAuth等}
-- **ORM/データアクセス**: {TypeORM/Prisma/Sequelize等}
-- **バリデーション**: {Joi/Yup/zod等}
+### Tech Stack
 
-#### データベース
-- **DBMS**: {PostgreSQL/MySQL/MongoDB等}
-- **キャッシュ**: {Redis/Memcached等 or なし}
-- **接続プール**: {実装されているか}
+#### Frontend
 
-#### インフラ・ツール
-- **ビルドツール**: {Webpack/Vite/Rollup等}
-- **テストフレームワーク**: {Jest/Vitest/Pytest等}
-- **コード品質**: {ESLint/Prettier/SonarQube等}
+- **Framework**: {React/Vue/Angular, etc.}
+- **State Management**: {Redux/Zustand/Pinia, etc.}
+- **UI Library**: {Material-UI/Ant Design, etc.}
+- **Styling**: {CSS Modules/styled-components, etc.}
 
-## レイヤー構成
+#### Backend
 
-### 発見されたレイヤー
+- **Framework**: {Express/NestJS/FastAPI, etc.}
+- **Authentication**: {JWT/Session/OAuth, etc.}
+- **ORM/Data Access**: {TypeORM/Prisma/Sequelize, etc.}
+- **Validation**: {Joi/Yup/zod, etc.}
+
+#### Database
+
+- **DBMS**: {PostgreSQL/MySQL/MongoDB, etc.}
+- **Cache**: {Redis/Memcached, or none}
+- **Connection Pool**: {present or not}
+
+#### Infra/Tools
+
+- **Build Tools**: {Webpack/Vite/Rollup, etc.}
+- **Test Frameworks**: {Jest/Vitest/Pytest, etc.}
+- **Code Quality**: {ESLint/Prettier/SonarQube, etc.}
+
+## Layered Architecture
+
+### Discovered Layers
 ```
-{実際のディレクトリ構造}
+
+{actual directory structure}
+
 ```
 
-### レイヤー責務分析
-- **プレゼンテーション層**: {実装状況}
-- **アプリケーション層**: {実装状況}
-- **ドメイン層**: {実装状況}
-- **インフラストラクチャ層**: {実装状況}
+### Layer Responsibilities Analysis
+- **Presentation Layer**: {status}
+- **Application Layer**: {status}
+- **Domain Layer**: {status}
+- **Infrastructure Layer**: {status}
 
-## デザインパターン
+## Design Patterns
 
-### 発見されたパターン
-- **Dependency Injection**: {実装されているか}
-- **Repository Pattern**: {実装されているか}
-- **Factory Pattern**: {使用箇所}
-- **Observer Pattern**: {使用箇所}
-- **Strategy Pattern**: {使用箇所}
+### Identified Patterns
+- **Dependency Injection**: {present or not}
+- **Repository Pattern**: {present or not}
+- **Factory Pattern**: {usage locations}
+- **Observer Pattern**: {usage locations}
+- **Strategy Pattern**: {usage locations}
 
-## 非機能要件の実装状況
+## Non-functional Requirement Implementations
 
-### セキュリティ
-- **認証**: {実装方式}
-- **認可**: {実装方式}
-- **CORS設定**: {設定状況}
-- **HTTPS対応**: {対応状況}
+### Security
+- **Authentication**: {method}
+- **Authorization**: {method}
+- **CORS**: {configured or not}
+- **HTTPS**: {enforced or not}
 
-### パフォーマンス
-- **キャッシュ**: {実装状況}
-- **データベース最適化**: {インデックス等}
-- **CDN**: {使用状況}
-- **画像最適化**: {実装状況}
+### Performance
+- **Cache**: {status}
+- **DB Optimization**: {indexes, etc.}
+- **CDN**: {usage}
+- **Image Optimization**: {status}
 
-### 運用・監視
-- **ログ出力**: {実装状況}
-- **エラートラッキング**: {実装状況}
-- **メトリクス収集**: {実装状況}
-- **ヘルスチェック**: {実装状況}
+### Operations/Monitoring
+- **Logging**: {status}
+- **Error Tracking**: {status}
+- **Metrics**: {status}
+- **Health Check**: {status}
 ```
 
 ### dataflow.md
 
-```markdown
-# データフロー図（逆生成）
+````markdown
+# Data Flow Diagram (Reverse-Generated)
 
-## ユーザーインタラクションフロー
+## User Interaction Flow
 
-### 認証フロー
-\`\`\`mermaid
+### Authentication Flow
+
+```mermaid
 sequenceDiagram
-    participant U as ユーザー
-    participant F as フロントエンド
-    participant B as バックエンド
-    participant D as データベース
-    
-    U->>F: ログイン情報入力
-    F->>B: POST /auth/login
-    B->>D: ユーザー検証
-    D-->>B: ユーザー情報
-    B-->>F: JWTトークン
-    F-->>U: ログイン完了
-\`\`\`
+    participant U as User
+    participant F as Frontend
+    participant B as Backend
+    participant D as Database
 
-### データ取得フロー
-\`\`\`mermaid
+    U->>F: Enter login credentials
+    F->>B: POST /auth/login
+    B->>D: Validate user
+    D-->>B: User info
+    B-->>F: JWT token
+    F-->>U: Login success
+```
+````
+
+### Data Fetch Flow
+
+```mermaid
 flowchart TD
-    A[ユーザーアクション] --> B[Reactコンポーネント]
-    B --> C[useQueryフック]
+    A[User Action] --> B[React Component]
+    B --> C[useQuery Hook]
     C --> D[Axios HTTP Client]
     D --> E[API Gateway/Express]
-    E --> F[コントローラー]
-    F --> G[サービス層]
-    G --> H[リポジトリ層]
-    H --> I[データベース]
+    E --> F[Controller]
+    F --> G[Service Layer]
+    G --> H[Repository Layer]
+    H --> I[Database]
     I --> H
     H --> G
     G --> F
@@ -180,60 +197,63 @@ flowchart TD
     E --> D
     D --> C
     C --> B
-    B --> J[UI更新]
-\`\`\`
-
-## 状態管理フロー
-
-### {使用されている状態管理ライブラリ} フロー
-\`\`\`mermaid
-flowchart LR
-    A[コンポーネント] --> B[Action Dispatch]
-    B --> C[Reducer/Store]
-    C --> D[State更新]
-    D --> A
-\`\`\`
-
-## エラーハンドリングフロー
-
-\`\`\`mermaid
-flowchart TD
-    A[エラー発生] --> B{エラー種別}
-    B -->|認証エラー| C[リダイレクト to ログイン]
-    B -->|ネットワークエラー| D[リトライ機能]
-    B -->|バリデーションエラー| E[フォームエラー表示]
-    B -->|サーバーエラー| F[エラートースト表示]
-\`\`\`
+    B --> J[UI Update]
 ```
+
+## State Management Flow
+
+### {State Management Library Used}
+
+```mermaid
+flowchart LR
+    A[Component] --> B[Action Dispatch]
+    B --> C[Reducer/Store]
+    C --> D[State Update]
+    D --> A
+```
+
+## Error Handling Flow
+
+```mermaid
+flowchart TD
+    A[Error Occurs] --> B{Error Type}
+    B -->|Auth Error| C[Redirect to Login]
+    B -->|Network Error| D[Retry]
+    B -->|Validation Error| E[Show Form Errors]
+    B -->|Server Error| F[Show Error Toast]
+```
+
+````
 
 ### api-specs.md
 
 ```markdown
-# API仕様書（逆生成）
+# API Specifications (Reverse-Generated)
 
-## ベースURL
-\`{発見されたベースURL}\`
+## Base URL
+`{discovered base URL}`
 
-## 認証方式
-{発見された認証方式の詳細}
+## Authentication Method
+{details of the discovered auth method}
 
-## エンドポイント一覧
+## Endpoints
 
-### 認証関連
+### Authentication
 
 #### POST /auth/login
-**説明**: ユーザーログイン
+**Description**: User login
 
-**リクエスト**:
-\`\`\`typescript
+**Request**:
+```typescript
 {
   email: string;
   password: string;
 }
-\`\`\`
+````
 
-**レスポンス**:
-\`\`\`typescript
+**Response**:
+
+```typescript
 {
   success: boolean;
   data: {
@@ -243,12 +263,13 @@ flowchart TD
       email: string;
       name: string;
     }
-  };
+  }
 }
-\`\`\`
+```
 
-**エラーレスポンス**:
-\`\`\`typescript
+**Error Response**:
+
+```typescript
 {
   success: false;
   error: {
@@ -256,38 +277,42 @@ flowchart TD
     message: string;
   }
 }
-\`\`\`
+```
 
 #### POST /auth/logout
-**説明**: ユーザーログアウト
 
-**ヘッダー**:
-\`\`\`
+**Description**: User logout
+
+**Headers**:
+
+```
 Authorization: Bearer {token}
-\`\`\`
+```
 
-### {その他のエンドポイント}
+### {Other Endpoints}
 
-## エラーコード一覧
+## Error Codes
 
-| コード | メッセージ | 説明 |
-|--------|------------|------|
-| AUTH_001 | Invalid credentials | 認証情報が無効 |
-| AUTH_002 | Token expired | トークンが期限切れ |
-| VALID_001 | Validation failed | バリデーションエラー |
+| Code      | Message             | Description                        |
+| --------- | ------------------- | ---------------------------------- |
+| AUTH_001  | Invalid credentials | Invalid authentication information |
+| AUTH_002  | Token expired       | Token has expired                  |
+| VALID_001 | Validation failed   | Validation error                   |
 
-## レスポンス共通形式
+## Common Response Formats
 
-### 成功レスポンス
-\`\`\`typescript
+### Success Response
+
+```typescript
 {
   success: true;
-  data: T; // 型は endpoint によって変動
+  data: T; // varies per endpoint
 }
-\`\`\`
+```
 
-### エラーレスポンス
-\`\`\`typescript
+### Error Response
+
+```typescript
 {
   success: false;
   error: {
@@ -296,21 +321,22 @@ Authorization: Bearer {token}
     details?: any;
   }
 }
-\`\`\`
 ```
+
+````
 
 ### database.md
 
 ```markdown
-# データベース設計（逆生成）
+# Database Design (Reverse-Generated)
 
-## スキーマ概要
+## Schema Overview
 
-### テーブル一覧
-{発見されたテーブル一覧}
+### Table List
+{discovered tables}
 
-### ER図
-\`\`\`mermaid
+### ER Diagram
+```mermaid
 erDiagram
     USERS {
         uuid id PK
@@ -319,7 +345,7 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    
+
     POSTS {
         uuid id PK
         uuid user_id FK
@@ -328,49 +354,57 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    
+
     USERS ||--o{ POSTS : creates
-\`\`\`
+````
 
-## テーブル詳細
+## Table Details
 
-### users テーブル
-\`\`\`sql
-{実際のCREATE TABLE文}
-\`\`\`
+### users table
 
-**カラム説明**:
-- \`id\`: {説明}
-- \`email\`: {説明}
-- \`name\`: {説明}
-
-**インデックス**:
-- \`idx_users_email\`: email カラムの検索用
-
-### {その他のテーブル}
-
-## 制約・関係性
-
-### 外部キー制約
-{発見された外部キー制約}
-
-### ユニーク制約
-{発見されたユニーク制約}
-
-## データアクセスパターン
-
-### よく使用されるクエリ
-{コードから発見されたクエリパターン}
-
-### パフォーマンス考慮事項
-{発見されたインデックス戦略}
+```sql
+{actual CREATE TABLE statement}
 ```
+
+**Column Descriptions**:
+
+- `id`: {description}
+- `email`: {description}
+- `name`: {description}
+
+**Indexes**:
+
+- `idx_users_email`: for email column lookup
+
+### {Other Tables}
+
+## Constraints & Relationships
+
+### Foreign Keys
+
+{discovered foreign key constraints}
+
+### Unique Constraints
+
+{discovered unique constraints}
+
+## Data Access Patterns
+
+### Common Queries
+
+{query patterns discovered from code}
+
+### Performance Considerations
+
+{discovered index strategies}
+
+````
 
 ### interfaces.ts
 
 ```typescript
 // ======================
-// エンティティ型定義
+// Entity Type Definitions
 // ======================
 
 export interface User {
@@ -392,7 +426,7 @@ export interface Post {
 }
 
 // ======================
-// API型定義
+// API Type Definitions
 // ======================
 
 export interface LoginRequest {
@@ -419,7 +453,7 @@ export interface ApiResponse<T = any> {
 }
 
 // ======================
-// コンポーネントProps型
+// Component Props Types
 // ======================
 
 export interface LoginFormProps {
@@ -429,7 +463,7 @@ export interface LoginFormProps {
 }
 
 // ======================
-// 状態管理型
+// State Management Types
 // ======================
 
 export interface AuthState {
@@ -440,7 +474,7 @@ export interface AuthState {
 }
 
 // ======================
-// 設定型
+// Configuration Types
 // ======================
 
 export interface AppConfig {
@@ -448,46 +482,49 @@ export interface AppConfig {
   tokenStorageKey: string;
   supportedLanguages: string[];
 }
-```
+````
 
-## 分析アルゴリズム
+## Analysis Algorithm
 
-### 1. ファイル走査・パターンマッチング
-- AST解析による関数・クラス・インターフェース抽出
-- 正規表現による設定ファイル解析
-- ディレクトリ構造からのアーキテクチャ推定
+### 1. File Scanning & Pattern Matching
 
-### 2. API仕様の自動生成
-- Express/NestJS ルート定義の解析
-- FastAPI スキーマ定義の解析
-- TypeScript型定義からのリクエスト/レスポンス推定
+- Extract functions/classes/interfaces via AST analysis
+- Analyze config files with regex where applicable
+- Infer architecture from directory structure
 
-### 3. データベーススキーマの抽出
-- マイグレーションファイルの解析
-- ORM モデル定義の解析
-- SQL ファイルの解析
+### 2. Automatic API Spec Generation
 
-## 実行コマンド例
+- Parse Express/NestJS route definitions
+- Parse FastAPI schema definitions
+- Infer request/response from TypeScript types
+
+### 3. Database Schema Extraction
+
+- Parse migration files
+- Parse ORM model definitions
+- Parse SQL files
+
+## Example Commands
 
 ```bash
-# フル分析（全設計書生成）
+# Full analysis (generate all design docs)
 claude code rev-design
 
-# 特定の設計書のみ生成
+# Generate specific design docs only
 claude code rev-design --target architecture
 claude code rev-design --target api
 claude code rev-design --target database
 
-# 特定のディレクトリを分析
+# Analyze a specific directory
 claude code rev-design --path ./backend
 
-# 出力形式指定
+# Specify output formats
 claude code rev-design --format markdown,openapi
 ```
 
-## 実行後の確認
+## Post-execution Verification
 
-- 生成された設計書ファイルの一覧を表示
-- 抽出されたAPI数、テーブル数、型定義数等の統計情報を表示
-- 不足している設計要素や推奨改善点を提示
-- 次のリバースエンジニアリングステップ（要件定義生成等）を提案 
+- Display the list of generated design files
+- Show statistics such as extracted API count, table count, and type definition count
+- Present missing design elements and recommended improvements
+- Propose the next reverse-engineering step (e.g., generating requirements)

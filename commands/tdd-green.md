@@ -1,54 +1,55 @@
-# TDD Greenフェーズ（実装）
+# TDD Green Phase (Implementation)
 
-TDDのGreenフェーズを実行します。
+Execute the Green phase of TDD.
 
-## 事前準備
+## Preliminary Preparation
 
-開発コンテキストの準備を行います：
+Prepare development context:
 
-1. **@agent-symbol-searcher で実装関連情報を検索し、見つかったファイルを読み込み**
-   - 既存の類似機能やユーティリティ関数を検索し、該当ファイルをReadツールで読み込み
-   - 実装パターンやアーキテクチャガイドラインを特定し、設計文書をReadツールで読み込み
-   - 依存関係やインポートパスを確認し、関連ファイルをReadツールで読み込み
+1. **Search for implementation-related information using @agent-symbol-searcher and read found files**
 
-2. **関連ファイルを直接読み込み**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - 既存の開発履歴を確認
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - 要件定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - テストケース定義を確認
-   - `docs/implements/{{task_id}}/{feature_name}-red-phase.md` - Redフェーズのテストを確認
-   - 関連する設計文書やタスクファイルも必要に応じて読み込み
+   - Search for existing similar features and utility functions, and read corresponding files with Read tool
+   - Identify implementation patterns and architecture guidelines, and read design documents with Read tool
+   - Check dependencies and import paths, and read related files with Read tool
 
-読み込み完了後、準備されたコンテキスト情報を基にGreenフェーズ（実装）の作業を開始します。
+2. **Direct reading of related files**
+   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
+   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
+   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check test case definition
+   - `docs/implements/{{task_id}}/{feature_name}-red-phase.md` - Check Red phase tests
+   - Read related design documents and task files as needed
 
-**テスト実行時はTaskツールを利用する**
+After loading completion, start Green phase (implementation) work based on prepared context information.
 
-## 信頼性レベル指示
+**Use Task tool when executing tests**
 
-実装コード作成時には、各実装内容について元の資料との照合状況を以下の信号でコメントしてください：
+## Reliability Level Instructions
 
-- 🟢 **青信号**: 元の資料を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: 元の資料から妥当な推測の場合
-- 🔴 **赤信号**: 元の資料にない推測の場合
+When creating implementation code, comment on the verification status with original materials for each implementation content using the following signals:
 
-## 目標
+- 🟢 **Green Signal**: When referring to original materials with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on original materials
+- 🔴 **Red Signal**: When speculation is not based on original materials
 
-Redフェーズで作成したテストを通すための**実装**を行ってください。
+## Objective
 
-## 実装の原則
+Please perform **implementation** to make tests created in the Red phase pass.
 
-- **テストが確実に通ること最優先**
-- コードの美しさは二の次（次のRefactorフェーズで改善）
-- 「とりあえず動く」レベルでOK
-- 複雑なロジックは後回し、シンプルな実装を心がける
-- テストがなかなか通らないときは、Taskツールを使用して失敗原因を調べてから修正の計画を立てて実装する
-- 既存のテストがエラーになった場合は仕様を元に適切に修正する
-- **モック使用の制限**: テストコード以外でモックを記述しない（実装コードは実際のロジックを書く）
-- **ファイルサイズ管理**: 実装ファイルが800行を超えた時点でファイル分割を検討する
-- NEVER: 必要なテストのスキップ禁止
-- NEVER: 必要なテストの削除禁止
-- NEVER: 実装コード内でのモック・スタブの記述禁止
-- NEVER: 実装コード内でDBに代わるインメモリーストレージの利用禁止
-- NEVER: 実装コード内でDB操作の省略禁止
+## Implementation Principles
+
+- **Highest priority on ensuring tests pass**
+- Code beauty is secondary (improve in next Refactor phase)
+- "Just working" level is OK
+- Postpone complex logic, focus on simple implementation
+- When tests are hard to pass, use Task tool to investigate failure causes before making implementation plan
+- If existing tests fail, fix appropriately based on specifications
+- **Mock Usage Restrictions**: Do not write mocks outside test code (implementation code should write actual logic)
+- **File Size Management**: Consider file splitting when implementation file exceeds 800 lines
+- NEVER: Prohibition of skipping necessary tests
+- NEVER: Prohibition of deleting necessary tests
+- NEVER: Prohibition of writing mocks/stubs in implementation code
+- NEVER: Prohibition of using in-memory storage instead of DB in implementation code
+- NEVER: Prohibition of omitting DB operations in implementation code
 
 ## 実装時の日本語コメント要件
 
@@ -76,7 +77,7 @@ function {{function_name}}(paramName) {
 function processData(input) {
   // 【入力値検証】: [入力値の妥当性をチェックする理由と方法] 🟢🟡🔴
   if (!input) {
-    throw new Error('入力値が不正です'); // 【エラー処理】: [なぜこのエラーが必要かを説明] 🟢🟡🔴
+    throw new Error("入力値が不正です"); // 【エラー処理】: [なぜこのエラーが必要かを説明] 🟢🟡🔴
   }
 
   // 【データ処理開始】: [メイン処理の開始を明示] 🟢🟡🔴
@@ -142,24 +143,24 @@ function {{function_name}}(input) {
 
 ## 段階的実装のガイドライン
 
-1. **まず1つのテストケースだけ通す**
+1. **まず 1 つのテストケースだけ通す**
    - 【実装戦略】: 複数テストの同時対応は複雑化を招くため避ける
-   - 【品質確保】: 1つずつ確実に実装することで品質を担保
+   - 【品質確保】: 1 つずつ確実に実装することで品質を担保
 2. **最も簡単な方法で実装**
    - 【シンプル実装】: 複雑なアルゴリズムは後のリファクタで追加
    - 【可読性重視】: 現段階では理解しやすさを最優先
 3. **ファイルサイズを意識した実装**
-   - 【800行制限】: 実装ファイルが800行を超えた時点で分割を検討
+   - 【800 行制限】: 実装ファイルが 800 行を超えた時点で分割を検討
    - 【モジュール設計】: 機能単位でファイルを適切に分離
    - 【関数分割】: 長大な関数は小さな単位に分割して実装
    - 【責任境界】: 各ファイルの責任範囲を明確にして実装
    - 【分割戦略】: 機能・レイヤー・ドメインでファイルを分離
 4. **コード品質基準の考慮**
-   - 【静的解析対応】: lintやtypecheckでエラーが出ない実装を心がける
+   - 【静的解析対応】: lint や typecheck でエラーが出ない実装を心がける
    - 【フォーマット統一】: プロジェクトの既存フォーマットに合わせた実装
    - 【命名規則遵守】: プロジェクトの命名規則に従った実装
 5. **他のテストケースは後回し**
-   - 【段階的開発】: TDDの原則に従い、1ステップずつ進める
+   - 【段階的開発】: TDD の原則に従い、1 ステップずつ進める
    - 【影響範囲限定】: 変更の影響を最小限に抑える
 6. **エラーハンドリングも最小限**
    - 【必要最小限】: テストで要求される部分のみ実装
@@ -173,60 +174,60 @@ function {{function_name}}(input) {
 ## 提供してください
 
 1. **実装コード**: テストを通すコード（必須の日本語コメント付き）
-2. **テスト実行結果**: Taskツールを使用して実際にテストが通ることの確認
+2. **テスト実行結果**: Task ツールを使用して実際にテストが通ることの確認
 3. **実装の説明**: どのような考えで実装したか（日本語コメントとの対応関係）
 4. **課題の特定**: 現在の実装の問題点（リファクタ対象の明確化）
-5. **ファイルサイズチェック**: 実装ファイルの行数確認（800行超過時の分割計画）
+5. **ファイルサイズチェック**: 実装ファイルの行数確認（800 行超過時の分割計画）
 6. **モック使用確認**: 実装コードにモック・スタブが含まれていないことの確認
 
-実装完了後、以下を実行してください：
+After implementation completion, execute the following:
 
-1. **メモファイル更新**: docs/implements/{{task_id}}/{feature_name}-memo.mdファイルのGreenフェーズセクションを更新
-   - 実装方針、実装コード、テスト結果、課題・改善点を記録
-   - 次のRefactorフェーズで参照できるよう詳細に記録
-2. 実装コードと設計内容をdocs/implements/{{task_id}}/{feature_name}-green-phase.mdに保存（既存ファイルがある場合は追記）
-3. TODOステータスを更新（Greenフェーズ完了をマーク）
-4. **自動遷移判定**: 以下の条件を満たす場合は自動で `/tdd-refactor` を実行
-   - Taskツールを使用して全てのテストが成功していることを確認済み
-   - 実装がシンプルで理解しやすい
-   - 明らかなリファクタリング箇所がある
-   - 機能的な問題がない
-5. **手動確認**: 自動遷移条件を満たさない場合は以下を提供してください：
-   - 「Taskツールを使用してテストが通ったことを確認しました。」
-   - 「現在の実装: [簡潔な説明]」
-   - 「実装に含めた日本語コメント: [コメントの目的と内容]」
-   - 「リファクタリングの候補: [改善すべき点]」
-   - 「次のRefactorフェーズに進んでよろしいですか？」
+1. **Memo File Update**: Update Green phase section of docs/implements/{{task_id}}/{feature_name}-memo.md file
+   - Record implementation policy, implementation code, test results, issues and improvements
+   - Record in detail for reference in next Refactor phase
+2. Save implementation code and design content to docs/implements/{{task_id}}/{feature_name}-green-phase.md (append if existing file exists)
+3. Update TODO status (mark Green phase completion)
+4. **Automatic Transition Assessment**: Automatically execute `/tdd-refactor` if the following conditions are met
+   - All tests confirmed successful using Task tool
+   - Implementation is simple and easy to understand
+   - Clear refactoring areas exist
+   - No functional problems
+5. **Manual Confirmation**: If automatic transition conditions are not met, provide the following:
+   - "Confirmed tests passed using Task tool."
+   - "Current implementation: [brief description]"
+   - "Japanese comments included in implementation: [purpose and content of comments]"
+   - "Refactoring candidates: [points to improve]"
+   - "May we proceed to the next Refactor phase?"
 
-## 品質判定基準
-
-```
-✅ 高品質:
-- テスト結果: Taskツールによる実行で全て成功
-- 実装品質: シンプルかつ動作する
-- リファクタ箇所: 明確に特定可能
-- 機能的問題: なし
-- コンパイルエラー: なし
-- ファイルサイズ: 800行以下または分割計画が明確
-- モック使用: 実装コードにモック・スタブが含まれていない
-
-⚠️ 要改善:
-- テストの一部が失敗（Taskツールで検出）
-- 実装が複雑すぎる
-- リファクタ方針が不明
-- 機能に懸念がある
-- コンパイルエラーが存在
-- ファイルサイズが800行を超過し分割計画が不明
-- 実装コードにモック・スタブが含まれている
-```
-
-## TODO更新パターン
+## Quality Assessment Criteria
 
 ```
-- 現在のTODO「Greenフェーズ（最小実装）」を「completed」にマーク
-- 最小実装フェーズの完了をTODO内容に反映
-- 品質判定結果をTODO内容に記録
-- 次のフェーズ「Refactorフェーズ（品質改善）」をTODOに追加
+✅ High Quality:
+- Test Results: All successful in Task tool execution
+- Implementation Quality: Simple and functional
+- Refactoring Areas: Clearly identifiable
+- Functional Issues: None
+- Compile Errors: None
+- File Size: 800 lines or less, or clear splitting plan
+- Mock Usage: No mocks/stubs in implementation code
+
+⚠️ Needs Improvement:
+- Some tests failing (detected by Task tool)
+- Implementation too complex
+- Refactoring approach unclear
+- Functional concerns exist
+- Compile errors exist
+- File size exceeds 800 lines with unclear splitting plan
+- Implementation code contains mocks/stubs
 ```
 
-次のステップ: `/tdd-refactor` でコードの品質を改善します。
+## TODO Update Pattern
+
+```
+- Mark current TODO "Green Phase (Minimal Implementation)" as "completed"
+- Reflect minimal implementation phase completion in TODO content
+- Record quality assessment results in TODO content
+- Add next phase "Refactor Phase (Quality Improvement)" to TODO
+```
+
+Next step: Use `/tdd-refactor` to improve code quality.

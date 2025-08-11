@@ -1,46 +1,135 @@
+# 7.3 Failure Cases and Countermeasures
+
+## Overview
+
+This section documents concrete failure cases encountered during AITDD practice and how we addressed them. Use these as a practical guide to avoid similar pitfalls.
+
+## Major Failure Categories
+
+### 1) Over‑reliance on AI
+
+Failure: Abandoning human decision‑making
+
+- Accepted AI proposals as‑is; developer intent missing
+- Delegated design too much to AI; project‑specific requirements ignored
+- Fewer creative solutions and technical discussions; fewer learning opportunities
+
+Impact: misaligned generic designs, limited creativity, weaker team skills
+
+Countermeasures:
+
+1. Clarify decision flow: humans decide policy → AI implements → humans verify → humans decide
+2. Protect creativity: humans explore multiple design options; treat AI as one reference; avoid AI for uniqueness‑critical parts
+3. Maintain skills: regularly hand‑code; explain design reasons in reviews; run human‑led technical research
+
+### 2) Quality issues from out‑of‑scope implementation
+
+Failure: Uncontrolled code generation
+
+- AI performed large, unexpected changes beyond instructions
+- Ignored consistency with existing code; added features beyond scope
+
+Controls:
+
+1. Set expectations before implementation: specify target files, expected patterns, forbidden areas, and scope bounds
+2. Enforce stepwise implementation and approvals
+3. Diff‑driven verification at every step
+
+### 3) QA cost explosion (review overload)
+
+- Review time exceeded expectations; frequency increased 10–20×
+- Continuous detailed review of large code volumes; verification of inferred parts
+
+Efficiency:
+
+1. Standardize review criteria (tests, security, performance, refactor goals, code quality)
+2. Use inference visibility (traffic‑light) to focus reviews
+3. Split review workload by priority and automation
+
+### 4) Test strategy failures
+
+- AI‑generated tests missed critical bugs; poor coverage and missing edge cases; lack of integration tests
+
+Fixes:
+
+1. Systematize test design (normal, abnormal, boundary, integration, performance)
+2. Strengthen human review of AI‑generated tests and map to business requirements
+3. Execute tests stepwise (unit → integration → system → acceptance)
+
+### 5) Prompt design failures
+
+- AI “improvements” went in the wrong direction due to vague problem statements and sudden large changes
+
+Approach: problem‑driven improvements with clear constraints, background, small steps, and effect measurement
+
+## Best Practices to Avoid Failures
+
+1. Thorough preparation (requirements, constraints, expected artifacts, quality bar, test strategy)
+2. Stepwise approach (small changes, confirm and approve, reuse successful patterns)
+3. Continuous improvement (record problems, analyze root causes, implement fixes, prevent recurrence, share knowledge)
+4. Maintain balance (human leads creative judgment; AI assists implementation; humans own QA; improve together)
+
+## Early Warning Signs and Immediate Actions
+
+- Process: accepting AI output as‑is; less design thinking; skipping test reviews; perfunctory code reviews
+- Quality: frequent unexpected bugs; changes break unrelated parts; repeated similar issues; lost system consistency
+- Team: fewer technical discussions; persistent skill gaps; fewer new ideas; rising AI dependency
+
+Actions: pause AI usage, analyze root causes, restore some manual implementation, increase technical discussions, and revisit quality standards and process.
+
+## Summary
+
+Most failures are preventable. Prepare thoroughly, proceed in small steps, improve continuously, and maintain a balanced human‑AI collaboration. Treat failures as learning opportunities—and don’t repeat them.
+
 # 7.3 失敗事例と対処法
 
 ## 概要
 
-AITDD実践において遭遇した具体的な失敗事例と、それらから学んだ対処法を詳しく解説します。これらの事例は実際の開発現場で発生した問題であり、同様の失敗を避けるための実践的なガイドとして活用できます。
+AITDD 実践において遭遇した具体的な失敗事例と、それらから学んだ対処法を詳しく解説します。これらの事例は実際の開発現場で発生した問題であり、同様の失敗を避けるための実践的なガイドとして活用できます。
 
 ## 主要な失敗カテゴリ
 
-### 1. AIへの過度な依存問題
+### 1. AI への過度な依存問題
 
 #### 失敗事例：意思決定の放棄
 
 **状況**
-- AIの提案をそのまま受け入れ続けた結果、開発者自身の意図や考えが反映されなくなった
-- 設計判断をAIに委ねすぎて、プロジェクト固有の要件が無視された
+
+- AI の提案をそのまま受け入れ続けた結果、開発者自身の意図や考えが反映されなくなった
+- 設計判断を AI に委ねすぎて、プロジェクト固有の要件が無視された
 - 創造的な解決策を考える機会を失い、画一的な実装ばかりになった
 
 **具体的な問題**
-- ビジネスロジックがGeneric過ぎて、実際の要件に合わない
+
+- ビジネスロジックが Generic 過ぎて、実際の要件に合わない
 - 独自性のないありふれたアーキテクチャの採用
 - チーム内での技術的議論が減少
 - 開発者のスキル向上機会の喪失
 
 **影響範囲**
+
 - **設計品質の低下**：要件に適合しない汎用的な設計
 - **創造性の制限**：独自のアイデアや解決策が生まれない
 - **学習機会の減少**：自分で考える機会の減少
 - **チーム力の低下**：技術的議論と知識共有の減少
 
-#### 対処法：意図的なAI活用制限
+#### 対処法：意図的な AI 活用制限
 
 **1. 意思決定プロセスの明確化**
+
 ```
 意思決定フロー：
 人間が方針決定 → AIに実装依頼 → 結果検証 → 人間が判断
 ```
 
 **2. 創造性保護の仕組み**
+
 - 設計段階では必ず複数案を人間が検討
-- AIの提案は「参考案の一つ」として扱う
-- 独自性が重要な部分はAIを使わない
+- AI の提案は「参考案の一つ」として扱う
+- 独自性が重要な部分は AI を使わない
 
 **3. スキル維持のための実践**
+
 - 定期的に手動実装の機会を設ける
 - コードレビューで設計理由を説明する習慣
 - 技術調査は人間主導で実施
@@ -50,17 +139,20 @@ AITDD実践において遭遇した具体的な失敗事例と、それらから
 #### 失敗事例：制御不能なコード生成
 
 **状況**
-- 明確な指示を出したつもりが、AIが想定外の大規模修正を実行
+
+- 明確な指示を出したつもりが、AI が想定外の大規模修正を実行
 - 既存コードとの整合性を無視した実装が生成された
 - 指示範囲を大幅に超えた機能が勝手に追加された
 
 **具体的な問題**
+
 - **意図しない既存コード修正**：関係ないファイルまで変更される
 - **過度な推測による実装**：要求していない機能の追加
 - **設計意図との乖離**：アーキテクチャ方針と異なる実装
 - **副作用の発生**：予期しない動作変更
 
 **実際の事例**
+
 ```
 指示：「ユーザー登録機能を追加」
 想定：registration.jsファイルの追加
@@ -71,6 +163,7 @@ AITDD実践において遭遇した具体的な失敗事例と、それらから
 #### 対処法：事前想定による制御
 
 **1. 実装前の明確な想定設定**
+
 ```
 実装依頼前のチェックリスト：
 □ 変更対象ファイルの明確化
@@ -80,11 +173,13 @@ AITDD実践において遭遇した具体的な失敗事例と、それらから
 ```
 
 **2. 段階的実装の強制**
+
 - 一度に大きな変更を依頼しない
 - ファイル単位での細かい指示
 - 各段階での確認と承認プロセス
 
 **3. 差分確認の徹底**
+
 ```
 確認プロセス：
 1. 変更ファイル一覧の確認
@@ -98,17 +193,20 @@ AITDD実践において遭遇した具体的な失敗事例と、それらから
 #### 失敗事例：レビュー地獄
 
 **状況**
-- AI生成コードの品質確認に想定以上の時間がかかった
+
+- AI 生成コードの品質確認に想定以上の時間がかかった
 - レビュー作業の頻度と負荷が急激に増加
 - 総開発時間は短縮されたが、作業者の疲労度が大幅に増加
 
 **具体的な問題**
-- **詳細コードレビューの連続**：AIが生成する大量コードの全確認
-- **推測部分の検証負荷**：AIの判断の妥当性確認
+
+- **詳細コードレビューの連続**：AI が生成する大量コードの全確認
+- **推測部分の検証負荷**：AI の判断の妥当性確認
 - **品質基準の曖昧さ**：何をどこまでチェックすべきか不明確
 - **レビュー疲れ**：集中力の低下による見落としリスク
 
 **数値で見る問題**
+
 ```
 従来の開発：
 - 実装時間：1-2日
@@ -124,7 +222,8 @@ AITDD導入後：
 
 **1. レビュー基準の標準化**
 
-5つの体系的品質基準を確立：
+5 つの体系的品質基準を確立：
+
 ```
 品質チェックポイント：
 1. テスト結果：全テストが成功している
@@ -134,14 +233,16 @@ AITDD導入後：
 5. コード品質：適切なレベルに向上している
 ```
 
-**2. AI推測可視化システムの導入**
+**2. AI 推測可視化システムの導入**
 
 信号機システムによる効率化：
+
 - 🟢 緑：確実な部分（軽いチェック）
 - 🟡 黄：推測部分（注意してチェック）
 - 🔴 赤：不確実部分（重点的にチェック）
 
 **3. レビュー負荷の分散**
+
 ```
 レビュー戦略：
 - 重要度による優先順位付け
@@ -155,11 +256,13 @@ AITDD導入後：
 #### 失敗事例：テスト設計の甘さ
 
 **状況**
-- AIが生成したテストケースが不十分で、重要なバグを見逃した
+
+- AI が生成したテストケースが不十分で、重要なバグを見逃した
 - テストケースの網羅性が低く、エッジケースが考慮されていなかった
 - 統合テストが不足し、システム全体の動作に問題が発生
 
 **具体的な問題**
+
 - **ハッピーパスのみのテスト**：正常系のテストケースに偏重
 - **エラーハンドリングの不足**：異常系のテストが不十分
 - **境界値テストの漏れ**：限界値でのテストが欠如
@@ -168,6 +271,7 @@ AITDD導入後：
 #### 対処法：テスト設計の強化
 
 **1. テストケース設計の体系化**
+
 ```
 テストケース分類：
 □ 正常系（ハッピーパス）
@@ -178,11 +282,13 @@ AITDD導入後：
 ```
 
 **2. テストレビューの強化**
-- AIが生成したテストケースの人間によるレビュー
+
+- AI が生成したテストケースの人間によるレビュー
 - テスト漏れの体系的なチェック
 - ビジネス要件との照合確認
 
 **3. 段階的なテスト実行**
+
 ```
 テスト実行順序：
 1. 単体テスト（各機能の個別確認）
@@ -196,11 +302,13 @@ AITDD導入後：
 #### 失敗事例：改善の方向性相違
 
 **状況**
-- プロンプトの改善をAIに依頼したところ、全く違う方向で修正された
+
+- プロンプトの改善を AI に依頼したところ、全く違う方向で修正された
 - 期待していた改善と真逆の結果が生成された
 - 継続的改善のつもりが、品質が劣化した
 
 **具体的な問題**
+
 - **課題説明の不足**：現在の問題点の説明が曖昧
 - **改善方向の不明確**：期待する改善方向の未指定
 - **文脈の共有不足**：プロジェクトの背景情報不足
@@ -209,6 +317,7 @@ AITDD導入後：
 #### 対処法：課題駆動の改善アプローチ
 
 **1. 明確な課題説明**
+
 ```
 課題説明テンプレート：
 現在の問題：[具体的な問題の説明]
@@ -218,11 +327,13 @@ AITDD導入後：
 ```
 
 **2. 段階的な改善プロセス**
+
 - 小さな改善を積み重ねる
 - 各段階で効果を確認
 - 問題があれば前の段階に戻る
 
 **3. 改善効果の測定**
+
 ```
 改善評価基準：
 □ 元の問題が解決されているか
@@ -236,6 +347,7 @@ AITDD導入後：
 ### 1. 事前準備の徹底
 
 **実装前チェックリスト**
+
 ```
 □ 要件の明確化（何を作るか）
 □ 制約の明示（何をしてはいけないか）
@@ -247,6 +359,7 @@ AITDD導入後：
 ### 2. 段階的アプローチ
 
 **小さく始めて確実に進む**
+
 - 一度に大きな変更をしない
 - 各段階で確認と承認を行う
 - 問題があれば即座に修正
@@ -255,6 +368,7 @@ AITDD導入後：
 ### 3. 継続的な改善
 
 **失敗から学ぶ仕組み**
+
 ```
 失敗分析プロセス：
 1. 問題の詳細記録
@@ -266,9 +380,10 @@ AITDD導入後：
 
 ### 4. バランスの維持
 
-**人間とAIの適切な役割分担**
+**人間と AI の適切な役割分担**
+
 - 創造的判断：人間が主導
-- 実装作業：AIが支援
+- 実装作業：AI が支援
 - 品質確認：人間が責任
 - 継続改善：協力して実施
 
@@ -279,45 +394,51 @@ AITDD導入後：
 以下の症状が現れたら、すぐに改善が必要です：
 
 **開発プロセスの警告サイン**
-- AIの出力をそのまま受け入れることが多くなった
+
+- AI の出力をそのまま受け入れることが多くなった
 - 設計について考える時間が極端に減った
 - テストケースの見直しをしなくなった
 - コードレビューが形式的になった
 
 **品質の警告サイン**
+
 - 想定外のバグが頻発している
 - 修正が他の部分に影響することが多い
 - 同じような問題を何度も繰り返している
 - システム全体の一貫性が失われている
 
 **チームの警告サイン**
+
 - 技術的議論が減った
 - 個人のスキル差が縮まらない
 - 新しいアイデアが出なくなった
-- AI依存度が高くなりすぎている
+- AI 依存度が高くなりすぎている
 
 ### 早期対処法
 
 **即座に実施すべき対策**
-1. AI使用を一時停止し、問題の根本原因を分析
+
+1. AI 使用を一時停止し、問題の根本原因を分析
 2. 手動での実装を一部復活させ、バランスを調整
 3. チームでの技術議論を意図的に増やす
 4. 品質基準とプロセスを見直し、改善する
 
 ## まとめ
 
-AITDDの実践で発生する失敗は、多くの場合予防可能です。重要なのは：
+AITDD の実践で発生する失敗は、多くの場合予防可能です。重要なのは：
 
 **失敗回避の原則**
+
 1. **事前準備の徹底**：明確な要件と制約の設定
 2. **段階的アプローチ**：小さく始めて確実に進む
 3. **継続的な改善**：失敗から学び、プロセスを改善
-4. **バランスの維持**：人間とAIの適切な役割分担
+4. **バランスの維持**：人間と AI の適切な役割分担
 
 **最も重要な教訓**
+
 - 失敗は学習の機会である
 - 早期発見と早期対処が重要
 - プロセスの継続的改善が成功の鍵
 - 人間の判断と創造性は代替不可能
 
-これらの失敗事例と対処法を参考に、より安全で効果的なAITDD実践を実現してください。失敗を恐れずに、しかし同じ失敗を繰り返さないよう、継続的に改善していくことが成功への道筋です。
+これらの失敗事例と対処法を参考に、より安全で効果的な AITDD 実践を実現してください。失敗を恐れずに、しかし同じ失敗を繰り返さないよう、継続的に改善していくことが成功への道筋です。

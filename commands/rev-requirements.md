@@ -1,55 +1,61 @@
 # rev-requirements
 
-## 目的
+## Purpose
 
-既存のコードベースから要件定義書を逆生成する。実装された機能を分析し、EARS（Easy Approach to Requirements Syntax）記法を用いて機能要件、非機能要件、ユーザーストーリーを抽出・文書化する。
+Reverse-engineer requirements definition documents from an existing codebase. Analyze implemented features and extract/document functional requirements, non-functional requirements, and user stories using EARS (Easy Approach to Requirements Syntax) notation.
 
-## 前提条件
+## Prerequisites
 
-- 分析対象のコードベースが存在する
-- `docs/reverse/` ディレクトリが存在する（なければ作成）
-- 可能であれば事前に `rev-tasks.md` および `rev-design.md` を実行済み
+- Codebase for analysis exists
+- `docs/reverse/` directory exists (create if it doesn't exist)
+- Preferably, `rev-tasks.md` and `rev-design.md` have been executed beforehand
 
-## 実行内容
+## Execution Content
 
-1. **機能の特定と分析**
-   - UI コンポーネントから画面機能を抽出
-   - API エンドポイントからビジネス機能を特定
-   - データベーススキーマからデータ要件を推定
-   - テストコードから期待動作を確認
+1. **Feature Identification and Analysis**
 
-2. **ユーザーストーリーの逆算**
-   - 実装された機能からユーザーの意図を推定
-   - WHO（ユーザー種別）の特定
-   - WHAT（実現したいこと）の抽出
-   - WHY（得られる価値）の推定
+   - Extract screen functions from UI components
+   - Identify business functions from API endpoints
+   - Estimate data requirements from database schema
+   - Confirm expected behavior from test code
 
-3. **EARS記法による要件分類**
-   - **通常要件（SHALL）**: 標準的な機能実装から抽出
-   - **条件付き要件（WHEN/IF-THEN）**: 条件分岐ロジックから抽出
-   - **状態要件（WHERE）**: 状態管理実装から抽出
-   - **オプション要件（MAY）**: 設定可能機能から抽出
-   - **制約要件（MUST）**: バリデーション・制限ロジックから抽出
+2. **User Story Reverse Engineering**
 
-4. **非機能要件の推定**
-   - パフォーマンス要件：実装されたキャッシュ、最適化から推定
-   - セキュリティ要件：認証・認可実装から抽出
-   - ユーザビリティ要件：UI/UX実装から抽出
-   - 運用要件：ログ、監視実装から抽出
+   - Estimate user intent from implemented features
+   - Identify WHO (user type)
+   - Extract WHAT (what they want to achieve)
+   - Estimate WHY (the value they gain)
 
-5. **Edgeケースの特定**
-   - エラーハンドリング実装から異常系要件を抽出
-   - バリデーション実装から境界値要件を抽出
-   - テストケースから想定されるエラーケースを抽出
+3. **Requirements Classification by EARS Notation**
 
-6. **受け入れ基準の生成**
-   - 実装されたテストから受け入れ基準を逆算
-   - 未実装のテストケースを推奨事項として提示
+   - **Normal Requirements (SHALL)**: Extracted from standard feature implementations
+   - **Conditional Requirements (WHEN/IF-THEN)**: Extracted from conditional branch logic
+   - **State Requirements (WHERE)**: Extracted from state management implementations
+   - **Optional Requirements (MAY)**: Extracted from configurable features
+   - **Constraint Requirements (MUST)**: Extracted from validation/restriction logic
 
-7. **ファイルの作成**
-   - `docs/reverse/{プロジェクト名}-requirements.md` として保存
+4. **Non-functional Requirements Estimation**
 
-## 出力フォーマット例
+   - Performance requirements: Estimated from implemented caching and optimizations
+   - Security requirements: Extracted from authentication/authorization implementations
+   - Usability requirements: Extracted from UI/UX implementations
+   - Operational requirements: Extracted from logging and monitoring implementations
+
+5. **Edge Case Identification**
+
+   - Extract exception requirements from error handling implementations
+   - Extract boundary value requirements from validation implementations
+   - Extract anticipated error cases from test cases
+
+6. **Acceptance Criteria Generation**
+
+   - Reverse-engineer acceptance criteria from implemented tests
+   - Suggest unimplemented test cases as recommendations
+
+7. **File Creation**
+   - Save as `docs/reverse/{project-name}-requirements.md`
+
+## Output Format Example
 
 ```markdown
 # {プロジェクト名} 要件定義書（逆生成）
@@ -64,43 +70,51 @@
 ## システム概要
 
 ### 推定されたシステム目的
+
 {実装された機能から推測されるシステムの目的}
 
 ### 対象ユーザー
-{UIコンポーネントや機能から推定されるユーザー種別}
+
+{UI コンポーネントや機能から推定されるユーザー種別}
 
 ## ユーザーストーリー
 
-### ストーリー1: ユーザー認証
+### ストーリー 1: ユーザー認証
+
 - **である** 未登録・既存ユーザー **として**
 - **私は** システムに安全にログイン **をしたい**
 - **そうすることで** 個人的な情報やサービスにアクセスできる
 
-**実装根拠**: 
+**実装根拠**:
+
 - `LoginForm.tsx` - ログインフォーム実装
-- `POST /auth/login` - 認証API実装
+- `POST /auth/login` - 認証 API 実装
 - `useAuth` フック - 認証状態管理
 
-### ストーリー2: {その他のストーリー}
+### ストーリー 2: {その他のストーリー}
 
 {実装された機能から推定される追加のユーザーストーリー}
 
-## 機能要件（EARS記法）
+## 機能要件（EARS 記法）
 
 ### 通常要件
 
 #### REQ-001: ユーザー認証
+
 システムは有効なメールアドレスとパスワードでのユーザーログインを提供しなければならない。
 
-**実装根拠**: 
+**実装根拠**:
+
 - `auth.service.ts:login()` メソッド
 - `POST /auth/login` エンドポイント
-- JWTトークン発行実装
+- JWT トークン発行実装
 
 #### REQ-002: セッション管理
+
 システムはログイン後のユーザーセッションを管理しなければならない。
 
 **実装根拠**:
+
 - JWT トークンによるセッション管理
 - `useAuth` フックでの状態管理
 - ローカルストレージでのトークン永続化
@@ -108,50 +122,62 @@
 ### 条件付き要件
 
 #### REQ-101: 認証失敗時の処理
+
 無効な認証情報が提供された場合、システムは適切なエラーメッセージを表示しなければならない。
 
 **実装根拠**:
+
 - `auth.controller.ts` のエラーハンドリング
 - `LoginForm.tsx` のエラー表示実装
 
 #### REQ-102: トークン期限切れ時の処理
-JWTトークンが期限切れの場合、システムはユーザーを再ログインページにリダイレクトしなければならない。
+
+JWT トークンが期限切れの場合、システムはユーザーを再ログインページにリダイレクトしなければならない。
 
 **実装根拠**:
-- `axios.interceptors` での401エラーハンドリング
+
+- `axios.interceptors` での 401 エラーハンドリング
 - 自動ログアウト機能の実装
 
 ### 状態要件
 
 #### REQ-201: ログイン状態での表示
-ユーザーがログイン状態にある場合、システムは認証済みユーザー向けのUIを表示しなければならない。
+
+ユーザーがログイン状態にある場合、システムは認証済みユーザー向けの UI を表示しなければならない。
 
 **実装根拠**:
+
 - `useAuth` フックでの認証状態確認
 - 認証状態による条件分岐レンダリング
 
 ### オプション要件
 
 #### REQ-301: ログイン状態の記憶
+
 システムはユーザーのログイン状態を記憶してもよい。
 
 **実装根拠**:
+
 - ローカルストレージでのトークン保存
 - 自動ログイン機能の実装
 
 ### 制約要件
 
 #### REQ-401: パスワード要件
-システムはパスワードに最小8文字の制約を設けなければならない。
+
+システムはパスワードに最小 8 文字の制約を設けなければならない。
 
 **実装根拠**:
+
 - フロントエンドバリデーション実装
 - `yup` スキーマでの制約定義
 
 #### REQ-402: レート制限
+
 システムはログイン試行に対してレート制限を設けなければならない。
 
 **実装根拠**:
+
 - `express-rate-limit` ミドルウェアの実装
 
 ## 非機能要件
@@ -159,227 +185,252 @@ JWTトークンが期限切れの場合、システムはユーザーを再ロ�
 ### パフォーマンス
 
 #### NFR-001: ログイン応答時間
-システムは通常のログイン処理を2秒以内に完了しなければならない。
+
+システムは通常のログイン処理を 2 秒以内に完了しなければならない。
 
 **実装根拠**:
+
 - データベースインデックス設定
 - 効率的なクエリ実装
 
 #### NFR-002: 同時ユーザー数
-システムは同時に100ユーザーのアクセスを処理できなければならない。
+
+システムは同時に 100 ユーザーのアクセスを処理できなければならない。
 
 **推定根拠**:
+
 - 接続プール設定
 - サーバー構成
 
 ### セキュリティ
 
 #### NFR-101: 認証トークン暗号化
-システムはJWTトークンを適切に暗号化しなければならない。
+
+システムは JWT トークンを適切に暗号化しなければならない。
 
 **実装根拠**:
+
 - `jsonwebtoken` ライブラリの使用
 - 秘密鍵による署名実装
 
-#### NFR-102: HTTPS通信
-システムは本番環境でHTTPS通信を強制しなければならない。
+#### NFR-102: HTTPS 通信
+
+システムは本番環境で HTTPS 通信を強制しなければならない。
 
 **実装根拠**:
-- SSL設定ファイル
+
+- SSL 設定ファイル
 - HTTPS リダイレクト実装
 
 ### ユーザビリティ
 
 #### NFR-201: レスポンシブデザイン
+
 システムはモバイルデバイスでも利用可能でなければならない。
 
 **実装根拠**:
+
 - CSS メディアクエリの実装
-- レスポンシブUIコンポーネント
+- レスポンシブ UI コンポーネント
 
 #### NFR-202: アクセシビリティ
+
 システムは基本的なアクセシビリティ要件を満たさなければならない。
 
 **実装根拠**:
-- ARIA属性の使用
-- セマンティックHTML構造
+
+- ARIA 属性の使用
+- セマンティック HTML 構造
 
 ### 運用性
 
 #### NFR-301: ログ出力
+
 システムは重要な操作をログに記録しなければならない。
 
 **実装根拠**:
+
 - `winston` ログライブラリの使用
 - 構造化ログの実装
 
 #### NFR-302: エラー追跡
+
 システムは発生したエラーを追跡可能でなければならない。
 
 **実装根拠**:
+
 - エラーハンドリング実装
 - ログ出力による追跡機能
 
-## Edgeケース
+## Edge Cases
 
-### エラー処理
+### Error Handling
 
-#### EDGE-001: ネットワーク障害
-ネットワーク接続が不安定な場合のリトライ処理
+#### EDGE-001: Network Disruption
 
-**実装根拠**:
-- `axios` のリトライ設定
-- エラートースト表示
+Retry processing for unstable network connections
 
-#### EDGE-002: サーバーダウン
-バックエンドサーバーが利用できない場合の処理
+**Implementation Root**:
 
-**実装根拠**:
-- フォールバック機能
-- エラーページ表示
+- `axios` retry settings
+- Error toast display
 
-### 境界値
+#### EDGE-002: Server Down
 
-#### EDGE-101: 最大文字数制限
-入力フィールドの最大文字数制限
+Processing for unavailable backend servers
 
-**実装根拠**:
-- フォームバリデーション実装
-- データベース制約
+**Implementation Root**:
 
-#### EDGE-102: 空文字・null値処理
-空文字やnull値に対する適切な処理
+- Fallback functionality
+- Error page display
 
-**実装根拠**:
-- バリデーション実装
-- デフォルト値設定
+### Boundary Values
 
-## 受け入れ基準
+#### EDGE-101: Maximum Character Limit
 
-### 実装済み機能テスト
+Maximum character limit for input fields
 
-- [x] ユーザーログイン機能
-  - [x] 有効な認証情報でのログイン成功
-  - [x] 無効な認証情報でのログイン失敗
-  - [x] エラーメッセージの適切な表示
-- [x] セッション管理機能
-  - [x] ログイン状態の維持
-  - [x] ログアウト機能
-  - [x] トークン期限切れ処理
+**Implementation Root**:
 
-### 推奨追加テスト
+- Form validation implementation
+- Database constraints
 
-- [ ] **パフォーマンステスト**
-  - [ ] ログイン応答時間測定
-  - [ ] 同時アクセス負荷テスト
-- [ ] **セキュリティテスト**
-  - [ ] SQLインジェクション対策テスト
-  - [ ] XSS対策テスト
-  - [ ] CSRF対策テスト
-- [ ] **アクセシビリティテスト**
-  - [ ] スクリーンリーダー対応テスト
-  - [ ] キーボード操作テスト
+#### EDGE-102: Empty String/Null Value Handling
 
-## 推定されていない要件
+Appropriate handling for empty strings and null values
 
-### 不明確な部分
+**Implementation Root**:
 
-以下の要件は実装から推定が困難なため、ステークホルダーとの確認が必要：
+- Validation implementation
+- Default value setting
 
-1. **ビジネス要件**
-   - システムの使用目的の詳細
-   - 対象ユーザーの詳細な属性
-   - 収益モデルや事業目標
+## Acceptance Criteria
 
-2. **運用要件**
-   - バックアップ・復旧要件
-   - SLA（サービスレベル合意）
-   - 監視・アラート要件
+### Implemented Functionality Tests
 
-3. **法的・コンプライアンス要件**
-   - データ保護規則への準拠
-   - 業界固有の規制要件
+- [x] User Login Functionality
+  - [x] Successful login with valid authentication credentials
+  - [x] Failed login with invalid authentication credentials
+  - [x] Appropriate error message display
+- [x] Session Management Functionality
+  - [x] Maintained login state
+  - [x] Logout functionality
+  - [x] Token expiration handling
 
-### 推奨される次ステップ
+### Recommended Additional Tests
 
-1. **ステークホルダーインタビュー** - 推定された要件の確認
-2. **ユーザビリティテスト** - 実際のユーザビリティ要件の確認
-3. **パフォーマンステスト** - 非機能要件の検証
-4. **セキュリティ監査** - セキュリティ要件の詳細検証
+- [ ] **Performance Tests**
+  - [ ] Login response time measurement
+  - [ ] Simultaneous access load test
+- [ ] **Security Tests**
+  - [ ] SQL injection prevention test
+  - [ ] XSS prevention test
+  - [ ] CSRF prevention test
+- [ ] **Accessibility Tests**
+  - [ ] Screen reader compatibility test
+  - [ ] Keyboard operation test
 
-## 分析の制約事項
+## Unidentified Requirements
 
-### 信頼度に影響する要因
+### Unclear Parts
 
-- **コメント不足**: 開発者の意図を推定で補完
-- **テストカバレッジ**: {%}% - 未テスト部分の要件は推定
-- **ドキュメント不足**: 外部仕様書が存在しない
-- **レガシーコード**: 古い実装パターンによる推定の難しさ
+The following requirements are difficult to estimate from implementation, so confirmation with stakeholders is required:
 
-### 推定の根拠
+1. **Business Requirements**
 
-- **強い根拠**: 実装 + テスト + 明確な動作
-- **中程度の根拠**: 実装 + 部分的テスト
-- **弱い根拠**: 実装のみ、推定で補完
+   - Detailed system usage purpose
+   - Detailed attributes of target users
+   - Revenue model and business objectives
 
+2. **Operational Requirements**
+
+   - Backup and recovery requirements
+   - SLA (Service Level Agreement)
+   - Monitoring and alerting requirements
+
+3. **Legal and Compliance Requirements**
+   - Compliance with data protection regulations
+   - Industry-specific regulatory requirements
+
+### Recommended Next Steps
+
+1. **Stakeholder Interviews** - Confirmation of estimated requirements
+2. **Usability Tests** - Confirmation of actual usability requirements
+3. **Performance Tests** - Verification of non-functional requirements
+4. **Security Audit** - Detailed verification of security requirements
+
+## Constraints in Analysis
+
+### Factors Affecting Reliability
+
+- **Comment Insufficiency**: Estimate by supplementing developer intent
+- **Test Coverage**: {%}% - Requirements for untested parts are estimated
+- **Document Insufficiency**: No external specification documents exist
+- **Legacy Code**: Difficulty in estimating due to old implementation patterns
+
+### Basis of Estimation
+
+- **Strong Basis**: Implementation + Tests + Clear behavior
+- **Medium Basis**: Implementation + Partial Tests
+- **Weak Basis**: Only implementation, supplemented by estimation
 ```
 
-## 要件抽出アルゴリズム
+## Requirement Extraction Algorithm
 
-### 1. 機能要件の抽出プロセス
-
-```
-1. APIエンドポイント → ビジネス機能要件
-2. UIコンポーネント → ユーザーインターフェース要件
-3. データベーススキーマ → データ要件
-4. バリデーション実装 → 制約要件
-5. 条件分岐 → 条件付き要件
-```
-
-### 2. 非機能要件の推定プロセス
+### 1. Functional Requirement Extraction Process
 
 ```
-1. 設定ファイル + ライブラリ → パフォーマンス・セキュリティ要件
-2. UI実装パターン → ユーザビリティ要件
-3. ログ・監視実装 → 運用要件
-4. テスト実装 → 品質要件
+1. API Endpoint → Business Functionality Requirement
+2. UI Component → User Interface Requirement
+3. Database Schema → Data Requirements
+4. Validation Implementation → Constraint Requirements
+5. Conditional Branching → Conditional Requirements
 ```
 
-### 3. ユーザーストーリーの逆算プロセス
+### 2. Non-functional Requirement Estimation Process
 
 ```
-1. 画面遷移フロー → ユーザージャーニー
-2. フォーム・入力項目 → ユーザーアクション
-3. データの CRUD操作 → ユーザーニーズ
-4. 権限・ロール実装 → ユーザー種別
+1. Configuration Files + Libraries → Performance and Security Requirements
+2. UI Implementation Patterns → Usability Requirements
+3. Logging and Monitoring Implementation → Operational Requirements
+4. Test Implementation → Quality Requirements
 ```
 
-## 実行コマンド例
+### 3. User Story Reverse Engineering Process
+
+```
+1. Screen Transition Flow → User Journey
+2. Forms and Input Items → User Actions
+3. CRUD Operations on Data → User Needs
+4. Permission and Role Implementation → User Types
+```
+
+## Example Execution Commands
 
 ```bash
-# フル分析（全要件抽出）
+# Full Analysis (All Requirements Extracted)
 claude code rev-requirements
 
-# 特定の要件カテゴリのみ抽出
+# Only specific requirement categories extracted
 claude code rev-requirements --target functional
 claude code rev-requirements --target non-functional
 claude code rev-requirements --target user-stories
 
-# 信頼度フィルタ
+# Confidence Filter
 claude code rev-requirements --confidence high
 claude code rev-requirements --confidence medium
 
-# 特定のディレクトリを分析
+# Analyze specific directory
 claude code rev-requirements --path ./src
 
-# 出力形式指定
+# Output format specification
 claude code rev-requirements --format markdown,json
 ```
 
-## 実行後の確認
+## Post-execution Confirmation
 
-- 抽出された要件数（機能要件・非機能要件）を表示
-- 分析の信頼度と根拠の強さを報告
-- 推定が困難な要件や確認が必要な項目を提示
-- ステークホルダー確認のための質問リストを生成
-- 次の推奨アクション（テスト追加、ドキュメント整備等）を提案 
+- Display the number of extracted requirements (functional and non-functional)
+- Report analysis reliability and strength of basis
+- Highlight requirements that are difficult to estimate or require confirmation
+- Generate a list of questions for stakeholder confirmation
+- Propose next recommended actions (add tests, document maintenance, etc.)

@@ -1,63 +1,69 @@
 # kairo-design
 
-## 目的
+## Purpose
 
-承認された要件定義書に基づいて、技術設計文書を生成する。データフロー図、TypeScriptインターフェース、データベーススキーマ、APIエンドポイントを含む包括的な設計を行う。
+Based on approved requirements definition documents, generate technical design documents. Perform comprehensive design including data flow diagrams, TypeScript interfaces, database schemas, and API endpoints.
 
-## 前提条件
+## Prerequisites
 
-- `docs/spec/` に要件定義書が存在する
-- 要件がユーザによって承認されている
+- Requirements definition documents exist in `docs/spec/`
+- Requirements have been approved by user
 
-## 実行内容
+## Execution Content
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
+- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
 
-1. **要件の分析**
-   - @agent-symbol-searcher で要件定義書を検索し、見つかったファイルをReadツールで読み込み
-   - @agent-symbol-searcher で関連する既存設計文書を確認し、見つかったファイルをReadツールで読み込み
-   - 機能要件と非機能要件を整理する
-   - システムの境界を明確にする
+1. **Requirements Analysis**
 
-2. **アーキテクチャ設計**
-   - システム全体のアーキテクチャを決定
-   - フロントエンド/バックエンドの分離
-   - マイクロサービスの必要性を検討
+   - Search for requirements definition documents using @agent-symbol-searcher and read found files with Read tool
+   - Check related existing design documents using @agent-symbol-searcher and read found files with Read tool
+   - Organize functional and non-functional requirements
+   - Clarify system boundaries
 
-3. **データフロー図の作成**
-   - Mermaid記法でデータフローを可視化
-   - ユーザーインタラクションの流れ
-   - システム間のデータの流れ
+2. **Architecture Design**
 
-4. **TypeScriptインターフェースの定義**
-   - エンティティの型定義
-   - APIリクエスト/レスポンスの型定義
-   - 共通型の定義
+   - Determine overall system architecture
+   - Frontend/backend separation
+   - Consider necessity of microservices
 
-5. **データベーススキーマの設計**
-   - テーブル定義
-   - リレーションシップ
-   - インデックス戦略
-   - 正規化レベルの決定
+3. **Data Flow Diagram Creation**
 
-6. **APIエンドポイントの設計**
-   - RESTful API設計
-   - エンドポイントの命名規則
-   - HTTPメソッドの適切な使用
+   - Visualize data flow using Mermaid notation
+   - User interaction flow
+   - Data flow between systems
+
+4. **TypeScript Interface Definition**
+
+   - Entity type definition
+   - API request/response type definition
+   - Common type definition
+
+5. **Database Schema Design**
+
+   - Table definition
+   - Relationships
+   - Index strategy
+   - Normalization level determination
+
+6. **API Endpoint Design**
+
+   - RESTful API design
+   - Endpoint naming conventions
+   - HTTP メソッドの適切な使用
    - リクエスト/レスポンスの構造
 
 7. **ファイルの作成**
    - `docs/design/{要件名}/` ディレクトリに以下を作成：
      - `architecture.md` - アーキテクチャ概要
      - `dataflow.md` - データフロー図
-     - `interfaces.ts` - TypeScript型定義
-     - `database-schema.sql` - DBスキーマ
-     - `api-endpoints.md` - API仕様
+     - `interfaces.ts` - TypeScript 型定義
+     - `database-schema.sql` - DB スキーマ
+     - `api-endpoints.md` - API 仕様
 
 ## 出力フォーマット例
 
@@ -89,7 +95,7 @@
 
 ### データベース
 
-- DBMS: {使用するDBMS}
+- DBMS: {使用する DBMS}
 - キャッシュ: {キャッシュ戦略}
 ```
 
@@ -211,9 +217,9 @@ CREATE INDEX idx_users_email ON users(email);
 ### DELETE /users/:id
 ```
 
-## 実行後の確認
+## Post-execution Verification
 
-- @agent-symbol-searcher で作成した設計と既存システムとの整合性を確認
-- 作成したファイルの一覧を表示
-- 設計の主要なポイントをサマリーで表示
-- ユーザに確認を促すメッセージを表示
+- Verify consistency between created design and existing system using @agent-symbol-searcher
+- Display list of created files
+- Display summary of main design points
+- Display message prompting user confirmation

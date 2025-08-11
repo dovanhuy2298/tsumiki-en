@@ -1,332 +1,383 @@
-# Tsumiki マニュアル
+# Tsumiki Manual
 
-## 使用方法
+## How to Use
 
-### セットアップ
+### Setup
 
-プロジェクトを使用する前に、まず `commands` ディレクトリの内容をClaudeのコマンドディレクトリにコピーします：
+Before using the project, copy the contents of the `commands` directory into Claude's command directory:
 
-```bash
-# プロジェクトのcommandsディレクトリを.claude/commandsにコピー
+````bash
+# Copy the project's commands directory to ~/.claude/commands
 cp -r commands ~/.claude/commands/
 
-# または、プロジェクトディレクトリ内で
+# Or, inside the project directory
 mkdir -p .claude
 cp -r commands .claude/
-```
+```bash
 
-### TDDコマンド
+### TDD Commands
 
-TASK作成時に `TDD` と判定している場合で個別にTDDプロセスを実行したい場合は、以下のコマンドを順次実行できます：
+If your TASK is categorized as `TDD` and you want to run the TDD process step-by-step, execute the following commands in order:
 
-```
-# TDD要件定義
-/tdd-requirements タスクファイル名　TASK番号
+````
 
-# テストケース作成
-/tdd-testcases タスクファイル名　TASK番号
+# TDD requirements definition
 
-# テスト実装〜TDD完了確認まで自動化する場合
-/tdd-cycle-full.sh  "タスクファイル名　TASK番号"
+/tdd-requirements <task-file> <TASK-ID>
 
-# テスト実装（Red）
-/tdd-red タスクファイル名　TASK番号
+# Create test cases
 
-# 最小実装（Green）
-/tdd-green タスクファイル名　TASK番号
+/tdd-testcases <task-file> <TASK-ID>
 
-# リファクタリング
-/tdd-refactor タスクファイル名　TASK番号
+# Automate from test implementation to TDD completion check
 
-# TDD完了確認
-/tdd-verify-complete タスクファイル名　TASK番号
-```
+/tdd-cycle-full.sh "<task-file> <TASK-ID>"
 
-### DIRECTコマンド
+# Red (write failing tests)
 
-TASK作成時に `DIRECT` と判定している場合は、以下のコマンドを順次実行できます：
+/tdd-red <task-file> <TASK-ID>
 
-```
-# DIRECT準備
-/direct-setup タスクファイル名　TASK番号
+# Green (minimal implementation)
 
-# DIRECT検証
-/direct-verify タスクファイル名　TASK番号
-```
+/tdd-green <task-file> <TASK-ID>
 
-### Kairoコマンド（包括的フロー）
+# Refactor
 
-#### 1. 要件定義
+/tdd-refactor <task-file> <TASK-ID>
 
-最初に、プロジェクトの要件概要をKairoに伝えます：
+# Verify TDD completion
 
-```
-/kairo-requirements 要件概要
-
-# プロンプト例：
-# "ECサイトの商品レビュー機能を実装したい。
-#  ユーザーは商品に対して5段階評価とコメントを投稿でき、
-#  他のユーザーのレビューを参照できる。"
-```
-
-Kairoは以下を生成します：
-- ユーザーストーリー
-- EARS記法による詳細な要件定義
-- エッジケースの考慮
-- 受け入れ基準
-
-生成されたファイル: `/docs/spec/{要件名}-requirements.md`
-
-#### 2. 設計
-
-要件を確認・修正した後、設計を依頼します：
-
-```
-/kairo-design（または省略可能）
-
-# 要件を承認済みであることを伝えてください
-```
-
-Kairoは以下を生成します：
-- アーキテクチャ設計書
-- データフロー図（Mermaid）
-- TypeScriptインターフェース定義
-- データベーススキーマ
-- APIエンドポイント仕様
-
-生成されたファイル: `/docs/design/{要件名}/` 配下
-
-#### 3. タスク分割
-
-設計を確認した後（承認は省略可）、タスク分割を実行します：
-
-```
-/kairo-tasks
-
-# 設計を承認したことを伝えてください（または省略可能）
-```
-
-タスク内容の確認用に `/kairo-task-verify` を実行することをお勧めします。
-
-Kairoは以下を生成します：
-- 依存関係を考慮したタスク一覧
-- 各タスクの詳細（テスト要件、UI/UX要件含む）
-- 実行順序とスケジュール
-
-生成されたファイル: `/docs/tasks/{要件名}-tasks.md`
-
-#### 4. 実装
-
-タスクを確認した後、実装を開始します：
-（TDDサイクルまたはDIRECTを手動実行をお勧めします
-
-```
-# 全タスクを順番に実装
-/kairo-implement
-
-# 特定のタスクのみ実装
-/kairo-implement  タスクファイル名　TASK番号
-# "TASK-101を実装してください"
-```
-
-Kairoは各タスクに対して内部的にTDDコマンドを使用して以下のプロセスを実行します：
-1. TDD要件定義（tdd-requirements）
-2. テストケース作成（tdd-testcases）
-3. テスト実装（tdd-red）
-4. 最小実装（tdd-green）
-5. リファクタリング（tdd-refactor）
-6. TDD完了確認（tdd-verify-complete）
-
-### リバースエンジニアリングコマンド
-
-既存のコードベースから各種文書を逆生成する場合は、以下のコマンドを順次実行できます：
-
-```
-# 既存コードからタスク構造を分析
-/rev-tasks
-
-# 設計文書の逆生成（タスク分析後推奨）
-/rev-design
-
-# テスト仕様書の逆生成（設計文書後推奨）
-/rev-specs
-
-# 要件定義書の逆生成（全分析完了後推奨）
-/rev-requirements
-```
-
-#### リバースエンジニアリングの詳細
-
-##### 概要
-
-リバースエンジニアリングコマンドは、既存のコードベースを分析し、実装から逆算して各種ドキュメントを生成します。
-
-##### 推奨実行順序
-
-1. **rev-tasks** - コードベース全体を分析してタスク構造を把握
-2. **rev-design** - アーキテクチャと設計文書を生成
-3. **rev-specs** - テスト仕様書とテストケースを生成
-4. **rev-requirements** - 要件定義書を最終的に生成
-
-##### 各コマンドの詳細
-
-###### rev-tasks（タスク構造分析）
-
-**目的**: 既存コードから実装済み機能をタスクとして抽出・整理
-
-**生成されるファイル**:
-- `docs/reverse/{プロジェクト名}-discovered-tasks.md`
-
-**分析内容**:
-- コードベース構造の把握
-- 実装済み機能の特定
-- API エンドポイントの抽出
-- データベース構造の分析
-- タスクの依存関係推定
-
-###### rev-design（設計文書逆生成）
-
-**目的**: 実装されたアーキテクチャから技術設計文書を生成
-
-**生成されるファイル**:
-- `docs/reverse/{プロジェクト名}-architecture.md`
-- `docs/reverse/{プロジェクト名}-dataflow.md`
-- `docs/reverse/{プロジェクト名}-api-specs.md`
-- `docs/reverse/{プロジェクト名}-database.md`
-- `docs/reverse/{プロジェクト名}-interfaces.ts`
-
-**分析内容**:
-- アーキテクチャパターンの特定
-- データフローの抽出
-- API仕様の抽出
-- データベーススキーマの逆生成
-- TypeScript型定義の整理
-
-###### rev-specs（テスト仕様書逆生成）
-
-**目的**: 実装コードからテストケースと仕様書を逆生成
-
-**生成されるファイル**:
-- `docs/reverse/{プロジェクト名}-test-specs.md`
-- `docs/reverse/{プロジェクト名}-test-cases.md`
-- `docs/reverse/tests/` - 生成されたテストコード
-
-**分析内容**:
-- 既存テストの分析
-- 不足テストケースの特定
-- API テストケースの生成
-- UI コンポーネントテストの生成
-- パフォーマンス・セキュリティテストの提案
-
-###### rev-requirements（要件定義書逆生成）
-
-**目的**: 実装機能から要件定義書をEARS記法で逆生成
-
-**生成されるファイル**:
-- `docs/reverse/{プロジェクト名}-requirements.md`
-
-**分析内容**:
-- ユーザーストーリーの逆算
-- EARS記法による要件分類
-- 非機能要件の推定
-- エッジケースの特定
-- 受け入れ基準の生成
-
-##### 使用例
+/tdd-verify-complete <task-file> <TASK-ID>
 
 ```bash
-# プロジェクト全体の逆解析
-/rev-tasks
-# → タスク構造を把握
 
-/rev-design
-# → アーキテクチャと設計を文書化
+### DIRECT Commands
 
-/rev-specs
-# → テスト状況を分析して不足テストを特定
+If your TASK is categorized as `DIRECT`, run the following commands in order:
 
-/rev-requirements
-# → 最終的に要件定義書を生成
 ```
 
-##### 注意事項
+# DIRECT setup
 
-- 各ステップで生成された内容は必ずレビューしてください
-- 推定された要件は実際のビジネス要件と異なる場合があります
-- テストケースは実装状況から推定されるため、完全ではない可能性があります
+/direct-setup <task-file> <TASK-ID>
 
-## ディレクトリ構造
+# DIRECT verification
+
+/direct-verify <task-file> <TASK-ID>
+
+```bash
+
+### Kairo Commands (End-to-End Flow)
+
+#### 1. Requirements Definition
+
+First, provide Kairo with a high-level requirement overview:
+
+```
+
+/kairo-requirements <requirement-overview>
+
+# Prompt example:
+
+# "I want to implement a product review feature for an e-commerce site.
+
+# Users can post 5-star ratings and comments on products,
+
+# and browse reviews posted by other users."
+
+```bash
+
+Kairo generates:
+
+- User stories
+- Detailed requirements using EARS notation
+- Edge case considerations
+- Acceptance criteria
+
+Created file: `/docs/spec/{requirement-name}-requirements.md`
+
+#### 2. Design
+
+After reviewing and refining the requirements, request design generation:
+
+```
+
+/kairo-design # optional
+
+# Tell Kairo the requirements have been approved
+
+```bash
+
+Kairo generates:
+
+- Architecture design document
+- Data flow diagrams (Mermaid)
+- TypeScript interface definitions
+- Database schema
+- API endpoint specifications
+
+Created files: under `/docs/design/{requirement-name}/`
+
+#### 3. Task Decomposition
+
+After reviewing the design (approval optional), decompose into tasks:
+
+```
+
+/kairo-tasks
+
+# Tell Kairo the design has been approved (optional)
+
+```text
+
+It is recommended to run `/kairo-task-verify` to validate task content.
+
+Kairo generates:
+
+- Task list with dependencies
+- Detailed task descriptions (including test and UI/UX requirements)
+- Execution order and schedule
+
+Created file: `/docs/tasks/{requirement-name}-tasks.md`
+
+#### 4. Implementation
+
+After confirming the tasks, start implementation.
+(We recommend running the TDD cycle or DIRECT manually.)
+
+```
+
+# Implement all tasks in sequence
+
+/kairo-implement
+
+# Implement a specific task only
+
+/kairo-implement <task-file> <TASK-ID>
+
+# e.g., "Please implement TASK-101"
+
+```
+
+For each task, Kairo internally runs TDD commands in the following order:
+
+1. TDD Requirements (`tdd-requirements`)
+2. Test Case Creation (`tdd-testcases`)
+3. Red (`tdd-red`)
+4. Green (`tdd-green`)
+5. Refactor (`tdd-refactor`)
+6. TDD Completion Verification (`tdd-verify-complete`)
+
+### Reverse Engineering Commands
+
+To reverse-generate documents from an existing codebase, run the following commands in order:
+
+```
+
+# Analyze task structure from existing code
+
+/rev-tasks
+
+# Reverse-generate design documents (recommended after task analysis)
+
+/rev-design
+
+# Reverse-generate test specifications (recommended after design documents)
+
+/rev-specs
+
+# Reverse-generate requirements (recommended after all analyses)
+
+/rev-requirements
+
+````
+
+#### Reverse Engineering Details
+
+##### Overview
+
+Reverse engineering commands analyze an existing codebase and produce documents by inferring from the implementation.
+
+##### Recommended Execution Order
+
+1. **rev-tasks** – Analyze the whole codebase to grasp the task structure
+2. **rev-design** – Generate architecture and design documents
+3. **rev-specs** – Generate test specifications and test cases
+4. **rev-requirements** – Finally generate the requirements document
+
+##### Command Details
+
+###### rev-tasks (Task structure analysis)
+
+**Purpose**: Extract and organize implemented features as tasks from the existing code
+
+**Generated files**:
+
+- `docs/reverse/{project-name}-discovered-tasks.md`
+
+**Analysis content**:
+
+- Understand the codebase structure
+- Identify implemented features
+- Extract API endpoints
+- Analyze database structures
+- Infer task dependencies
+
+###### rev-design (Reverse-generate design documents)
+
+**Purpose**: Generate technical design documents from the implemented architecture
+
+**Generated files**:
+
+- `docs/reverse/{project-name}-architecture.md`
+- `docs/reverse/{project-name}-dataflow.md`
+- `docs/reverse/{project-name}-api-specs.md`
+- `docs/reverse/{project-name}-database.md`
+- `docs/reverse/{project-name}-interfaces.ts`
+
+**Analysis content**:
+
+- Identify architecture patterns
+- Extract data flows
+- Extract API specifications
+- Reverse-generate database schema
+- Organize TypeScript type definitions
+
+###### rev-specs (Reverse-generate test specifications)
+
+**Purpose**: Reverse-generate test cases and specifications from implementation code
+
+**Generated files**:
+
+- `docs/reverse/{project-name}-test-specs.md`
+- `docs/reverse/{project-name}-test-cases.md`
+- `docs/reverse/tests/` – Generated test code
+
+**Analysis content**:
+
+- Analyze existing tests
+- Identify missing test cases
+- Generate API test cases
+- Generate UI component tests
+- Propose performance and security tests
+
+###### rev-requirements (Reverse-generate requirements)
+
+**Purpose**: Reverse-generate a requirements document using EARS notation from implemented features
+
+**Generated files**:
+
+- `docs/reverse/{project-name}-requirements.md`
+
+**Analysis content**:
+
+- Back-calculate user stories
+- Classify requirements using EARS notation
+- Infer non-functional requirements
+- Identify edge cases
+- Generate acceptance criteria
+
+##### Usage Example
+
+```bash
+# Reverse-analyze the entire project
+/rev-tasks
+# → Grasp task structure
+
+/rev-design
+# → Document architecture and design
+
+/rev-specs
+# → Analyze current tests and identify gaps
+
+/rev-requirements
+# → Finally generate the requirements definition
+````
+
+##### Notes
+
+- Always review the generated content at each step
+- Inferred requirements may differ from actual business needs
+- Since test cases are inferred from the implementation, they may be incomplete
+
+## Directory Structure
 
 ```
 /projects/ai/test18/
 ├── .claude/
-│   └── commands/           # Kairoコマンド
+│   └── commands/           # Kairo commands
 ├── docs/
-│   ├── spec/              # 要件定義書
-│   ├── design/            # 設計文書
-│   ├── tasks/             # タスク一覧
-│   └── reverse/           # リバース文書
-├── implementation/        # 実装コード
-│   └── {要件名}/
-│       └── {タスクID}/
-├── backend/              # バックエンドコード
-├── frontend/             # フロントエンドコード
-└── database/             # データベース関連
+│   ├── spec/               # Requirements definitions
+│   ├── design/             # Design documents
+│   ├── tasks/              # Task lists
+│   └── reverse/            # Reverse-engineered docs
+├── implementation/         # Implementation code
+│   └── {requirement-name}/
+│       └── {task-id}/
+├── backend/                # Backend code
+├── frontend/               # Frontend code
+└── database/               # Database-related
 ```
 
-## ワークフロー例
+## Workflow Example
 
 ```mermaid
 flowchart TD
-    A[要件概要を伝える] --> B[kairo-requirements]
-    B --> C{要件を確認}
-    C -->|修正必要| B
+    A[Provide requirement overview] --> B[kairo-requirements]
+    B --> C{Review requirements}
+    C -->|Needs changes| B
     C -->|OK| D[kairo-design]
-    D --> E{設計を確認}
-    E -->|修正必要| D
+    D --> E{Review design}
+    E -->|Needs changes| D
     E -->|OK| F[kairo-tasks]
-    F --> G{タスクを確認}
+    F --> G{Review tasks}
     G -->|OK| H[kairo-implement]
-    H --> I{全タスク完了?}
+    H --> I{All tasks complete?}
     I -->|No| H
-    I -->|Yes| J[プロジェクト完了]
+    I -->|Yes| J[Project complete]
 ```
 
-## 利点
+## Benefits
 
-1. **一貫性のある開発プロセス**
-   - 要件から実装まで統一されたフロー
-   - EARS記法による明確な要件定義
+1. **Consistent development process**
 
-2. **品質の担保**
-   - TDDコマンドによる堅牢な実装
-   - 包括的なテストカバレッジ
+   - Unified flow from requirements to implementation
+   - Clear requirements definition via EARS notation
 
-3. **効率的な開発**
-   - 自動的なタスク分割と優先順位付け
-   - 依存関係の可視化
+2. **Quality assurance**
 
-4. **包括的なドキュメント**
-   - 要件、設計、実装が全てドキュメント化
-   - 後からの参照が容易
+   - Robust implementation via TDD commands
+   - Comprehensive test coverage
 
-## 注意事項
+3. **Efficient development**
 
-- 各ステップでユーザーの確認を求めます
-- 生成された内容は必ずレビューしてください
-- プロジェクトの特性に応じて調整が必要な場合があります
+   - Automated task decomposition and prioritization
+   - Visibility into dependencies
 
-## トラブルシューティング
+4. **Comprehensive documentation**
+   - Requirements, design, and implementation all documented
+   - Easy to reference later
 
-### Q: 要件が複雑すぎる場合は？
-A: 要件を複数の小さな機能に分割して、それぞれに対してKairoを実行してください。
+## General Notes
 
-### Q: 既存のコードベースに適用できる？
-A: はい。既存のコードを分析した上で、新機能の追加や改修に使用できます。
+- User confirmation is requested at each step
+- Always review generated content
+- Adjust according to your project's characteristics as needed
 
-### Q: カスタマイズは可能？
-A: 各コマンドファイルを編集することで、プロジェクトに合わせたカスタマイズが可能です。
+## Troubleshooting
 
-## サポート
+### Q: What if the requirements are too complex?
 
-問題や質問がある場合は、プロジェクトのイシュートラッカーに報告してください。
+A: Split the requirements into multiple small features and run Kairo for each.
+
+### Q: Can this be applied to an existing codebase?
+
+A: Yes. It can analyze existing code and be used for adding new features or refactoring.
+
+### Q: Can I customize it?
+
+A: Yes. Customize by editing each command file to fit your project.
+
+## Support
+
+If you encounter issues or have questions, please report them to the project's issue tracker.

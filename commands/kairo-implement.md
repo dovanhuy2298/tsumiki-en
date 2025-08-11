@@ -1,100 +1,135 @@
 # kairo-implement
 
-## 目的
+## English Quick Guide
 
-分割されたタスクを順番に、またはユーザが指定したタスクを実装する。既存のTDDコマンドを活用して品質の高い実装を行う。
+This file contains detailed Japanese blocks below. Use this quick guide for an English-first overview.
 
-## 前提条件
+- Implementation types:
+  - TDD Process (for code implementation tasks)
+  - Direct Work Process (for setup/config tasks)
 
-- `docs/tasks/{要件名}-tasks.md` にタスク一覧が存在する
-- ユーザがタスクの実装を承認している
-- 既存のTDDコマンドが利用可能である
-- 実装用のワークスペースが設定されている
+TDD Process:
 
-## 実行内容
+- Requirements Definition: run `tdd-requirements.md`
+- Test Case Creation: run `tdd-testcases.md`
+- Red (write failing tests): run `tdd-red.md`
+- Green (minimal implementation): run `tdd-green.md`
+- Refactor: run `tdd-refactor.md`
+- Quality Verification: run `tdd-verify-complete.md`
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+Direct Work Process:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- Execute preparation work: create directories, configuration files, install dependencies, set up environment
+- Verify preparation results: confirm outputs and readiness for next task
 
-1. **タスクの選択**
-   - @agent-symbol-searcher で指定されたタスクIDを検索し、見つかったタスクファイルをReadツールで読み込み
-   - ユーザが指定したタスクIDを確認
-   - 指定がない場合は、依存関係に基づいて次のタスクを自動選択
-   - 選択したタスクの詳細を表示
+See command examples and detailed steps below.
 
-2. **依存関係の確認**
-   - @agent-symbol-searcher で依存タスクの状態を検索し、見つかったタスクファイルをReadツールで読み込み
-   - 依存タスクが完了しているか確認
-   - 未完了の依存タスクがある場合は警告
+## Purpose
 
-3. **実装ディレクトリの準備**
-   - 現在のワークスペースで作業を行う
-   - 必要に応じてディレクトリ構造を確認
+Implement divided tasks in order, or implement user-specified tasks. Use existing TDD commands to perform high-quality implementation.
 
-4. **実装タイプの判定**
-   - タスクの性質を分析（コード実装 vs 準備作業）
-   - 実装方式を決定（TDD vs 直接作業）
+## Prerequisites
 
-5. **実装プロセスの実行**
+- Task list exists in `docs/tasks/{requirement-name}-tasks.md`
+- User has approved task implementation
+- Existing TDD commands are available
+- Implementation workspace is set up
 
-   ### A. **TDDプロセス**（コード実装タスク用）
+## Execution Content
 
-   a. **要件定義** - `@task general-purpose tdd-requirements.md`
-   ```
-   Task実行: TDD要件定義フェーズ
-   目的: タスクの詳細要件を記述し、受け入れ基準を明確化する
-   コマンド: tdd-requirements.md
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
+
+- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
+- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
+
+1. **Task Selection**
+
+   - Search for specified task ID using @agent-symbol-searcher and read found task files with Read tool
+   - Confirm user-specified task ID
+   - If no specification, automatically select next task based on dependencies
+   - Display details of selected task
+
+2. **Dependency Verification**
+
+   - Search for dependent task status using @agent-symbol-searcher and read found task files with Read tool
+   - Confirm if dependent tasks are completed
+   - Warn if incomplete dependent tasks exist
+
+3. **Implementation Directory Preparation**
+
+   - Work in current workspace
+   - Check directory structure as needed
+
+4. **Implementation Type Determination**
+
+   - Analyze task nature (code implementation vs preparation work)
+   - Determine implementation method (TDD vs direct work)
+
+5. **Implementation Process Execution**
+
+   ### A. **TDD Process** (for code implementation tasks)
+
+   a. **Requirements Definition** - `@task general-purpose tdd-requirements.md`
+
+   ````text
+   Task execution: TDD requirements definition phase
+   Purpose: Describe detailed task requirements and clarify acceptance criteria
+   Command: tdd-requirements.md
    実行方式: 個別Task実行
-   ```
+   ```text
 
    b. **テストケース作成** - `@task general-purpose tdd-testcases.md`
-   ```
+
+   ```markdown
    Task実行: TDDテストケース作成フェーズ
    目的: 単体テストケースを作成し、エッジケースを考慮する
    コマンド: tdd-testcases.md
    実行方式: 個別Task実行
-   ```
+   ```text
 
    c. **テスト実装** - `@task general-purpose tdd-red.md`
-   ```
+
+   ```text
    Task実行: TDDレッドフェーズ
    目的: 失敗するテストを実装し、テストが失敗することを確認する
    コマンド: tdd-red.md
    実行方式: 個別Task実行
-   ```
+   ```text
 
    d. **最小実装** - `@task general-purpose tdd-green.md`
-   ```
+
+   ```text
    Task実行: TDDグリーンフェーズ
    目的: テストが通る最小限の実装を行い、過度な実装を避ける
    コマンド: tdd-green.md
    実行方式: 個別Task実行
-   ```
+   ```text
 
    e. **リファクタリング** - `@task general-purpose tdd-refactor.md`
-   ```
+
+   ```text
    Task実行: TDDリファクタリングフェーズ
    目的: コードの品質向上と保守性の改善を行う
    コマンド: tdd-refactor.md
    実行方式: 個別Task実行
-   ```
+   ```text
 
    f. **品質確認** - `@task general-purpose tdd-verify-complete.md`
-   ```
+
+   ```text
    Task実行: TDD品質確認フェーズ
    目的: 実装の完成度を確認し、不足があればc-fを繰り返す
    コマンド: tdd-verify-complete.md
    実行方式: 個別Task実行
-   ```
+   ```text
 
    ### B. **直接作業プロセス**（準備作業タスク用）
 
    a. **準備作業の実行** - `@task general-purpose direct-work-execute`
-   ```
+
+   ```text
    Task実行: 直接作業実行フェーズ
    目的: ディレクトリ作成、設定ファイル作成、依存関係のインストール、環境設定を行う
    作業内容:
@@ -103,10 +138,11 @@
    - 依存関係のインストール
    - 環境設定
    実行方式: 個別Task実行
-   ```
+   ```text
 
    b. **作業結果の確認** - `@task general-purpose direct-work-verify`
-   ```
+
+   ```text
    Task実行: 直接作業確認フェーズ
    目的: 作業完了の検証と成果物確認を行う
    作業内容:
@@ -114,7 +150,7 @@
    - 期待された成果物の確認
    - 次のタスクへの準備状況確認
    実行方式: 個別Task実行
-   ```
+   ````
 
 6. **タスクの完了処理**
    - タスクのステータスを更新（タスクファイルのチェックボックスにチェックを入れる）
@@ -123,7 +159,7 @@
 
 ## 実行フロー
 
-```mermaid
+````mermaid
 flowchart TD
     A[タスク選択] --> B{依存関係OK?}
     B -->|No| C[警告表示]
@@ -149,10 +185,11 @@ flowchart TD
     H --> I{他のタスク?}
     I -->|Yes| A
     I -->|No| J[全タスク完了]
-```
+```text
 
 ## コマンド実行例
 
+```bash
 ```bash
 # 全タスクを順番に実装
 $ claude code kairo-implement --all
@@ -165,20 +202,20 @@ $ claude code kairo-implement --list-parallel
 
 # 現在の進捗を表示
 $ claude code kairo-implement --status
-```
+```markdown
 
 ## 実装タイプ判定基準
 
-### TDDプロセス（コード実装タスク）
+### TDD プロセス（コード実装タスク）
 
 以下の条件に当てはまるタスク：
 
 - 新しいコンポーネント、サービス、フック等の実装
 - 既存コードの機能追加・修正
 - ビジネスロジックの実装
-- API実装
+- API 実装
 
-**例**: TaskService実装、UIコンポーネント作成、状態管理実装
+**例**: TaskService 実装、UI コンポーネント作成、状態管理実装
 
 ### 直接作業プロセス（準備作業タスク）
 
@@ -192,19 +229,20 @@ $ claude code kairo-implement --status
 
 **例**: プロジェクト初期化、データベース設定、開発環境設定
 
-## 個別Task実行アプローチ
+## 個別 Task 実行アプローチ
 
-### Task実行の方針
+### Task 実行の方針
 
-各実装ステップを個別のTaskとして実行することで、以下のメリットが得られます：
+各実装ステップを個別の Task として実行することで、以下のメリットが得られます：
 
 1. **独立性**: 各ステップが独立して実行され、エラー発生時の切り分けが容易
 2. **再実行性**: 特定のステップのみ再実行が可能
 3. **並列性**: 依存関係のないステップは並列実行可能
 4. **追跡性**: 各ステップの実行状況と結果が明確に記録される
 
-### Task実行パターン
+### Task 実行パターン
 
+```bash
 ```bash
 # TDDプロセスの場合
 @task general-purpose tdd-requirements.md
@@ -217,17 +255,19 @@ $ claude code kairo-implement --status
 # 直接作業プロセスの場合
 @task general-purpose direct-work-execute
 @task general-purpose direct-work-verify
-```
+```markdown
 
 ## 実装時の注意事項
 
-### TDDプロセス用
+### TDD プロセス用
 
 1. **テストファースト**
+
    - 必ずテストを先に書く
    - テストが失敗することを確認してから実装
 
 2. **インクリメンタルな実装**
+
    - 一度に全てを実装しない
    - 小さなステップで進める
 
@@ -238,10 +278,12 @@ $ claude code kairo-implement --status
 ### 直接作業プロセス用
 
 1. **作業の段階的実行**
+
    - 依存関係を考慮した順序で実行
    - 各ステップの完了を確認
 
 2. **設定の検証**
+
    - 作成した設定ファイルの動作確認
    - 環境の正常性チェック
 
@@ -251,9 +293,10 @@ $ claude code kairo-implement --status
 
 ## 出力フォーマット
 
-### タスク開始時（TDDプロセス）
+### タスク開始時（TDD プロセス）
 
-```
+```text
+```text
 🚀 タスク TASK-101: ユーザー認証API の実装を開始します
 
 📋 タスク詳細:
@@ -263,11 +306,13 @@ $ claude code kairo-implement --status
 - 実装タイプ: TDDプロセス
 
 🔄 TDDプロセスを開始します...
-```
+```text
+```text
 
 ### タスク開始時（直接作業プロセス）
 
-```
+```text
+```text
 🚀 タスク TASK-003: データベース設定 の実装を開始します
 
 📋 タスク詳細:
@@ -277,33 +322,35 @@ $ claude code kairo-implement --status
 - 実装タイプ: 直接作業プロセス
 
 🔧 準備作業を開始します...
-```
+```text
+```text
 
 ### 各ステップ完了時（TDD）
 
-```
+```text
+```text
 ✅ Task 1/6: @task tdd-requirements 完了
    ファイル: /implementation/{要件名}/TASK-101/requirements.md
    Task実行結果: 要件定義書作成完了
 
 🏃 Task 2/6: @task tdd-testcases 実行中...
    Task実行: TDDテストケース作成フェーズを開始
-```
+```text
 
 ### 各ステップ完了時（直接作業）
 
-```
+```text
 ✅ Task 1/2: @task direct-work-execute 完了
    作成ファイル: 8個、設定更新: 3個
    Task実行結果: 準備作業実行完了
 
 🏃 Task 2/2: @task direct-work-verify 実行中...
    Task実行: 直接作業確認フェーズを開始
-```
+```markdown
 
 ### タスク完了時（TDD）
 
-```
+```text
 🎉 タスク TASK-101 が完了しました！
 
 ✅ タスクファイルのチェックボックスを更新しました
@@ -322,11 +369,11 @@ $ claude code kairo-implement --status
 - TASK-201: ログイン画面（依存関係あり）
 
 続けて実装しますか？ (y/n)
-```
+```text
 
 ### タスク完了時（直接作業）
 
-```
+```text
 🎉 タスク TASK-003 が完了しました！
 
 ✅ タスクファイルのチェックボックスを更新しました
@@ -345,17 +392,17 @@ $ claude code kairo-implement --status
 - TASK-101: TaskService実装（依存関係あり）
 
 続けて実装しますか？ (y/n)
-```
+````
 
-## エラーハンドリング
+## Error Handling
 
-- 依存タスク未完了: 警告を表示し、確認を求める
-- テスト失敗: 詳細なエラー情報を表示
-- ファイル競合: バックアップを作成してから上書き
+- Incomplete dependent tasks: Display warning and request confirmation
+- Test failures: Display detailed error information
+- File conflicts: Create backup before overwriting
 
-## 実行後の確認
+## Post-execution Verification
 
-- 実装したファイルの一覧を表示
-- テスト結果のサマリーを表示
-- 残りのタスクと進捗率を表示
-- 次のタスクの提案を表示
+- Display list of implemented files
+- Display test result summary
+- Display remaining tasks and progress rate
+- Display next task suggestions

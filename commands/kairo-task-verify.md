@@ -1,52 +1,55 @@
 # kairo-task-verify
 
-## 目的
+## Purpose
 
-作成されたタスクファイルの内容を確認し、出力フォーマット例に沿った情報が抜けていたら追加する。
+Check the content of created task files and add any missing information according to the output format example.
 
-## 前提条件
+## Prerequisites
 
-- `docs/tasks/{要件名}-tasks.md` が存在する
-- kairo-tasksコマンドによってタスクファイルが作成済みである
+- `docs/tasks/{requirement-name}-tasks.md` exists
+- Task file has been created by kairo-tasks command
 
-## 実行内容
+## Execution Content
 
-**【信頼性レベル指示】**:
-各項目について、元の資料（EARS要件定義書・設計文書含む）との照合状況を以下の信号でコメントしてください：
+**【Reliability Level Instructions】**:
+For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
 
-- 🟢 **青信号**: EARS要件定義書・設計文書を参考にしてほぼ推測していない場合
-- 🟡 **黄信号**: EARS要件定義書・設計文書から妥当な推測の場合
-- 🔴 **赤信号**: EARS要件定義書・設計文書にない推測の場合
+- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
+- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
+- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
 
-1. **タスクファイルの確認**
-   - @agent-symbol-searcher でタスクファイルを検索し、見つかったファイルをReadツールで読み込み
-   - `docs/tasks/{要件名}-tasks.md` をReadツールで読み込み
+1. **Task File Verification**
 
-2. **出力フォーマット例との比較**
-   - @agent-symbol-searcher で関連するタスクフォーマットを検索し、見つかったファイルをReadツールで読み込み
-   - kairo-tasksコマンドファイルをReadツールで読み込み、出力フォーマット例を確認
-   - 作成されたタスクファイルに不足している情報を特定
+   - Search for task files using @agent-symbol-searcher and read found files with Read tool
+   - Read `docs/tasks/{requirement-name}-tasks.md` with Read tool
 
-3. **不足情報の追加**
-   以下の項目が含まれているか確認し、不足していれば追加：
-   - 概要セクション（全タスク数、推定作業時間、クリティカルパス）
-   - 各タスクのチェックボックス
-   - タスクタイプ（TDD/DIRECT）の明記
-   - 要件リンク
-   - 依存タスク
-   - 実装詳細
-   - テスト要件
-   - UI/UX要件（フロントエンドタスクの場合）
-   - エラーハンドリング要件
-   - 完了条件
-   - 実行順序（Mermaidガントチャート）
-   - サブタスクテンプレート情報
+2. **Comparison with Output Format Example**
 
-4. **ファイルの更新**
-   - 不足している情報を追加してファイルを更新
+   - Search for related task formats using @agent-symbol-searcher and read found files with Read tool
+   - Read kairo-tasks command file with Read tool and check output format example
+   - Identify missing information in the created task file
 
-## 実行後の確認
+3. **Add Missing Information**
+   Check if the following items are included and add if missing:
 
-- 更新したファイルのパスを表示
-- 追加した情報の概要を表示
-- タスクファイルが完全になったことを確認
+   - Overview section (total number of tasks, estimated work time, critical path)
+   - Checkbox for each task
+   - Explicit task type (TDD/DIRECT)
+   - Requirements link
+   - Dependent tasks
+   - Implementation details
+   - Test requirements
+   - UI/UX requirements (for frontend tasks)
+   - Error handling requirements
+   - Completion conditions
+   - Execution order (Mermaid Gantt chart)
+   - Subtask template information
+
+4. **File Update**
+   - Update the file by adding the missing information
+
+## Post-execution Verification
+
+- Display path of the updated file
+- Display summary of added information
+- Confirm that the task file is complete

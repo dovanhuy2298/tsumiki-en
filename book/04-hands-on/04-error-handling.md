@@ -1,10 +1,648 @@
+# 4.4 Error Handling and Debugging
+
+## Learning Objectives
+
+In this chapter, you will learn how to handle various errors that occur during AITDD development and establish effective debugging techniques:
+
+- Understand error patterns specific to AI-generated code
+- Identify and fix prompt-induced errors
+- Establish an efficient debugging process
+- Decide when to switch to manual implementation and how to do it
+- Best practices to prevent errors
+
+## Error Classification and Handling Strategies
+
+AITDD development produces error types that differ somewhat from traditional development. Classify them appropriately and apply the right countermeasures.
+
+### Basic Classification
+
+1. Prompt-induced errors
+
+- Caused by ambiguous instructions
+- Caused by unclear requirements
+- Caused by insufficient context
+
+2. AI-implementation errors
+
+- Bugs in AI-generated code
+- Inconsistencies with existing code
+- Performance issues
+
+3. Integration errors
+
+- Problems during multi-feature integration
+- Interface mismatches
+- Dependency problems
+
+4. Traditional errors
+
+- General programming mistakes
+- Environment configuration issues
+- External dependency issues
+
+## Practical Debugging Process
+
+### Step 1: Comprehensive Information Gathering
+
+When an error occurs, first collect information systematically.
+
+```markdown
+## Error Info Collection Checklist
+
+### Basics
+
+- [ ] Full error message
+- [ ] Stack trace
+- [ ] Timing of occurrence
+- [ ] Execution environment
+
+### Context
+
+- [ ] Executed command
+- [ ] Input data
+- [ ] Expected behavior
+- [ ] Actual behavior
+
+### AI-related
+
+- [ ] Prompt used
+- [ ] Relevant AI-generated code
+- [ ] Related existing code
+
+### Runtime
+
+- [ ] OS/browser info
+- [ ] Node.js/TypeScript versions
+- [ ] Dependency states
+```
+
+Example record:
+
+```
+Example at error time:
+
+Error message:
+TypeError: Cannot read property 'map' of undefined
+    at getAllTasks (TaskController.ts:15)
+    at Router.handle (express/lib/router/layer.js:95)
+
+Timing:
+During GET /api/tasks endpoint test
+
+Input:
+GET http://localhost:3000/api/tasks
+
+Expected:
+Response including an empty array
+
+Actual:
+Called map on undefined and crashed
+
+Prompt used:
+"Implement an API endpoint that calls TaskManager.getAllTasks and returns the response"
+```
+
+### Step 2: AI-assisted Root Cause Analysis
+
+Provide all collected information to AI and ask for a root cause analysis.
+
+Effective analysis prompt:
+
+```
+Please analyze the following error:
+
+## Error info
+[paste everything you collected]
+
+## Related code
+[paste all relevant source code]
+
+## Requests
+1. Proximate cause
+2. Root causes (design/implementation)
+3. Possibility of prompt-induced issues
+4. Fix strategy
+5. Prevention of similar issues
+
+Please be concrete and practical.
+```
+
+Example of AI analysis:
+
+```
+## Error analysis
+
+### Proximate cause
+TaskController.getAllTasks: taskManager.getAllTasks() returned undefined
+
+### Root causes
+1. Incorrect TaskManager instantiation
+2. Task array not initialized in getAllTasks
+
+### Prompt-induced possibility
+Instruction "use existing TaskManager" was ambiguous and implementation may have proceeded without checking the class definition
+
+### Fix strategy
+1. Verify TaskManager initialization
+2. Validate getAllTasks return value
+3. Add null/undefined checks
+
+### Prevention
+1. Include existing code details in prompts
+2. Strengthen type-safety of return values
+3. Add null/undefined cases in unit tests
+```
+
+### Step 3: Iterative Investigation and Hypothesis Testing
+
+Investigate step-by-step based on the analysis.
+
+Example steps:
+
+```typescript
+// 1. Confirm TaskManager state
+describe("TaskManager debugging", () => {
+  test("TaskManager instantiation", () => {
+    const manager = new TaskManager();
+    console.log("TaskManager instance:", manager);
+    expect(manager).toBeDefined();
+  });
+
+  test("getAllTasks return value", () => {
+    const manager = new TaskManager();
+    const result = manager.getAllTasks();
+    console.log("getAllTasks result:", result);
+    console.log("result type:", typeof result);
+    expect(result).toBeDefined();
+  });
+
+  test("Initial tasks array state", () => {
+    const manager = new TaskManager();
+    const tasks = manager.getAllTasks();
+    expect(Array.isArray(tasks)).toBe(true);
+    console.log("Initial tasks array:", tasks);
+  });
+});
+```
+
+Run debug tests:
+
+```bash
+npm test -- --verbose TaskManager debugging
+```
+
+### Step 4: Implement Fixes with AI Collaboration
+
+Feed findings back to AI and ask for a fix implementation.
+
+Fix request prompt:
+
+```
+From the debugging investigation, we found:
+
+## Findings
+[paste debug test output]
+
+## Identified issues
+1. Array initialization in TaskManager is incorrect
+2. getAllTasks returns undefined
+
+## Fix requirements
+Implement fixes so that:
+1. Arrays are properly initialized
+2. Type-safety is ensured
+3. Null/undefined checks are added
+4. Existing tests pass
+5. New test cases are added
+
+Please include code and explanation of the fix.
+```
+
+## Identifying and Fixing Prompt-induced Errors
+
+### Criteria to judge prompt problems
+
+By frequency:
+
+```
+Occurrence pattern of similar errors:
+- First: treat as implementation error
+- Second: consider prompt issue
+- Third: prompt fix required
+```
+
+Typical signs of prompt issues:
+
+- Different implementations for the same request
+- Output deviates greatly from expectations
+- Unintended modifications of existing code
+- Implementations exceeding requested scope
+
+### Process to fix prompt issues
+
+1. Prompt diagnosis (ask AI to critique the prompt)
+
+```
+Please analyze the following prompt and point out issues:
+
+## Prompt used
+[the problematic prompt]
+
+## Expected output
+[what you expected]
+
+## Actual output
+[what you got]
+
+## Diagnosis requests
+1. Ambiguous parts
+2. Missing information
+3. Misleading expressions
+4. Improvement proposals
+```
+
+2. Create improved prompt
+
+```
+Before:
+"Create an API endpoint using the TaskManager class"
+
+After:
+"Using the following existing TaskManager, implement GET /api/tasks.
+
+Existing code:
+[full TaskManager code]
+
+Requirements:
+1. Do not change existing code
+2. Use Express Router
+3. Response format: { success: boolean, data: Task[] }
+4. Include error handling
+5. Ensure TypeScript type-safety
+
+Output format:
+- routes/tasks.ts
+- controllers/TaskController.ts
+- Corresponding test file"
+```
+
+3. Validate the improved prompt
+
+```typescript
+describe("Prompt improvement validation", () => {
+  test("Reproduce issue with old prompt", async () => {
+    // Implement with the old prompt
+    // Confirm expected problem happens
+  });
+
+  test("Verify fix with improved prompt", async () => {
+    // Implement with improved prompt
+    // Confirm problem resolved
+  });
+
+  test("Check side effects", async () => {
+    // Confirm no new issues from the improvement
+  });
+});
+```
+
+## Decision to Switch to Manual Implementation
+
+### When to decide before starting
+
+```markdown
+## Checklist for considering manual implementation
+
+### Implementation image
+
+- [ ] You can picture concrete steps
+- [ ] Technologies/libraries are clear
+- [ ] You can anticipate pitfalls
+
+### Technical complexity
+
+- [ ] Performance optimization is required
+- [ ] Complex algorithms are required
+- [ ] Deep domain knowledge is required
+
+### Difficulty explaining to AI
+
+- [ ] Requirements hard to articulate
+- [ ] Prompts become overly long
+- [ ] Too much prerequisite explanation
+```
+
+### When to switch during implementation
+
+```
+Decision criteria:
+1. Same error occurs 3+ times
+2. Prompt fixes fail to resolve
+3. Debug time exceeds implementation time
+4. AI-generated code quality is inconsistent
+```
+
+### Effective manual implementation approach
+
+Use AI partially with a staged strategy:
+
+```typescript
+// 1) Implement complex logic manually
+const complexAlgorithm = (data: any[]) => {
+  let result = [];
+  for (let i = 0; i < data.length; i++) {
+    // Complex calculations
+  }
+  return result;
+};
+
+// 2) Ask AI to generate boilerplate
+const generateApiResponse = (data: any) => ({
+  success: true,
+  data,
+  meta: {
+    timestamp: new Date().toISOString(),
+    count: Array.isArray(data) ? data.length : 1,
+  },
+});
+
+// 3) Combine
+export const processData = async (inputData: any[]) => {
+  try {
+    const processedData = complexAlgorithm(inputData);
+    return generateApiResponse(processedData);
+  } catch (error) {
+    // Error handling (can be AI-assisted)
+  }
+};
+```
+
+### Using AI even when implementing manually
+
+1. Leverage IDE AI completion:
+
+```typescript
+const taskManager = new TaskManager();
+// Use AI completion where helpful
+```
+
+2. Ask AI for partial code generation:
+
+```
+Please create a validation function based on the following types:
+
+interface TaskInput {
+  title: string;
+  description?: string;
+}
+
+Requirements:
+- title required (1–100 chars)
+- description optional (0–500 chars)
+- Clear error messages for invalid input
+- Works as a TypeScript type guard
+```
+
+3. Keep the Validation step even when manual
+
+```
+Validation checklist for manual implementation:
+1. Consistency with spec
+2. Type-safety ensured
+3. Appropriate error handling
+4. Test coverage confirmed
+5. Performance appropriate
+6. Readability and maintainability
+```
+
+## Best Practices to Prevent Errors
+
+### Improve prompt design
+
+1. Clarify context
+
+```
+Good prompt example:
+
+"Add a new feature to the following existing system:
+
+Existing code:
+[paste all relevant code]
+
+New feature requirements:
+[clear and concrete]
+
+Constraints:
+- Do not modify existing code
+- Ensure TypeScript type-safety
+- Error handling required
+
+Expected output:
+- Implementation code
+- Test code
+- Usage example
+- Notes"
+```
+
+2. Phase the implementation
+
+```
+Implement complex features step by step:
+
+Step 1: Interface design
+Step 2: Basic implementation
+Step 3: Error handling
+Step 4: Test creation
+
+Confirm each step before moving on.
+```
+
+### Strengthen test strategy
+
+1. Tests specific to AI-generated code
+
+```typescript
+describe("AI-generated code validation", () => {
+  test("No unintended changes to legacy code", () => {
+    const originalFunction = require("./legacy/original-module");
+    expect(originalFunction.criticalMethod).toBeDefined();
+    expect(typeof originalFunction.criticalMethod).toBe("function");
+  });
+
+  test("Scope check for inferred implementations", () => {
+    const implementation = new FeatureImplementation();
+    expect(implementation.getImplementedFeatures()).toEqual(
+      expect.arrayContaining(REQUIRED_FEATURES)
+    );
+  });
+
+  test("Type-safety holds", () => {
+    // Confirm TypeScript compile passes
+  });
+});
+```
+
+2. Strengthen integration tests
+
+```typescript
+describe("Feature integration tests", () => {
+  test("Regression when integrating three features", async () => {
+    const feature1 = await executeFeature1();
+    const feature2 = await executeFeature2(feature1.result);
+    const feature3 = await executeFeature3(feature2.result);
+    expect(feature3.result).toMatchExpectedOutput();
+  });
+});
+```
+
+### Continuous improvement process
+
+1. Accumulate error patterns
+
+```markdown
+## Error pattern management
+
+### Frequent errors
+
+1. undefined/null access
+
+   - Cause: Missing initialization in AI code
+   - Countermeasure: Explicit instructions to initialize
+
+2. Type mismatch
+
+   - Cause: Missing type info in prompt
+   - Countermeasure: Provide explicit type definitions
+
+3. Legacy code modification
+   - Cause: Weak "do not modify" constraint
+   - Countermeasure: Concrete constraint instructions
+```
+
+2. Improve prompt templates
+
+```
+Improved prompt template:
+
+### Base Template
+
+Feature: [name]
+Target: [what to implement]
+
+Existing code:
+[all related code]
+
+Requirements:
+[clear and concrete]
+
+Constraints:
+- Do not modify existing code
+- [other constraints]
+
+Expected output:
+- [expected format]
+
+Quality requirements:
+- TypeScript type-safety
+- Error handling
+- Include test code
+```
+
+## Practical Debugging Techniques
+
+### Log-based debugging
+
+Effective logging helper and usage:
+
+```typescript
+class DebugLogger {
+  static log(context: string, data: any) {
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[${context}]`, {
+        timestamp: new Date().toISOString(),
+        data: JSON.stringify(data, null, 2),
+      });
+    }
+  }
+
+  static error(context: string, error: any) {
+    console.error(`[ERROR:${context}]`, {
+      message: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString(),
+    });
+  }
+}
+
+export const taskController = {
+  getAllTasks: async (req, res, next) => {
+    try {
+      DebugLogger.log("TaskController.getAllTasks", "Starting execution");
+      const tasks = taskManager.getAllTasks();
+      DebugLogger.log("TaskController.getAllTasks", {
+        tasksCount: tasks?.length,
+      });
+      const response = generateResponse(tasks);
+      DebugLogger.log("TaskController.getAllTasks", { response });
+      res.json(response);
+    } catch (error) {
+      DebugLogger.error("TaskController.getAllTasks", error);
+      next(error);
+    }
+  },
+};
+```
+
+### Test-driven debugging
+
+Work backward from a failing test:
+
+```typescript
+describe("Bug reproduction test", () => {
+  test("Reproduce null error under specific conditions", () => {
+    const manager = new TaskManager();
+    const result = manager.getAllTasks();
+    expect(() => result.map((x) => x.id)).toThrow();
+  });
+
+  test("Verify after the fix", () => {
+    const manager = new TaskManager();
+    const result = manager.getAllTasks();
+    expect(Array.isArray(result)).toBe(true);
+    expect(() => result.map((x) => x.id)).not.toThrow();
+  });
+});
+```
+
+## Summary
+
+In this chapter, you learned comprehensive error handling and debugging methods for AITDD development:
+
+Main outcomes:
+
+- Proper classification and handling of errors
+- Efficient debugging with AI support
+- Identification and correction of prompt-induced errors
+- Decision-making for switching to manual implementation and a hybrid AI strategy
+- Best practices for error prevention
+
+Practical skills:
+
+- Comprehensive information gathering
+- AI-assisted error analysis
+- Stepwise problem solving
+- Continuous quality improvement
+
+Next:
+With these skills, you are ready to learn advanced AITDD optimization techniques. We proceed to prompt design optimization and AI utilization.
+
 # 4.4 エラーハンドリングとデバッグ
 
 ## 学習目標
 
-この章では、AITDD開発中に発生する各種エラーの対処法と効果的なデバッグ手法を習得します：
+この章では、AITDD 開発中に発生する各種エラーの対処法と効果的なデバッグ手法を習得します：
 
-- AI生成コード特有のエラーパターンの理解
+- AI 生成コード特有のエラーパターンの理解
 - プロンプト起因エラーの特定と修正方法
 - 効率的なデバッグプロセスの確立
 - 手動実装への切り替え判断とその実践
@@ -12,64 +650,74 @@
 
 ## エラーの分類と対処戦略
 
-AITDD開発では、従来の開発とは異なる種類のエラーが発生します。これらを適切に分類し、それぞれに応じた対処法を適用することが重要です。
+AITDD 開発では、従来の開発とは異なる種類のエラーが発生します。これらを適切に分類し、それぞれに応じた対処法を適用することが重要です。
 
 ### エラーの基本分類
 
 **1. プロンプト起因エラー**
+
 - 指示の曖昧さによるもの
 - 要件の不明確さによるもの
 - コンテキスト不足によるもの
 
-**2. AI実装起因エラー**
-- AI生成コードのバグ
+**2. AI 実装起因エラー**
+
+- AI 生成コードのバグ
 - 既存コードとの整合性問題
 - パフォーマンス問題
 
 **3. 統合起因エラー**
+
 - 複数機能統合時の問題
 - インターフェース不整合
 - 依存関係の問題
 
 **4. 従来型エラー**
+
 - 一般的なプログラミングエラー
 - 環境設定の問題
 - 外部依存の問題
 
 ## 実践的デバッグプロセス
 
-### ステップ1：エラー情報の包括的収集
+### ステップ 1：エラー情報の包括的収集
 
 エラーが発生した場合、まず情報を系統的に収集します。
 
 **収集する情報**：
+
 ```markdown
 ## エラー情報収集チェックリスト
 
 ### 基本情報
+
 - [ ] エラーメッセージ（完全版）
 - [ ] スタックトレース
 - [ ] 発生タイミング
 - [ ] 実行環境
 
 ### コンテキスト情報
+
 - [ ] 実行されたコマンド
 - [ ] 入力データ
 - [ ] 期待していた動作
 - [ ] 実際の動作
 
-### AI関連情報
+### AI 関連情報
+
 - [ ] 使用したプロンプト
-- [ ] AI生成コードの該当部分
+- [ ] AI 生成コードの該当部分
 - [ ] 関連する既存コード
 
 ### 実行環境
+
 - [ ] OS・ブラウザ情報
-- [ ] Node.js/TypeScriptバージョン
+- [ ] Node.js/TypeScript バージョン
 - [ ] 依存パッケージの状態
 ```
 
 **情報収集の実例**：
+
 ```
 エラー発生時の記録例：
 
@@ -94,11 +742,12 @@ undefined に対して map を呼び出しエラー
 「TaskManagerクラスの getAllTasks メソッドを呼び出してレスポンスを返すAPIエンドポイントを実装してください」
 ```
 
-### ステップ2：AIによる原因分析
+### ステップ 2：AI による原因分析
 
-収集した情報を全てAIに渡し、エラーの原因分析を依頼します。
+収集した情報を全て AI に渡し、エラーの原因分析を依頼します。
 
 **効果的な分析プロンプト**：
+
 ```
 以下のエラーについて原因を分析してください：
 
@@ -118,7 +767,8 @@ undefined に対して map を呼び出しエラー
 できるだけ具体的で実践的な分析をお願いします。
 ```
 
-**AIによる分析例**：
+**AI による分析例**：
+
 ```
 ## エラー分析結果
 
@@ -144,47 +794,50 @@ TaskController.getAllTasks メソッドで、taskManager.getAllTasks() が undef
 3. 単体テストでnull/undefined ケースを追加
 ```
 
-### ステップ3：段階的調査と仮説検証
+### ステップ 3：段階的調査と仮説検証
 
-AIの分析に基づいて、段階的に問題を調査します。
+AI の分析に基づいて、段階的に問題を調査します。
 
 **調査手順例**：
+
 ```typescript
 // 1. TaskManagerクラスの状態確認
-describe('TaskManagerデバッグ', () => {
-  test('TaskManagerインスタンス化確認', () => {
+describe("TaskManagerデバッグ", () => {
+  test("TaskManagerインスタンス化確認", () => {
     const manager = new TaskManager();
-    console.log('TaskManager instance:', manager);
+    console.log("TaskManager instance:", manager);
     expect(manager).toBeDefined();
   });
 
-  test('getAllTasks戻り値確認', () => {
+  test("getAllTasks戻り値確認", () => {
     const manager = new TaskManager();
     const result = manager.getAllTasks();
-    console.log('getAllTasks result:', result);
-    console.log('result type:', typeof result);
+    console.log("getAllTasks result:", result);
+    console.log("result type:", typeof result);
     expect(result).toBeDefined();
   });
 
-  test('タスク配列の初期状態確認', () => {
+  test("タスク配列の初期状態確認", () => {
     const manager = new TaskManager();
     const tasks = manager.getAllTasks();
     expect(Array.isArray(tasks)).toBe(true);
-    console.log('Initial tasks array:', tasks);
+    console.log("Initial tasks array:", tasks);
   });
 });
 ```
 
 **デバッグ実行**：
+
 ```bash
 npm test -- --verbose TaskManagerデバッグ
 ```
 
-### ステップ4：AIと協力した修正実装
+### ステップ 4：AI と協力した修正実装
 
-調査結果をAIにフィードバックし、修正実装を依頼します。
+調査結果を AI にフィードバックし、修正実装を依頼します。
 
 **修正依頼プロンプト**：
+
 ```
 デバッグ調査の結果、以下が判明しました：
 
@@ -211,6 +864,7 @@ npm test -- --verbose TaskManagerデバッグ
 ### プロンプト問題の判断基準
 
 **頻度による判定**：
+
 ```
 同様のエラーパターンの発生状況：
 - 1回目：実装エラーとして処理
@@ -219,6 +873,7 @@ npm test -- --verbose TaskManagerデバッグ
 ```
 
 **典型的なプロンプト問題の兆候**：
+
 - 同じ要求で異なる実装が生成される
 - 期待と大きく異なる出力
 - 既存コードを意図せず修正
@@ -228,7 +883,8 @@ npm test -- --verbose TaskManagerデバッグ
 
 #### 1. プロンプト診断
 
-**AIによる診断依頼**：
+**AI による診断依頼**：
+
 ```
 以下のプロンプトを分析し、問題点を指摘してください：
 
@@ -251,6 +907,7 @@ npm test -- --verbose TaskManagerデバッグ
 #### 2. プロンプト改善案の作成
 
 **改善プロンプトの例**：
+
 ```
 改善前（問題のあったプロンプト）：
 「TaskManagerクラスを使ってAPIエンドポイントを作成してください」
@@ -277,19 +934,20 @@ npm test -- --verbose TaskManagerデバッグ
 #### 3. 改善プロンプトの検証
 
 **検証プロセス**：
+
 ```typescript
-describe('プロンプト改善検証', () => {
-  test('改善前プロンプトでの問題再現', async () => {
+describe("プロンプト改善検証", () => {
+  test("改善前プロンプトでの問題再現", async () => {
     // 問題のあったプロンプトで実装を依頼
     // 期待する問題が発生することを確認
   });
 
-  test('改善後プロンプトでの解決確認', async () => {
+  test("改善後プロンプトでの解決確認", async () => {
     // 改善されたプロンプトで実装を依頼
     // 問題が解決されることを確認
   });
 
-  test('改善プロンプトの副作用確認', async () => {
+  test("改善プロンプトの副作用確認", async () => {
     // 改善により新たな問題が発生していないことを確認
   });
 });
@@ -300,26 +958,31 @@ describe('プロンプト改善検証', () => {
 ### 切り替えタイミングの判断
 
 **実装開始前の判断**：
+
 ```markdown
 ## 手動実装検討チェックリスト
 
 ### 実装イメージの有無
+
 - [ ] 具体的な実装手順が思い浮かぶ
 - [ ] 使用する技術・ライブラリが明確
 - [ ] 実装の落とし穴が予測できる
 
 ### 技術的複雑さ
+
 - [ ] パフォーマンス最適化が必要
 - [ ] 複雑なアルゴリズムが必要
 - [ ] 深いドメイン知識が必要
 
-### AIへの説明困難度
+### AI への説明困難度
+
 - [ ] 要件を明確に言語化できない
 - [ ] プロンプトが異常に長くなる
 - [ ] 前提知識の説明が困難
 ```
 
 **実装中の切り替え判断**：
+
 ```
 切り替え判断の基準：
 1. 同じエラーが3回以上発生
@@ -330,9 +993,10 @@ describe('プロンプト改善検証', () => {
 
 ### 効果的な手動実装アプローチ
 
-#### 段階的AI併用戦略
+#### 段階的 AI 併用戦略
 
-**完全手動ではなく、部分的AI活用**：
+**完全手動ではなく、部分的 AI 活用**：
+
 ```typescript
 // 1. 複雑なロジック部分は手動実装
 const complexAlgorithm = (data: any[]) => {
@@ -352,8 +1016,8 @@ const generateApiResponse = (data: any) => {
     data,
     meta: {
       timestamp: new Date().toISOString(),
-      count: Array.isArray(data) ? data.length : 1
-    }
+      count: Array.isArray(data) ? data.length : 1,
+    },
   };
 };
 
@@ -368,9 +1032,10 @@ export const processData = async (inputData: any[]) => {
 };
 ```
 
-#### 手動実装でのAI支援活用
+#### 手動実装での AI 支援活用
 
-**1. IDE補完機能の活用**：
+**1. IDE 補完機能の活用**：
+
 ```typescript
 // VS Code等のAI補完を積極的に使用
 const taskManager = new TaskManager();
@@ -378,6 +1043,7 @@ const taskManager = new TaskManager();
 ```
 
 **2. 部分的なコード生成依頼**：
+
 ```
 明確な実装イメージがある部分のAI依頼例：
 
@@ -397,7 +1063,8 @@ interface TaskInput {
 
 #### 品質プロセスの継続
 
-**手動実装でもValidationステップは必須**：
+**手動実装でも Validation ステップは必須**：
+
 ```
 手動実装のValidationチェック項目：
 1. 仕様要件との整合性
@@ -413,6 +1080,7 @@ interface TaskInput {
 ### プロンプト設計の改善
 
 **1. コンテキストの明確化**：
+
 ```
 良いプロンプト例：
 
@@ -437,6 +1105,7 @@ interface TaskInput {
 ```
 
 **2. 段階的な実装指示**：
+
 ```
 複雑な機能の段階的実装：
 
@@ -452,24 +1121,26 @@ interface TaskInput {
 
 ### テスト戦略の強化
 
-**1. AI生成コード特有のテスト**：
+**1. AI 生成コード特有のテスト**：
+
 ```typescript
-describe('AI生成コード検証テスト', () => {
-  test('意図しない既存コード修正がないことを確認', () => {
+describe("AI生成コード検証テスト", () => {
+  test("意図しない既存コード修正がないことを確認", () => {
     // 既存の重要な関数が変更されていないことをテスト
-    const originalFunction = require('./legacy/original-module');
+    const originalFunction = require("./legacy/original-module");
     expect(originalFunction.criticalMethod).toBeDefined();
-    expect(typeof originalFunction.criticalMethod).toBe('function');
+    expect(typeof originalFunction.criticalMethod).toBe("function");
   });
 
-  test('推測による実装範囲の確認', () => {
+  test("推測による実装範囲の確認", () => {
     // AIが推測で実装した部分が要件内であることを確認
     const implementation = new FeatureImplementation();
-    expect(implementation.getImplementedFeatures())
-      .toEqual(expect.arrayContaining(REQUIRED_FEATURES));
+    expect(implementation.getImplementedFeatures()).toEqual(
+      expect.arrayContaining(REQUIRED_FEATURES)
+    );
   });
 
-  test('型安全性の確認', () => {
+  test("型安全性の確認", () => {
     // TypeScriptの型チェックが正しく機能することを確認
     // コンパイルエラーが発生しないことをテスト
   });
@@ -477,14 +1148,15 @@ describe('AI生成コード検証テスト', () => {
 ```
 
 **2. 統合テストの強化**：
+
 ```typescript
-describe('機能統合テスト', () => {
-  test('3機能統合でのレグレッション確認', async () => {
+describe("機能統合テスト", () => {
+  test("3機能統合でのレグレッション確認", async () => {
     // 3つの機能が組み合わされても正常動作することをテスト
     const feature1 = await executeFeature1();
     const feature2 = await executeFeature2(feature1.result);
     const feature3 = await executeFeature3(feature2.result);
-    
+
     expect(feature3.result).toMatchExpectedOutput();
   });
 });
@@ -493,15 +1165,19 @@ describe('機能統合テスト', () => {
 ### 継続的改善プロセス
 
 **1. エラーパターンの蓄積**：
+
 ```markdown
 ## エラーパターン管理
 
 ### 発生頻度の高いエラー
+
 1. undefined/null アクセスエラー
-   - 原因：AI生成コードでの初期化不足
+
+   - 原因：AI 生成コードでの初期化不足
    - 対策：明示的な初期化指示
 
 2. 型不整合エラー
+
    - 原因：プロンプトでの型情報不足
    - 対策：型定義を明示的に提供
 
@@ -511,11 +1187,13 @@ describe('機能統合テスト', () => {
 ```
 
 **2. プロンプトテンプレートの改善**：
+
 ```
 改善されたプロンプトテンプレート：
 
 ### 基本テンプレート
 ```
+
 機能: [機能名]
 実装対象: [具体的な実装内容]
 
@@ -526,17 +1204,21 @@ describe('機能統合テスト', () => {
 [明確で具体的な要件]
 
 制約:
+
 - 既存コードは変更禁止
 - [その他の制約]
 
 出力要求:
+
 - [期待する出力形式]
 
 品質要件:
-- TypeScript型安全性
+
+- TypeScript 型安全性
 - エラーハンドリング
 - テストコード含む
-```
+
+````
 
 ## 実践的デバッグテクニック
 
@@ -569,13 +1251,13 @@ export const taskController = {
   getAllTasks: async (req, res, next) => {
     try {
       DebugLogger.log('TaskController.getAllTasks', 'Starting execution');
-      
+
       const tasks = taskManager.getAllTasks();
       DebugLogger.log('TaskController.getAllTasks', { tasksCount: tasks?.length });
-      
+
       const response = generateResponse(tasks);
       DebugLogger.log('TaskController.getAllTasks', { response });
-      
+
       res.json(response);
     } catch (error) {
       DebugLogger.error('TaskController.getAllTasks', error);
@@ -583,51 +1265,54 @@ export const taskController = {
     }
   }
 };
-```
+````
 
 ### テスト駆動デバッグ
 
 **失敗テストからの逆算**：
+
 ```typescript
-describe('バグ再現テスト', () => {
-  test('特定条件でのnullエラー再現', () => {
+describe("バグ再現テスト", () => {
+  test("特定条件でのnullエラー再現", () => {
     // バグが発生する最小条件を特定
     const manager = new TaskManager();
     const result = manager.getAllTasks();
-    
+
     // この時点でエラーが発生するはず
-    expect(() => result.map(x => x.id)).toThrow();
+    expect(() => result.map((x) => x.id)).toThrow();
   });
 
-  test('修正後の動作確認', () => {
+  test("修正後の動作確認", () => {
     // 修正後に期待する動作をテスト
     const manager = new TaskManager();
     const result = manager.getAllTasks();
-    
+
     expect(Array.isArray(result)).toBe(true);
-    expect(() => result.map(x => x.id)).not.toThrow();
+    expect(() => result.map((x) => x.id)).not.toThrow();
   });
 });
 ```
 
 ## まとめ
 
-この章では、AITDD開発における包括的なエラーハンドリングとデバッグ手法を学習しました：
+この章では、AITDD 開発における包括的なエラーハンドリングとデバッグ手法を学習しました：
 
 **主要な学習成果**：
+
 - エラーの適切な分類と対処法
-- AI活用による効率的デバッグプロセス
+- AI 活用による効率的デバッグプロセス
 - プロンプト起因エラーの特定と修正
-- 手動実装への切り替え判断とAI併用戦略
+- 手動実装への切り替え判断と AI 併用戦略
 - エラー予防のベストプラクティス
 
 **実践的スキル**：
+
 - 包括的な情報収集技法
-- AIと協力したエラー分析
+- AI と協力したエラー分析
 - 段階的な問題解決アプローチ
 - 品質管理の継続的改善
 
 **次章への準備**：
-これらのスキルにより、より高度なAITDD手法と最適化技術を学習する準備が整いました。プロンプト設計とAI活用の最適化に進みます。
+これらのスキルにより、より高度な AITDD 手法と最適化技術を学習する準備が整いました。プロンプト設計と AI 活用の最適化に進みます。
 
-AITDDの実践ハンズオンシリーズを通じて、基礎から応用まで一通りの技術を習得しました。次部では、これらの技術をさらに洗練させ、実際のプロダクション環境で活用するための高度な技法を学習していきます。
+AITDD の実践ハンズオンシリーズを通じて、基礎から応用まで一通りの技術を習得しました。次部では、これらの技術をさらに洗練させ、実際のプロダクション環境で活用するための高度な技法を学習していきます。

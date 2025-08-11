@@ -1,247 +1,274 @@
-# 第1章：AITDDとは何か
+# Chapter 1: What is AITDD?
 
-## 1.1 AITDDの基本概念と定義
+## 1.1 Basic Concept and Definition of AITDD
 
-### AITDDとは
+### What is AITDD
 
-AITDD（AI+TDD：AI-assisted Test-Driven Development）は、AI技術を活用してテスト駆動開発（TDD）を支援する革新的な開発手法です。従来のTDDの構造化されたアプローチにAIの能力を組み合わせることで、開発効率を劇的に向上させながら品質を維持することを目指します。
+AITDD (AI + TDD: AI-assisted Test-Driven Development) is an innovative development methodology that leverages AI to support Test-Driven Development (TDD). By combining the structured approach of traditional TDD with the power of AI, it aims to dramatically improve development efficiency while maintaining quality.
 
-### 基本的な構成要素
+### Core Components
 
-AITDDは以下の3つの主要な要素から構成されます：
+AITDD consists of the following three main elements:
 
-#### 1. テスト駆動開発（TDD）フレームワーク
-- **明確な目標設定**: テストによる要件定義
-- **構造化されたプロセス**: Red-Green-Refactorサイクル
-- **品質保証**: テストによる継続的な検証
+#### 1. Test-Driven Development (TDD) Framework
 
-#### 2. AI支援システム
-- **コード生成**: 実装の自動化
-- **リアルタイム分析**: 依存関係やライブラリの動的調査
-- **継続的学習**: プロジェクト特性に合わせた最適化
+- **Clear goal setting**: Requirements definition through tests
+- **Structured process**: Red-Green-Refactor cycle
+- **Quality assurance**: Continuous verification via tests
 
-#### 3. 人間とAIの協調体制
-- **戦略的判断**: 人間による高レベルな意思決定
-- **実装支援**: AIによる詳細な実装作業
-- **品質管理**: 人間によるレビューと検証
+#### 2. AI Support System
 
-## 1.2 従来の開発手法との違い
+- **Code generation**: Automating implementation
+- **Real-time analysis**: Dynamic investigation of dependencies and libraries
+- **Continuous learning**: Optimization tailored to project characteristics
 
-### 従来のソフトウェア開発
+#### 3. Collaboration Between Humans and AI
 
-**特徴:**
-- 手動でのコード記述が中心
-- 実装に多くの時間とリソースを消費
-- 個人のスキル・経験に依存度が高い
-- ドキュメントとコードの乖離が発生しやすい
+- **Strategic decision-making**: High-level decisions by humans
+- **Implementation support**: Detailed implementation work by AI
+- **Quality management**: Review and verification by humans
 
-**課題:**
-- 開発速度の限界
-- 品質のばらつき
-- 技術的負債の蓄積
-- 新技術習得のコスト
+## 1.2 Differences from Conventional Development Methods
 
-### AITDDアプローチ
+### Conventional Software Development
 
-**特徴:**
-- AIによる開発支援が中心
-- 実装負担が大幅に軽減
-- TDDによる構造化されたアプローチ
-- 開発速度の大幅な向上
+**Characteristics:**
 
-**利点:**
-- **開発速度の向上**: 実装負担軽減により、従来比で大幅な時間短縮
-- **品質の安定化**: TDDベースのアプローチによる品質管理
-- **学習コストの削減**: AIによる支援で技術習得の敷居を下げる
-- **ドキュメント整合性**: テストとドキュメントの自動同期
+- Manual code writing at the center
+- Consumes a lot of time and resources for implementation
+- High dependence on individual skills and experience
+- Easy divergence between documentation and code
 
-### 具体的な違いの例
+**Challenges:**
 
-| 項目 | 従来の開発 | AITDD |
-|------|------------|--------|
-| 要件定義 | 仕様書作成 → 実装 | テスト作成 → AI実装 |
-| コード品質 | レビューに依存 | テスト駆動で保証 |
-| 実装速度 | 個人スキルに依存 | AI支援で一定水準 |
-| 技術習得 | 時間をかけて学習 | AI支援で実践的学習 |
-| 保守性 | 属人化しやすい | 体系化されたプロセス |
+- Limits to development speed
+- Variability in quality
+- Accumulation of technical debt
+- Cost of learning new technologies
 
-## 1.3 AITDDが適している場面・避けるべき場面
+### AITDD Approach
 
-### 効果的な適用場面
+**Characteristics:**
 
-#### 1. プロジェクトの特徴
-- **類似コードの大量作成**: よく似たようなコードを沢山作る場合に特に効果的
-- **比較的大規模プロジェクト**: 開発効率の改善効果が顕著に現れる
-- **中長期開発**: 開発期間・チーム構成については比較的自由度が高い
+- Development support primarily by AI
+- Significant reduction of implementation burden
+- Structured approach through TDD
+- Significant improvement in development speed
 
-#### 2. 具体的なコードパターン
-以下のような実装において特に効果を発揮します：
+**Benefits:**
 
-**データ処理系:**
-- CRUD操作の実装
-- APIエンドポイントの作成
-- データベースモデルの定義
+- **Improved development speed**: Significant time reduction compared to conventional methods by reducing implementation burden
+- **Stabilized quality**: Quality management through a TDD-based approach
+- **Reduced learning cost**: Lower barrier to learning technologies with AI support
+- **Documentation consistency**: Automatic synchronization between tests and documentation
 
-**ユーザーインターフェース系:**
-- フォームバリデーション
-- 画面遷移の実装
-- 入力検証処理
+### Concrete Differences
 
-**テスト・品質保証系:**
-- テストケースの作成
-- モックオブジェクトの定義
-- 統合テストの実装
+| Item                    | Conventional Development        | AITDD                              |
+| ----------------------- | ------------------------------- | ---------------------------------- |
+| Requirements Definition | Write spec → Implement          | Write tests → AI implements        |
+| Code Quality            | Relies on review                | Guaranteed by test-driven approach |
+| Implementation Speed    | Depends on individual skill     | More consistent with AI support    |
+| Skill Acquisition       | Time-consuming learning         | Practical learning with AI support |
+| Maintainability         | Prone to being person-dependent | Systematized process               |
 
-#### 3. 技術スタックの適合性
+## 1.3 Where AITDD Fits Well and Where to Avoid/Be Careful
 
-**向いている言語:**
-- JavaScript（Node.js、React、Vue.js等）
-- Python（Django、FastAPI、Flask等）
+### Effective Application Scenarios
 
-**理由:**
-- パッケージ管理の透明性が高い（package.json、requirements.txt等）
-- AIが必要に応じて依存ライブラリを動的に調べることができる
-- jarやddl形式での配布がない
-- 豊富なオープンソースエコシステム
+#### 1. Project Characteristics
 
-### 適用を避けるべき/注意すべき場面
+- **Mass creation of similar code**: Particularly effective when creating many similar implementations
+- **Relatively large-scale projects**: Efficiency gains become prominent
+- **Mid- to long-term development**: Greater flexibility in development duration and team composition
 
-#### 1. パフォーマンス要求が極めて高い場合
-- AITDDを完全に避けるわけではない
-- **AIを使いながら人が主導する**アプローチに切り替える
-- AI支援は活用するが、最終的な実装判断は人間が行う
-- ベンチマークテストとプロファイリングを重視
+#### 2. Specific Code Patterns
 
-#### 2. 技術的制約がある場合
+Particularly effective for implementations like the following:
 
-**コンパイル型言語での制限:**
-- Java、C#等のjar/dll配布
-- AIが直接内容を調査することが困難
-- 事前知識に依存する場面が多い
+**Data Processing:**
 
-**セキュリティ要件が厳格な場合:**
-- AIサービスの利用制限
-- コード外部送信の禁止
-- オンプレミス環境での制約
+- Implementing CRUD operations
+- Creating API endpoints
+- Defining database models
 
-#### 3. その他の考慮事項
-- 現時点では多くのプロジェクトでの実証がまだ不十分
-- 業務の性質的には技術スタックの向き・不向きが主要な判断要素
-- チームメンバーのAI活用に対する理解度とスキル
+**User Interface:**
 
-### 判断のフレームワーク
+- Form validation
+- Implementing screen transitions
+- Input validation logic
 
-AITDDを導入するかどうかの判断には、以下の要素を総合的に検討します：
+**Testing and QA:**
 
-```
-✅ 適用推奨
-- 類似パターンの繰り返し実装が多い
-- JavaScript/Pythonベースのプロジェクト
-- 中規模以上の開発チーム
-- 品質より開発速度を重視
+- Creating test cases
+- Defining mock objects
+- Implementing integration tests
 
-⚠️ 注意深く検討
-- パフォーマンス要件が厳しい
-- セキュリティ要件が厳格
-- チームのAI活用経験が少ない
+#### 3. Suitability for Tech Stacks
 
-❌ 適用非推奨
-- 一品物の特殊な実装が中心
-- コンパイル型言語中心
-- 小規模なプロトタイプ開発
-```
+**Recommended Languages:**
 
-## 1.4 AITDDの具体的なワークフロー
+- JavaScript (Node.js, React, Vue.js, etc.)
+- Python (Django, FastAPI, Flask, etc.)
 
-### 基本的な開発サイクル
+**Reasons:**
 
-AITDDでは、従来のTDDサイクルを拡張した以下のプロセスを採用します：
+- High transparency in package management (package.json, requirements.txt, etc.)
+- AI can dynamically investigate dependent libraries as needed
+- No jar/dll distribution
+- Rich open-source ecosystem
+
+### Situations to Avoid/Use with Caution
+
+#### 1. Extremely High Performance Requirements
+
+- Not a complete avoidance of AITDD
+- Switch to an approach where **humans lead while using AI**
+- Utilize AI support, but humans make final implementation decisions
+- Emphasize benchmark testing and profiling
+
+#### 2. Technical Constraints
+
+**Constraints in Compiled Languages:**
+
+- Distribution of jar/dll such as Java and C#
+- Difficult for AI to directly inspect contents
+- Many situations depend on prior knowledge
+
+**Strict Security Requirements:**
+
+- Restrictions on using AI services
+- Prohibition on sending code externally
+- Constraints in on-premises environments
+
+#### 3. Other Considerations
+
+- At this time, large-scale validation across many projects is still insufficient
+- Suitability primarily depends on the nature of the tech stack
+- Level of team understanding and skill in using AI
+
+### A Framework for Decision-Making
+
+Consider the following factors comprehensively when deciding whether to adopt AITDD:
 
 ```
-TODO作成 → 仕様作成 → テストケース作成 → Red-Green-Refactor-Validation → レビュー
+✅ Recommended
+- Many repeated implementations of similar patterns
+- JavaScript/Python-based projects
+- Medium or larger development teams
+- Prioritize development speed over absolute perfection
+
+⚠️ Consider Carefully
+- Strict performance requirements
+- Strict security requirements
+- Team has little experience using AI
+
+❌ Not Recommended
+- Highly custom, one-off implementations
+- Primarily compiled languages
+- Very small prototype projects
 ```
 
-#### フェーズ1：計画と設計（人間主導）
-1. **TODO作成**: 開発タスクの明確化と作業単位の細分化
-2. **仕様作成**: TODOからの詳細仕様策定（**人力レビュー必須**）
-3. **テストケース作成**: 仕様に基づくテストケース設計（**人力レビュー必須**）
+## 1.4 Concrete AITDD Workflow
 
-#### フェーズ2：実装サイクル（AI主導・人間監督）
-4. **Red-Green-Refactor-Validation**: 拡張TDDサイクルをAIが実行
-   - **Red**: テスト失敗の確認
-   - **Green**: AIによる最小実装
-   - **Refactor**: AIによるコード最適化
-   - **Validation**: 実装の妥当性検証
+### Basic Development Cycle
 
-#### フェーズ3：品質保証（人間主導）
-5. **最終レビュー**: ソースコードの人力確認と品質チェック
-
-### AIと人間の役割分担
-
-| 担当者 | 主な責任 | 具体的な作業 |
-|--------|----------|-------------|
-| **人間** | 戦略・品質管理 | 仕様策定、テスト設計、最終レビュー |
-| **AI** | 実装・最適化 | コード生成、リファクタリング、自動テスト |
-
-## 1.5 実践事例から学ぶ教訓
-
-### バイブコーディングからの進化
-
-AITDDの開発過程で重要な発見がありました。初期の「バイブコーディング」（ノリと勢いでAIを使うコーディング）から、構造化されたAITDDへの進化です。
-
-#### バイブコーディングの限界
-- **スケールの壁**: 3機能程度の統合で限界に到達
-- **品質の不安定性**: AIが指示していない大量のコードを勝手に生成
-- **保守性の欠如**: 同じ要求で全く違う実装が生まれやすい
-
-#### AITDDによる解決
-- **段階的開発**: 長期開発でも使える安定性を獲得
-- **品質の予測可能性**: テストファーストによる品質保証
-- **統合作業の簡素化**: 構造化されたアプローチによる一貫性
-
-### 実際の成果
-
-**開発効率:**
-- 従来の開発と比較して明確な時間短縮を実現
-- リファクタリング工程を経ることで高品質を達成
-
-**プロセスの有効性:**
-- 再現性のあるプロセスの確立
-- 小規模実験プロジェクトでの有効性を確認
-
-## 1.6 AITDDを始める前に知っておくべきこと
-
-### 段階的導入のすすめ
-
-1. **第1段階**: 小規模な実験でAIコーディングの可能性を体感
-2. **第2段階**: バイブコーディングの限界を認識（統合の難しさ）
-3. **第3段階**: TDD導入による体系化
-4. **第4段階**: 長期的なAITDD手法の確立
-
-### 成功のための心構え
-
-**やるべきこと:**
-- 最初からテスト戦略を考慮
-- 小規模実験で限界を把握
-- 人間とAIの役割分担を明確化
-
-**避けるべきこと:**
-- AIの出力を無批判に受け入れる
-- 品質管理を後回しにする
-- 大規模開発をいきなり始める
-
-### 推奨される学習パス
+AITDD adopts the following process, which extends the traditional TDD cycle:
 
 ```
-1. 第2章：環境構築とツールセットアップ
+Create TODO → Write Specification → Create Test Cases → Red-Green-Refactor-Validation → Review
+```
+
+#### Phase 1: Planning and Design (Human-led)
+
+1. **Create TODO**: Clarify development tasks and break into work units
+2. **Write Specification**: Create detailed specifications from TODOs (**human review required**)
+3. **Create Test Cases**: Design test cases based on the specification (**human review required**)
+
+#### Phase 2: Implementation Cycle (AI-led with human supervision)
+
+4. **Red-Green-Refactor-Validation**: AI executes the extended TDD cycle
+   - **Red**: Confirm failing tests
+   - **Green**: Minimal implementation by AI
+   - **Refactor**: Code optimization by AI
+   - **Validation**: Validate implementation soundness
+
+#### Phase 3: Quality Assurance (Human-led)
+
+5. **Final Review**: Human verification of source code and quality checks
+
+### Roles of AI and Humans
+
+| Role      | Main Responsibility         | Specific Work                                   |
+| --------- | --------------------------- | ----------------------------------------------- |
+| **Human** | Strategy/Quality Management | Specification, test design, final review        |
+| **AI**    | Implementation/Optimization | Code generation, refactoring, automated testing |
+
+## 1.5 Lessons Learned from Practice
+
+### Evolution from “Vibe Coding”
+
+An important discovery during the evolution of AITDD: moving from initial “vibe coding” (ad-hoc AI-driven coding) to structured AITDD.
+
+#### Limits of Vibe Coding
+
+- **Scaling wall**: Hits limits when integrating around three features
+- **Quality instability**: AI generates large amounts of code that were not instructed
+- **Lack of maintainability**: Same requirements often lead to completely different implementations
+
+#### AITDD Solutions
+
+- **Incremental development**: Stability usable even in long-term development
+- **Predictable quality**: Quality assurance via test-first approach
+- **Simplified integration**: Consistency through a structured approach
+
+### Actual Outcomes
+
+**Development Efficiency:**
+
+- Achieved clear time reduction compared to conventional development
+- Achieved high quality through a refactoring phase
+
+**Process Effectiveness:**
+
+- Established a reproducible process
+- Verified effectiveness in small experimental projects
+
+## 1.6 What to Know Before Starting AITDD
+
+### Recommendation for Phased Adoption
+
+1. **Phase 1**: Experience the potential of AI coding with small experiments
+2. **Phase 2**: Recognize the limits of vibe coding (difficulty of integration)
+3. **Phase 3**: Systematize via TDD introduction
+4. **Phase 4**: Establish a long-term AITDD methodology
+
+### Mindset for Success
+
+**Do:**
+
+- Consider a test strategy from the start
+- Understand limits through small experiments
+- Clarify role division between humans and AI
+
+**Avoid:**
+
+- Blindly accepting AI output
+- Postponing quality management
+- Starting large-scale development immediately
+
+### Recommended Learning Path
+
+```
+1. Chapter 2: Environment setup and tools
    ↓
-2. 第3章：AITDDプロセスの詳細理解
+2. Chapter 3: Detailed understanding of AITDD process
    ↓
-3. 第4章：小規模プロジェクトでの実践
+3. Chapter 4: Practice with a small project
    ↓
-4. 第5章以降：最適化と応用
+4. Chapter 5 and beyond: Optimization and application
 ```
 
 ---
 
-**次の章では、AITDDを実践するための開発環境とツールセットアップについて詳しく説明します。実際にClaude Sonnet 4を活用した開発環境の構築方法を、手順を追って解説していきます。**
+**In the next chapter, we will explain in detail the development environment and tool setup for practicing AITDD. We will walk through how to build a development environment that leverages Claude Sonnet 4.**

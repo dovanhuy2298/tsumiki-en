@@ -1,10 +1,11 @@
-テストエラーを解消して。
-最初に全テストケースの確認をタスク実行してテストケースのエラーをtodoにセットして
-各対象毎に以下の作業を実施して
-　 - タスクで詳細にテストのエラー原因を調る
- 　- 新たなタスクで /tdd-green を使って修正する
-最後に全体のテストの成功率を確認してレポートして
-ゴールはテストケースの成功数を上げること
-NEVER: テストのスキップ
-NEVER: 既存でテストケースの削除
-#ultrathink
+Fix test errors.
+First, run all test cases to check and set test case errors to todos
+Then for each target, perform the following work:
+
+- Investigate the detailed causes of test errors using tasks
+- Use /tdd-green with new tasks to fix errors
+  Finally, check the overall test success rate and report
+  Goal is to increase the number of successful test cases
+  NEVER: Skip tests
+  NEVER: Delete existing test cases
+  #ultrathink

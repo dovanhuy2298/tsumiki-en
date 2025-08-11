@@ -1,408 +1,426 @@
 # direct-verify
 
-## 目的
+## Purpose
 
-DIRECTタスクで実行した設定作業の動作確認とテストを行います。設定が正しく適用され、システムが期待通りに動作することを確認します。
+Verify operation and run tests for the configuration work performed in a DIRECT task. Confirm that configurations are correctly applied and that the system behaves as expected.
 
-## 前提条件
+## Prerequisites
 
-- `direct-setup.md` が実行済み
-- タスクIDが提供されている
-- 設定作業の記録が存在する
+- `direct-setup.md` has been executed
+- Task ID is provided
+- A record of configuration work exists
 
-## 実行内容
+## Execution Content
 
-**【重要】**: direct-setupで作成されたファイルについて、コンパイルエラーや構文エラーが見つかった場合は自動的に解決を試行します。
+**Important**: If compile or syntax errors are found in files created by direct-setup, an automatic attempt to resolve them will be performed.
 
-1. **設定の確認**
-   - @agent-symbol-searcher で関連設定や検証パターンを検索し、見つかったファイルをReadツールで読み込み
-   - `docs/implements/{TASK-ID}/setup-report.md` をReadツールで読み込み、設定作業の結果を確認
-   - 環境変数の確認
-   - 設定ファイルの内容確認
-   - 依存関係のインストール状況確認
-   - サービスの起動状況確認
+1. **Configuration Verification**
 
-2. **コンパイル・構文確認**
-   - TypeScript/JavaScript構文エラーチェック（該当する場合）
-   - 設定ファイルの構文確認（JSON, YAML等）
-   - SQL構文確認（該当する場合）
-   - 最低限のコンパイルエラー解消
+   - Search related configurations and verification patterns with @agent-symbol-searcher and read found files with the Read tool
+   - Read `docs/implements/{TASK-ID}/setup-report.md` with the Read tool and confirm the results of configuration work
+   - Verify environment variables
+   - Verify configuration file contents
+   - Verify dependency installation status
+   - Verify service startup status
 
-3. **動作テストの実行**
-   - @agent-symbol-searcher で既存のテストケースや検証スクリプトを検索し、見つかったファイルをReadツールで読み込み
-   - 基本的な動作確認
-   - 接続テスト
-   - 権限の確認
-   - エラーケースの確認
+2. **Compile/Syntax Verification**
 
-4. **品質チェック**
-   - セキュリティ設定の確認
-   - パフォーマンス基準の確認
-   - ログの確認
+   - TypeScript/JavaScript syntax error check (if applicable)
+   - Configuration file syntax verification (JSON, YAML, etc.)
+   - SQL syntax verification (if applicable)
+   - Resolve minimal compile errors
 
-## 出力先
+3. **Run Operation Tests**
 
-確認記録は `docs/implements/{TASK-ID}/` ディレクトリに以下のファイルとして作成されます：
-- `verify-report.md`: 設定確認・動作テスト記録
+   - Search existing test cases and verification scripts with @agent-symbol-searcher and read found files with the Read tool
+   - Basic operation check
+   - Connectivity tests
+   - Permission check
+   - Error case check
 
-## 出力フォーマット例
+4. **Quality Checks**
+   - Verify security-related settings
+   - Verify performance baselines
+   - Verify logs
+
+## Output Destination
+
+Verification records are created under `docs/implements/{TASK-ID}/` as the following file:
+
+- `verify-report.md`: Record of configuration verification and operation tests
+
+## Example Output Format
 
 ````markdown
-# {TASK-ID} 設定確認・動作テスト
+# {TASK-ID} Configuration Verification & Operation Tests
 
-## 確認概要
+## Summary
 
-- **タスクID**: {TASK-ID}
-- **確認内容**: {設定確認の概要}
-- **実行日時**: {実行日時}
-- **実行者**: {実行者}
+- **Task ID**: {TASK-ID}
+- **Scope**: {Overview of configuration verification}
+- **Execution Date**: {Date/time}
+- **Executor**: {Executor}
 
-## 設定確認結果
+## Configuration Verification Results
 
-### 1. 環境変数の確認
+### 1. Environment Variables
 
 ```bash
-# 実行したコマンド
+# Commands executed
 echo $NODE_ENV
 echo $DATABASE_URL
 ```
-````
 
-**確認結果**:
+**Results**:
 
-- [x] NODE_ENV: development (期待値: development)
-- [x] DATABASE_URL: postgresql://localhost:5432/mydb (期待値: 正しいDB URL)
+- [x] NODE_ENV: development (Expected: development)
+- [x] DATABASE_URL: postgresql://localhost:5432/mydb (Expected: valid DB URL)
 
-### 2. 設定ファイルの確認
+### 2. Configuration Files
 
-**確認ファイル**: `config/database.json`
+**Target File**: `config/database.json`
 
 ```bash
-# 実行したコマンド
+# Commands executed
 cat config/database.json | jq .
 ```
 
-**確認結果**:
+**Results**:
 
-- [x] ファイルが存在する
-- [x] JSON形式が正しい
-- [x] 必要な設定項目が含まれている
+- [x] File exists
+- [x] Valid JSON format
+- [x] Required configuration keys present
 
-## コンパイル・構文チェック結果
+## Compile/Syntax Check Results
 
-### 1. TypeScript/JavaScript構文チェック
+### 1. TypeScript/JavaScript Syntax Check
 
 ```bash
-# TypeScriptファイルがある場合
+# If TypeScript files exist
 npx tsc --noEmit --skipLibCheck
 
-# JavaScript構文チェック
+# JavaScript syntax check
 node --check *.js
 ```
 
-**チェック結果**:
+**Results**:
 
-- [x] TypeScript構文エラー: なし
-- [x] JavaScript構文エラー: なし
-- [x] import/require文: 正常
+- [x] TypeScript syntax errors: none
+- [x] JavaScript syntax errors: none
+- [x] import/require statements: valid
 
-### 2. 設定ファイル構文チェック
+### 2. Configuration File Syntax Check
 
 ```bash
-# JSON設定ファイルの構文チェック
+# JSON configuration syntax check
 cat config/*.json | jq empty
 
-# YAML設定ファイルの構文チェック（該当する場合）
+# YAML configuration syntax check (if applicable)
 yamllint config/*.yml
 ```
 
-**チェック結果**:
+**Results**:
 
-- [x] JSON構文: 正常
-- [x] YAML構文: 正常（該当する場合）
-- [x] 設定項目の妥当性: 確認済み
+- [x] JSON syntax: valid
+- [x] YAML syntax: valid (if applicable)
+- [x] Configuration key validity: verified
 
-### 3. SQL構文チェック（該当する場合）
+### 3. SQL Syntax Check (if applicable)
 
 ```bash
-# SQL構文の基本チェック
+# Basic SQL syntax check
 psql -d mydb --single-transaction --set ON_ERROR_STOP=on -f schema.sql --dry-run
 ```
 
-**チェック結果**:
+**Results**:
 
-- [x] SQL構文: 正常
-- [x] テーブル定義: 正常
-- [x] 制約定義: 正常
+- [x] SQL syntax: valid
+- [x] Table definitions: valid
+- [x] Constraint definitions: valid
 
-### 3. 依存関係の確認
+### 3. Dependency Verification
 
 ```bash
-# 実行したコマンド
+# Commands executed
 npm list express pg
 ```
 
-**確認結果**:
+**Results**:
 
-- [x] express: インストール済み
-- [x] pg: インストール済み
+- [x] express: installed
+- [x] pg: installed
 
-### 4. データベース接続テスト
+### 4. Database Connectivity Test
 
 ```bash
-# 実行したコマンド
+# Commands executed
 psql -d mydb -c "SELECT 1;"
 ```
 
-**確認結果**:
+**Results**:
 
-- [x] データベース接続成功
-- [x] クエリ実行成功
+- [x] Database connection: success
+- [x] Query execution: success
 
-## 動作テスト結果
+## Operation Test Results
 
-### 1. 基本動作テスト
+### 1. Basic Operation
 
 ```bash
-# 実行したテストコマンド
+# Test command executed
 node -e "console.log('Hello, World!');"
 ```
 
-**テスト結果**:
+**Results**:
 
-- [x] Node.js実行環境: 正常
-- [x] 基本的なJavaScript実行: 正常
+- [x] Node.js runtime: OK
+- [x] Basic JavaScript execution: OK
 
-### 2. データベース接続テスト
+### 2. Database Connection Test
 
 ```javascript
-// テストスクリプト
-const { Pool } = require('pg');
+// Test script
+const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-pool.query('SELECT NOW()', (err, res) => {
+pool.query("SELECT NOW()", (err, res) => {
   if (err) {
-    console.error('Error:', err);
+    console.error("Error:", err);
   } else {
-    console.log('Connected:', res.rows[0]);
+    console.log("Connected:", res.rows[0]);
   }
   pool.end();
 });
 ```
 
-**テスト結果**:
+**Results**:
 
-- [x] データベース接続: 正常
-- [x] クエリ実行: 正常
-- [x] 接続終了: 正常
+- [x] Database connection: OK
+- [x] Query execution: OK
+- [x] Connection close: OK
 
-### 3. セキュリティ設定テスト
+### 3. Security Settings Test
 
 ```bash
-# 実行したコマンド
+# Commands executed
 ls -la config/
 ps aux | grep node
 ```
 
-**テスト結果**:
+**Results**:
 
-- [x] 設定ファイルの権限: 適切
-- [x] プロセスの実行権限: 適切
-- [x] 機密情報の保護: 適切
+- [x] Configuration file permissions: appropriate
+- [x] Process execution privileges: appropriate
+- [x] Protection of sensitive information: appropriate
 
-## 品質チェック結果
+## Quality Check Results
 
-### パフォーマンス確認
+### Performance
 
-- [x] 起動時間: 2秒以内
-- [x] メモリ使用量: 256MB以内
-- [x] CPU使用率: 10%以内
+- [x] Startup time: within 2 seconds
+- [x] Memory usage: within 256 MB
+- [x] CPU usage: within 10%
 
-### ログ確認
+### Logs
 
-- [x] エラーログ: 異常なし
-- [x] 警告ログ: 問題なし
-- [x] 情報ログ: 適切に出力
+- [x] Error logs: none
+- [x] Warning logs: none
+- [x] Info logs: output appropriately
 
-## 全体的な確認結果
+## Overall Verification Result
 
-- [x] 設定作業が正しく完了している
-- [x] 全ての動作テストが成功している
-- [x] 品質基準を満たしている
-- [x] 次のタスクに進む準備が整っている
+- [x] Configuration work completed correctly
+- [x] All operation tests succeeded
+- [x] Meets quality standards
+- [x] Ready to proceed to the next task
 
-## 発見された問題と解決
+## Found Issues and Resolutions
 
-### 構文エラー・コンパイルエラーの解決
+### Resolution of Syntax/Compile Errors
 
-**自動解決を試行する問題**:
-- TypeScript/JavaScript構文エラー
-- JSON/YAML構文エラー
-- 基本的なSQL構文エラー
-- import/require文の問題
+**Issues automatically attempted**:
 
-### 問題1: {問題があれば記載}
+- TypeScript/JavaScript syntax errors
+- JSON/YAML syntax errors
+- Basic SQL syntax errors
+- import/require issues
 
-- **問題内容**: {問題の詳細}
-- **発見方法**: {構文チェック/コンパイル/動作テスト}
-- **重要度**: {高/中/低}
-- **自動解決**: {実行した解決コマンド・修正内容}
-- **解決結果**: {解決済み/手動対応が必要}
+### Issue 1: {Describe issue if any}
 
-### 解決実行ログ
+- **Details**: {Issue details}
+- **Detected by**: {Syntax check/Compile/Operation test}
+- **Severity**: {High/Medium/Low}
+- **Auto-fix**: {Commands/changes applied}
+- **Result**: {Resolved/Manual action required}
+
+### Resolution Execution Log
 
 ```bash
-# 実行した解決コマンド例
-# 構文エラー修正
-sed -i 's/typo/correct/g' config.js
+# Sample commands executed to resolve issues
+# Fix syntax
+gsed -i 's/typo/correct/g' config.js
 
-# 依存関係の修正
+# Fix dependencies
 npm install missing-package
 
-# 設定ファイル修正
+# Update config file
 jq '.port = 3000' config.json > temp.json && mv temp.json config.json
 ```
 
-**解決結果**:
-- [x] 問題1: 解決済み
-- [x] 問題2: 解決済み
-- [ ] 問題3: 手動対応が必要（詳細は推奨事項に記載）
+**Resolution Summary**:
 
-## 推奨事項
+- [x] Issue 1: Resolved
+- [x] Issue 2: Resolved
+- [ ] Issue 3: Manual action required (see recommendations)
 
-- {改善提案があれば記載}
-- {最適化の提案があれば記載}
+## Recommendations
 
-## 次のステップ
+- {Add improvement suggestions if any}
+- {Add optimization suggestions if any}
 
-- タスクの完了報告
-- 関連するタスクの開始準備
-- 必要に応じて設定の微調整
+## Next Steps
 
+- Report task completion
+- Prepare to start related tasks
+- Fine-tune configuration if necessary
 ````
 
-## 実行後の確認
-- `docs/implements/{TASK-ID}/verify-report.md` ファイルが作成されていることを確認
-- 全ての確認項目が完了していることを確認
-- 問題が発見された場合は適切に対処されていることを確認
-- タスクの完了条件を満たしていることを確認
-- 次のタスクに進む準備が整っていることを確認
+## Post-execution Verification
 
-## ディレクトリ確認
+- Verify that `docs/implements/{TASK-ID}/verify-report.md` has been created
+- Verify that all verification items are completed
+- Verify that any issues found have been addressed appropriately
+- Verify that the task completion criteria are satisfied
+- Verify readiness to proceed to the next task
 
-`docs/implements/{TASK-ID}/` ディレクトリが存在することを確認してください（direct-setupで作成済みのはず）
+## Directory Check
 
-## タスクの完了マーキング
-品質チェックが十分で、全ての確認項目がクリアされた場合は、tasksディレクトリの該当するタスクファイルに完了マークを付けてください。
+Confirm that the directory `docs/implements/{TASK-ID}/` exists (it should have been created in direct-setup).
 
-### 完了条件
-以下の条件を全て満たす場合にタスクを完了とマークします：
-- [ ] 全ての設定確認項目がクリア
-- [ ] コンパイル・構文チェックが成功（エラーがすべて解決済み）
-- [ ] 全ての動作テストが成功
-- [ ] 品質チェック項目が基準を満たしている
-- [ ] 発見された問題が適切に対処されている
-- [ ] セキュリティ設定が適切
-- [ ] パフォーマンス基準を満たしている
+## Task Completion Marking
 
-### 完了マークの付け方
-1. ユーザが指定したタスクファイルを確認
-2. ファイル内の該当セクションまたはタスク項目に `✅ 完了` または `[COMPLETED]` マークを追加
-3. 完了日時と確認者を記録
+If quality checks are sufficient and all verification items pass, add a completion mark to the corresponding task file under the tasks directory.
 
-## README.mdの更新
-タスクが完了した場合、プロジェクトのルートディレクトリの `README.md` を作成または更新してください。
+### Completion Criteria
 
-### 更新内容
-1. **現在のREADME.mdの確認**: 既存のREADME.mdがある場合は内容を確認
-2. **完了したタスクの情報を追加**:
-   - 実装した機能の概要
-   - 設定手順
-   - 動作確認方法
-   - 使用方法
-3. **プロジェクト全体の情報を更新**:
-   - セットアップ手順
-   - 依存関係
-   - 環境要件
-   - 開発・運用手順
+Mark the task complete only if all of the following are true:
 
-### README.md更新フォーマット例
+- [ ] All configuration verification items passed
+- [ ] Compile/syntax checks succeeded (all errors resolved)
+- [ ] All operation tests succeeded
+- [ ] Quality checks meet standards
+- [ ] Issues identified have been addressed
+- [ ] Security settings are appropriate
+- [ ] Performance meets baseline
 
-```markdown
-# プロジェクト名
+### How to Mark Complete
 
-## 概要
-{プロジェクトの概要}
+1. Locate the task file specified by the user
+2. Add a `✅ Completed` or `[COMPLETED]` mark to the relevant section or task item in the file
+3. Record completion date/time and verifier
 
-## 完了した機能
-### {TASK-ID}: {タスク名}
-- **実装日**: {実装日}
-- **概要**: {機能の概要}
-- **設定内容**: {設定した内容}
-- **動作確認**: {動作確認の結果}
+## README.md Update
 
-## セットアップ手順
-### 前提条件
-- {必要な環境・ツール}
+When the task is completed, create or update the project's root `README.md`.
 
-### インストール
+### What to Update
+
+1. **Check the current README.md**: If it exists, review the content
+2. **Add information about the completed task**:
+   - Overview of the implemented feature
+   - Configuration steps
+   - How to verify operation
+   - Usage instructions
+3. **Update project-wide information**:
+   - Setup steps
+   - Dependencies
+   - Environment requirements
+   - Development/operations procedures
+
+### README.md Update Example Format
+
+````markdown
+# Project Name
+
+## Overview
+
+{Project overview}
+
+## Completed Features
+
+### {TASK-ID}: {Task Name}
+
+- **Implementation Date**: {Date}
+- **Overview**: {Feature overview}
+- **Configuration**: {What was configured}
+- **Verification**: {Verification results}
+
+## Setup
+
+### Prerequisites
+
+- {Required environment/tools}
+
+### Installation
+
 ```bash
-# 依存関係のインストール
-{インストールコマンド}
+# Install dependencies
+{install command}
 
-# 環境変数の設定
-{環境変数設定}
+# Environment variables
+{env vars setup}
+```
 ````
 
-### 起動方法
+### Start
 
 ```bash
-# 開発サーバーの起動
-{起動コマンド}
+# Start development server
+{start command}
 ```
 
-## 設定
+## Configuration
 
-### 環境変数
+### Environment Variables
 
-- `{環境変数名}`: {説明}
+- `{ENV_VAR_NAME}`: {Description}
 
-### 設定ファイル
+### Configuration Files
 
-- `{設定ファイルパス}`: {説明}
+- `{path/to/config}`: {Description}
 
-## 使用方法
+## Usage
 
-{使用方法の説明}
+{How to use}
 
-## 開発
+## Development
 
-### 開発環境の準備
+### Prepare Dev Environment
 
-{開発環境の準備手順}
+{Steps to prepare dev environment}
 
-### テスト
+### Test
 
-{テストの実行方法}
+{How to run tests}
 
-## トラブルシューティング
+## Troubleshooting
 
-### よくある問題
+### Common Issues
 
-- **問題**: {問題の内容}
-- **解決方法**: {解決方法}
+- **Issue**: {Issue}
+- **Solution**: {Solution}
 
-## 更新履歴
+## Changelog
 
-- {日付}: {TASK-ID} {変更内容}
+- {Date}: {TASK-ID} {Changes}
 
 ```
 
-### 実行手順
-1. 現在のREADME.mdを確認（存在しない場合は新規作成）
-2. 完了したタスクの情報を追加
-3. 必要に応じて他のセクションも更新
-4. 変更内容をコミット
+### Steps
+1. Review the current README.md (create new if it does not exist)
+2. Add information about the completed task
+3. Update other sections as needed
+4. Commit the changes
 ```
