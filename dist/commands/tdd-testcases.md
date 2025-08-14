@@ -1,42 +1,35 @@
-# TDD Test Case Identification
+# TDD Test Case Creation
 
-Identify test cases based on the requirements organized earlier.
+Create comprehensive test cases for TDD development based on requirements definition.
 
-## Preliminary Preparation
+## Purpose
 
-Prepare development context:
+Create detailed test cases covering normal cases, abnormal cases, and edge cases based on requirements definition documents. Prepare for Red phase (failing test creation) in TDD cycle.
 
-1. **Search for test-related information using @agent-symbol-searcher and read found files**
+## Prerequisites
 
-   - Search for existing test patterns and test cases, and read corresponding test files with Read tool
-   - Identify testing methods and mock strategies for similar features, and read related files with Read tool
-   - Check test framework usage and read configuration files with Read tool
+- Requirements definition document exists (`docs/implements/{{task_id}}/{feature_name}-requirements.md`)
+- Feature to be implemented is clearly defined
+- Development environment is set up
 
-2. **Direct reading of related files**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check existing test cases
-   - Read related design documents and task files as needed
+## Execution Content
 
-After loading completion, identify test cases based on prepared context information.
+### 1. Requirements Analysis
 
-## Reliability Level Instructions
+- Read requirements definition document with Read tool
+- Extract functional requirements and constraints
+- Identify input/output specifications
+- Clarify expected behavior and error handling
 
-When creating each test case, always comment on the verification status with original materials (requirements definition, existing implementation, library documentation, etc.) using the following signals:
+### 2. Test Case Design
 
-- 🟢 **Green Signal**: When referring to original materials with minimal speculation
-- 🟡 **Yellow Signal**: When making reasonable speculation based on original materials
-- 🔴 **Red Signal**: When speculation is not based on original materials
+Design test cases covering the following three categories:
 
-## Test Case Classification
+#### 2.1 Normal System Test Cases
 
-### 1. Normal System Test Cases (Basic Operations)
-
-Please describe in the following format:
-
-- **Test Name**: [Easy-to-understand Japanese name]
-  - **What to Test**: [Specific operations or features to verify in this test]
-  - **Expected Behavior**: [What processes should execute normally]
+- **Test Name**: [Easy-to-understand Vietnamese name]
+  - **Test Case Overview**: [What normal operation is expected]
+  - **Business Value**: [Why this functionality is important]
 - **Input Values**: [Specific values]
   - **Meaning of Input Data**: [Why this input value was chosen, what it represents]
 - **Expected Results**: [Specific expected values]
@@ -45,105 +38,105 @@ Please describe in the following format:
   - **Verification Points**: [Points to pay special attention to during verification]
 - 🟢🟡🔴 State reliability level of this test case
 
-### 2. Abnormal System Test Cases (Error Handling)
+#### 2.2 Abnormal System Test Cases (Error Handling)
 
-- **Test Name**: [Easy-to-understand Japanese name]
+- **Test Name**: [Easy-to-understand Vietnamese name]
   - **Error Case Overview**: [What abnormal situation is anticipated]
-  - **エラー処理の重要性**: [なぜこのエラーハンドリングが必要か]
-- **入力値**: [不正な値や境界を超えた値]
-  - **不正な理由**: [なぜこの入力値が不正とされるか]
-  - **実際の発生シナリオ**: [実運用でどのような場面で発生するか]
-- **期待される結果**: [適切なエラーメッセージや例外]
-  - **エラーメッセージの内容**: [ユーザーにとって分かりやすいメッセージか]
-  - **システムの安全性**: [エラー時にシステムが安全な状態を保てるか]
-- **テストの目的**: [エラーハンドリングの確認]
-  - **品質保証の観点**: [このテストがシステム品質にどう貢献するか]
-- 🟢🟡🔴 このテストケースの信頼性レベルを記載
+  - **Error Handling Importance**: [Why this error handling is necessary]
+- **Input Values**: [Invalid values or values exceeding boundaries]
+  - **Reason for Invalidity**: [Why this input value is considered invalid]
+  - **Actual Occurrence Scenarios**: [In what situations this occurs in actual operation]
+- **Expected Results**: [Appropriate error messages or exceptions]
+  - **Error Message Content**: [Whether the message is understandable for users]
+  - **System Safety**: [Whether the system can maintain safe state during errors]
+- **Test Purpose**: [Error handling verification]
+  - **Quality Assurance Perspective**: [How this test contributes to system quality]
+- 🟢🟡🔴 State reliability level of this test case
 
-### 3. 境界値テストケース（最小値、最大値、null 等）
+#### 2.3 Boundary Value Test Cases (Minimum, maximum, null, etc.)
 
-- **テスト名**: [わかりやすい日本語名]
-  - **境界値の意味**: [なぜこの値が境界として重要か]
-  - **境界値での動作保証**: [境界付近での動作の一貫性確認]
-- **入力値**: [境界値]
-  - **境界値選択の根拠**: [なぜこの値を境界値として選んだか]
-  - **実際の使用場面**: [実運用でこの境界値がどう影響するか]
-- **期待される結果**: [境界での動作]
-  - **境界での正確性**: [境界値での計算や処理が正確に行われるか]
-  - **一貫した動作**: [境界の内側と外側で動作が一貫しているか]
-- **テストの目的**: [境界条件の確認]
-  - **堅牢性の確認**: [システムが極端な条件下でも安定動作するか]
-- 🟢🟡🔴 このテストケースの信頼性レベルを記載
+- **Test Name**: [Easy-to-understand Vietnamese name]
+  - **Boundary Value Meaning**: [Why this value is important as a boundary]
+  - **Behavior Guarantee at Boundary**: [Consistency confirmation of behavior near boundaries]
+- **Input Values**: [Boundary values]
+  - **Reason for Boundary Value Selection**: [Why this value was chosen as boundary]
+  - **Actual Usage Scenarios**: [How this boundary value affects actual operation]
+- **Expected Results**: [Behavior at boundaries]
+  - **Accuracy at Boundaries**: [Whether calculations and processing are accurate at boundary values]
+  - **Consistent Behavior**: [Whether behavior is consistent inside and outside boundaries]
+- **Test Purpose**: [Boundary condition verification]
+  - **Robustness Confirmation**: [Whether system operates stably under extreme conditions]
+- 🟢🟡🔴 State reliability level of this test case
 
-## 開発言語・フレームワーク
+## Development Language & Framework
 
-実装に使用する言語・テストフレームワークも併せて指定してください：
+Please also specify the language and test framework to be used for implementation:
 
-- **プログラミング言語**: {{language}}
-  - **言語選択の理由**: [なぜこの言語を選んだか]
-  - **テストに適した機能**: [この言語のテストに有利な特徴]
-- **テストフレームワーク**: {{test_framework}}
-  - **フレームワーク選択の理由**: [なぜこのテストフレームワークを選んだか]
-  - **テスト実行環境**: [どのような環境でテストを実行するか]
-- 🟢🟡🔴 この内容の信頼性レベルを記載
+- **Programming Language**: {{language}}
+  - **Reason for Language Selection**: [Why this language was chosen]
+  - **Features Suitable for Testing**: [Advantageous features of this language for testing]
+- **Test Framework**: {{test_framework}}
+  - **Reason for Framework Selection**: [Why this test framework was chosen]
+  - **Test Execution Environment**: [In what environment tests will be executed]
+- 🟢🟡🔴 State reliability level of this content
 
-## テストケース実装時の日本語コメント指針
+## Vietnamese Comment Guidelines for Test Case Implementation
 
-各テストケースの実装時には以下の日本語コメントを必ず含めてください：
+When implementing each test case, please include the following Vietnamese comments:
 
-### テストケース開始時のコメント
-
-```javascript
-// 【テスト目的】: [このテストで何を確認するかを日本語で明記]
-// 【テスト内容】: [具体的にどのような処理をテストするかを説明]
-// 【期待される動作】: [正常に動作した場合の結果を説明]
-// 🟢🟡🔴 この内容の信頼性レベルを記載
-```
-
-### Given（準備フェーズ）のコメント
+### Test Case Start Comments
 
 ```javascript
-// 【テストデータ準備】: [なぜこのデータを用意するかの理由]
-// 【初期条件設定】: [テスト実行前の状態を説明]
-// 【前提条件確認】: [テスト実行に必要な前提条件を明記]
+// 【Test Purpose】: [Clearly state in Vietnamese what to verify in this test]
+// 【Test Content】: [Explain specifically what processing to test]
+// 【Expected Behavior】: [Explain the result when operating normally]
+// 🟢🟡🔴 State reliability level of this content
 ```
 
-### When（実行フェーズ）のコメント
+### Given (Preparation Phase) Comments
 
 ```javascript
-// 【実際の処理実行】: [どの機能/メソッドを呼び出すかを説明]
-// 【処理内容】: [実行される処理の内容を日本語で説明]
-// 【実行タイミング】: [なぜこのタイミングで実行するかを説明]
+// 【Test Data Preparation】: [Reason why this data is prepared]
+// 【Initial Condition Setting】: [Explain state before test execution]
+// 【Prerequisite Confirmation】: [Clearly state prerequisites needed for test execution]
 ```
 
-### Then（検証フェーズ）のコメント
+### When (Execution Phase) Comments
 
 ```javascript
-// 【結果検証】: [何を検証するかを具体的に説明]
-// 【期待値確認】: [期待される結果とその理由を説明]
-// 【品質保証】: [この検証がシステム品質にどう貢献するかを説明]
+// 【Actual Processing Execution】: [Explain which functionality/method to call]
+// 【Processing Content】: [Explain in Vietnamese the content of processing to be executed]
+// 【Execution Timing】: [Explain why execution is at this timing]
 ```
 
-### 各 expect ステートメントのコメント
+### Then (Verification Phase) Comments
 
 ```javascript
-// 【検証項目】: [この検証で確認している具体的な項目]
-// 🟢🟡🔴 この内容の信頼性レベルを記載
-expect(result.validPaths).toHaveLength(2); // 【確認内容】: 有効なパスが正確に2つ検出されることを確認
-expect(result.invalidPaths).toContain("nonexistent.json"); // 【確認内容】: 存在しないファイルが無効パスとして適切に分類されることを確認
+// 【Result Verification】: [Specifically explain what to verify]
+// 【Expected Value Confirmation】: [Explain expected results and their reasons]
+// 【Quality Assurance】: [Explain how this verification contributes to system quality]
 ```
 
-### セットアップ・クリーンアップのコメント
+### Comments for Each expect Statement
+
+```javascript
+// 【Verification Item】: [Specific item being verified in this verification]
+// 🟢🟡🔴 State reliability level of this content
+expect(result.validPaths).toHaveLength(2); // 【Confirmation Content】: Confirm that exactly 2 valid paths are detected
+expect(result.invalidPaths).toContain("nonexistent.json"); // 【Confirmation Content】: Confirm that non-existent file is appropriately classified as invalid path
+```
+
+### Setup & Cleanup Comments
 
 ```javascript
 beforeEach(() => {
-  // 【テスト前準備】: [各テスト実行前に行う準備作業の説明]
-  // 【環境初期化】: [テスト環境をクリーンな状態にする理由と方法]
+  // 【Pre-test Preparation】: [Explanation of preparation work done before each test execution]
+  // 【Environment Initialization】: [Reason and method for keeping test environment in clean state]
 });
 
 afterEach(() => {
-  // 【テスト後処理】: [各テスト実行後に行うクリーンアップ作業の説明]
-  // 【状態復元】: [次のテストに影響しないよう状態を復元する理由]
+  // 【Post-test Processing】: [Explanation of cleanup work done after each test execution]
+  // 【State Restoration】: [Reason for restoring state to avoid affecting next test]
 });
 ```
 

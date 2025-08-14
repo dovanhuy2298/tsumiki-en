@@ -1,51 +1,35 @@
-# TDD Red Phase (Write Failing Tests)
+# TDD Red Phase (Failing Test Creation)
 
-Execute the Red phase of TDD.
+Create failing tests for TDD development based on test case definitions.
 
-## Preliminary Preparation
+## Purpose
 
-Prepare development context:
+Create failing tests that define expected behavior for features to be implemented. These tests will fail initially and serve as specifications for implementation in the Green phase.
 
-1. **Search for test implementation-related information using @agent-symbol-searcher and read found files**
+## Prerequisites
 
-   - Search for existing test files and test functions, and read corresponding files with Read tool
-   - Identify test setup and mock usage patterns, and read related files with Read tool
-   - Check Jest/Mocha and other test framework configurations, and read configuration files with Read tool
+- Test case definition document exists (`docs/implements/{{task_id}}/{feature_name}-testcases.md`)
+- Requirements definition document exists
+- Development environment is set up
+- Test framework is configured
 
-2. **Direct reading of related files**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check test case definition
-   - Read related design documents and task files as needed
+## Execution Content
 
-After loading completion, start Red phase (failing test creation) work based on prepared context information.
+### 1. Test Case Analysis
 
-## Target Test Cases
+- Read test case definition document with Read tool
+- Understand test scenarios and expected behavior
+- Identify input/output specifications
+- Clarify test data requirements
 
-**【Target Test Cases】**: {{test_case_name}}
+### 2. Test Code Creation
 
-## Test Case Addition Target Count
+Create test code following these principles:
 
-**Test Case Addition Target Count**: 10 or more (add all if less than 10 available test cases)
-
-Please select and implement 10 or more test cases from unimplemented test cases. If less than 10 test cases are available, target all available test cases for implementation.
-If test cases are already implemented, add tests from test cases written in the test case definition.
-
-## Reliability Level Instructions
-
-When creating test code, comment on the verification status with original materials for each test case content using the following signals:
-
-- 🟢 **Green Signal**: When referring to original materials with minimal speculation
-- 🟡 **Yellow Signal**: When making reasonable speculation based on original materials
-- 🔴 **Red Signal**: When speculation is not based on original materials
-
-## Requirements
-
-- **Language/Framework Used**: {{language_framework}}
-- Tests must be created in a failing state
-- Test names should be clearly written in Japanese
-- Assertions (expected value verification) should be clearly described
-- Create by calling functions/methods that are not yet implemented
+- **Test Structure**: Follow Given-When-Then pattern
+- **Test Data**: Prepare appropriate test data
+- **Assertions**: Define clear expected results
+- **Failure Confirmation**: Ensure tests fail initially
 
 ## Test Code Creation Guidelines
 
@@ -54,207 +38,207 @@ When creating test code, comment on the verification status with original materi
 - Actual process execution (When)
 - Result verification (Then)
 
-## 日本語コメント必須要件
+## Vietnamese Comment Requirements
 
-テストコードには以下の日本語コメントを必ず含めてください：
+Test code must include the following Vietnamese comments:
 
-### テストケース開始時のコメント
+### Test Case Start Comments
 
 ```javascript
 describe('{{feature_name}}', () => {
   test('{{test_case_name}}', () => {
-    // 【テスト目的】: [このテストで何を確認するかを日本語で明記]
-    // 【テスト内容】: [具体的にどのような処理をテストするかを説明]
-    // 【期待される動作】: [正常に動作した場合の結果を説明]
-    // 🟢🟡🔴 信頼性レベル: [このテストの内容が元資料のどの程度に基づいているか]
+    // 【Test Purpose】: [Clearly state in Vietnamese what to verify in this test]
+    // 【Test Content】: [Explain specifically what processing to test]
+    // 【Expected Behavior】: [Explain the result when operating normally]
+    // 🟢🟡🔴 Reliability Level: [To what extent this test content is based on original materials]
 
-    // 【テストデータ準備】: [なぜこのデータを用意するかの理由]
-    // 【初期条件設定】: [テスト実行前の状態を説明]
+    // 【Test Data Preparation】: [Reason why this data is prepared]
+    // 【Initial Condition Setting】: [Explain state before test execution]
     const input = {{test_input}};
 
-    // 【実際の処理実行】: [どの機能/メソッドを呼び出すかを説明]
-    // 【処理内容】: [実行される処理の内容を日本語で説明]
+    // 【Actual Processing Execution】: [Explain which functionality/method to call]
+    // 【Processing Content】: [Explain in Vietnamese the content of processing to be executed]
     const result = {{function_name}}(input);
 
-    // 【結果検証】: [何を検証するかを具体的に説明]
-    // 【期待値確認】: [期待される結果とその理由を説明]
-    expect(result).toBe({{expected_output}}); // 【確認内容】: [この検証で確認している具体的な項目] 🟢🟡🔴
+    // 【Result Verification】: [Specifically explain what to verify]
+    // 【Expected Value Confirmation】: [Explain expected results and their reasons]
+    expect(result).toBe({{expected_output}}); // 【Confirmation Content】: [Specific item being verified in this verification] 🟢🟡🔴
   });
 });
 ```
 
-### セットアップ・クリーンアップのコメント（必要に応じて）
+### Setup & Cleanup Comments (as needed)
 
 ```javascript
 beforeEach(() => {
-  // 【テスト前準備】: [各テスト実行前に行う準備作業の説明]
-  // 【環境初期化】: [テスト環境をクリーンな状態にする理由と方法]
+  // 【Pre-test Preparation】: [Explanation of preparation work done before each test execution]
+  // 【Environment Initialization】: [Reason and method for keeping test environment in clean state]
 });
 
 afterEach(() => {
-  // 【テスト後処理】: [各テスト実行後に行うクリーンアップ作業の説明]
-  // 【状態復元】: [次のテストに影響しないよう状態を復元する理由]
+  // 【Post-test Processing】: [Explanation of cleanup work done after each test execution]
+  // 【State Restoration】: [Reason for restoring state to avoid affecting next test]
 });
 ```
 
-### 各 expect ステートメントのコメント
+### Comments for Each expect Statement
 
-各 expect ステートメントには必ず日本語コメントを付けてください：
+Each expect statement must have Vietnamese comments:
 
 ```javascript
-expect(result.property).toBe(expectedValue); // 【確認内容】: [この検証で確認している具体的な項目と理由]
-expect(result.array).toHaveLength(3); // 【確認内容】: [配列の長さが期待値と一致することを確認する理由]
-expect(result.errors).toContain("error message"); // 【確認内容】: [特定のエラーメッセージが含まれることを確認する理由]
+expect(result.property).toBe(expectedValue); // 【Confirmation Content】: [Specific item and reason being verified in this verification]
+expect(result.array).toHaveLength(3); // 【Confirmation Content】: [Reason for confirming array length matches expected value]
+expect(result.errors).toContain("error message"); // 【Confirmation Content】: [Reason for confirming specific error message is included]
 ```
 
-## 作成するテストコードの例
+## Example Test Code to Create
 
 ```javascript
-// テストファイル: {{test_file_name}}
+// Test file: {{test_file_name}}
 describe('{{feature_name}}', () => {
   beforeEach(() => {
-    // 【テスト前準備】: 各テスト実行前にテスト環境を初期化し、一貫したテスト条件を保証
-    // 【環境初期化】: 前のテストの影響を受けないよう、ファイルシステムの状態をクリーンにリセット
+    // 【Pre-test Preparation】: Initialize test environment before each test execution to ensure consistent test conditions
+    // 【Environment Initialization】: Clean reset of file system state to avoid influence from previous tests
   });
 
   afterEach(() => {
-    // 【テスト後処理】: テスト実行後に作成された一時ファイルやディレクトリを削除
-    // 【状態復元】: 次のテストに影響しないよう、システムを元の状態に戻す
+    // 【Post-test Processing】: Delete temporary files and directories created after test execution
+    // 【State Restoration】: Return system to original state to avoid affecting next test
   });
 
   test('{{test_case_name}}', () => {
-    // 【テスト目的】: {{test_purpose}}
-    // 【テスト内容】: {{test_description}}
-    // 【期待される動作】: {{expected_behavior}}
-    // 🟢🟡🔴 信頼性レベル: [このテストの内容が元資料のどの程度に基づいているか]
+    // 【Test Purpose】: {{test_purpose}}
+    // 【Test Content】: {{test_description}}
+    // 【Expected Behavior】: {{expected_behavior}}
+    // 🟢🟡🔴 Reliability Level: [To what extent this test content is based on original materials]
 
-    // 【テストデータ準備】: {{test_data_reason}}
-    // 【初期条件設定】: {{initial_condition}}
+    // 【Test Data Preparation】: {{test_data_reason}}
+    // 【Initial Condition Setting】: {{initial_condition}}
     const input = {{test_input}};
 
-    // 【実際の処理実行】: {{function_description}}
-    // 【処理内容】: {{process_description}}
+    // 【Actual Processing Execution】: {{function_description}}
+    // 【Processing Content】: {{process_description}}
     const result = {{function_name}}(input);
 
-    // 【結果検証】: {{verification_description}}
-    // 【期待値確認】: {{expected_result_reason}}
-    expect(result).toBe({{expected_output}}); // 【確認内容】: {{specific_verification_point}}
+    // 【Result Verification】: {{verification_description}}
+    // 【Expected Value Confirmation】: {{expected_result_reason}}
+    expect(result).toBe({{expected_output}}); // 【Confirmation Content】: {{specific_verification_point}}
   });
 });
 ```
 
-## 提供してください
+## Please Provide
 
-1. **テストコード**: 実行可能な形式で、必須の日本語コメント付き
-2. **テスト実行コマンド**: どのように実行するか
-3. **期待される失敗メッセージ**: どのようなエラーが出るか
-4. **コメントの説明**: 各日本語コメントの意図と目的
+1. **Test Code**: In executable format with required Vietnamese comments
+2. **Test Execution Command**: How to execute
+3. **Expected Failure Message**: What kind of error will occur
+4. **Comment Explanation**: Intent and purpose of each Vietnamese comment
 
-テストコード作成後、以下を実行してください：
+After test code creation, execute the following:
 
-1. **メモファイル作成・更新**: docs/implements/{{task_id}}/{feature_name}-memo.md ファイルに Red フェーズの内容を作成または追記
-   - 既存のメモファイルがある場合は、Red フェーズセクションを更新
-   - メモファイルが存在しない場合は新規作成
-2. テストコードの設計内容を docs/implements/{{task_id}}/{feature_name}-red-phase.md に保存（既存ファイルがある場合は追記）
-3. TODO ステータスを更新（Red フェーズ完了をマーク）
-4. **品質判定**: テストコードの品質を以下の基準で判定
-   - テスト実行: 実行可能で失敗することを確認済み
-   - 期待値: 明確で具体的
-   - アサーション: 適切
-   - 実装方針: 明確
-5. **次のステップ表示**: 判定結果に関わらず、次のお勧めコマンドを表示
-   - 「次のお勧めステップ: `/tdd-green` で Green フェーズ（最小実装）を開始します。」
+1. **Memo File Creation/Update**: Create or append Red phase content to docs/implements/{{task_id}}/{feature_name}-memo.md file
+   - If existing memo file exists, update Red phase section
+   - If memo file doesn't exist, create new one
+2. Save test code design content to docs/implements/{{task_id}}/{feature_name}-red-phase.md (append if existing file exists)
+3. Update TODO status (mark Red phase completion)
+4. **Quality Assessment**: Assess test code quality based on the following criteria
+   - Test execution: Executable and confirmed to fail
+   - Expected values: Clear and specific
+   - Assertions: Appropriate
+   - Implementation approach: Clear
+5. **Next Step Display**: Regardless of assessment results, display next recommended command
+   - "Next recommended step: Start Green phase (minimal implementation) with `/tdd-green`."
 
-## TDD メモファイル形式
+## TDD Memo File Format
 
-docs/implements/{{task_id}}/{feature_name}-memo.md ファイルの形式：
+Format for docs/implements/{{task_id}}/{feature_name}-memo.md file:
 
 ```markdown
-# TDD 開発メモ: {feature_name}
+# TDD Development Memo: {feature_name}
 
-## 概要
+## Overview
 
-- 機能名: [機能名]
-- 開発開始: [日時]
-- 現在のフェーズ: [Red/Green/Refactor]
+- Feature Name: [Feature name]
+- Development Start: [Date/Time]
+- Current Phase: [Red/Green/Refactor]
 
-## 関連ファイル
+## Related Files
 
-- 元タスクファイル: `docs/tasks/{taskファイルのパス}.md`
-- 要件定義: `docs/implements/{{task_id}}/{feature_name}-requirements.md`
-- テストケース定義: `docs/implements/{{task_id}}/{feature_name}-testcases.md`
-- 実装ファイル: `[実装ファイルのパス]`
-- テストファイル: `[テストファイルのパス]`
+- Original Task File: `docs/tasks/{task file path}.md`
+- Requirements Definition: `docs/implements/{{task_id}}/{feature_name}-requirements.md`
+- Test Case Definition: `docs/implements/{{task_id}}/{feature_name}-testcases.md`
+- Implementation File: `[Implementation file path]`
+- Test File: `[Test file path]`
 
-## Red フェーズ（失敗するテスト作成）
+## Red Phase (Failing Test Creation)
 
-### 作成日時
+### Creation Date/Time
 
-[日時]
+[Date/Time]
 
-### テストケース
+### Test Cases
 
-[作成したテストケースの概要]
+[Overview of created test cases]
 
-### テストコード
+### Test Code
 
-[実際のテストコード]
+[Actual test code]
 
-### 期待される失敗
+### Expected Failures
 
-[どのような失敗が期待されるか]
+[What kind of failures are expected]
 
-### 次のフェーズへの要求事項
+### Requirements for Next Phase
 
-[Green フェーズで実装すべき内容]
+[Content to be implemented in Green phase]
 
-## Green フェーズ（最小実装）
+## Green Phase (Minimal Implementation)
 
-### 実装日時
+### Implementation Date/Time
 
-[日時]
+[Date/Time]
 
-### 実装方針
+### Implementation Approach
 
-[最小実装の方針]
+[Minimal implementation approach]
 
-### 実装コード
+### Implementation Code
 
-[実際の実装コード]
+[Actual implementation code]
 
-### テスト結果
+### Test Results
 
-[テストが通った結果]
+[Results when tests pass]
 
-### 課題・改善点
+### Issues & Improvements
 
-[Refactor フェーズで改善すべき点]
+[Points to improve in Refactor phase]
 
-## Refactor フェーズ（品質改善）
+## Refactor Phase (Quality Improvement)
 
-### リファクタ日時
+### Refactor Date/Time
 
-[日時]
+[Date/Time]
 
-### 改善内容
+### Improvement Content
 
-[具体的な改善内容]
+[Specific improvement content]
 
-### セキュリティレビュー
+### Security Review
 
-[セキュリティ面での確認結果]
+[Security confirmation results]
 
-### パフォーマンスレビュー
+### Performance Review
 
-[パフォーマンス面での確認結果]
+[Performance confirmation results]
 
-### 最終コード
+### Final Code
 
-[リファクタ後のコード]
+[Code after refactoring]
 
-### 品質評価
+### Quality Assessment
 
-[最終的な品質評価]
+[Final quality assessment]
 ```
 
 ## Quality Assessment Criteria

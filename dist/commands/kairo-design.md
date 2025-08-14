@@ -54,89 +54,91 @@ For each item, comment on the verification status with original materials (inclu
 
    - RESTful API design
    - Endpoint naming conventions
-   - HTTP メソッドの適切な使用
-   - リクエスト/レスポンスの構造
+   - Proper use of HTTP methods
+   - Request/response structure
 
-7. **ファイルの作成**
-   - `docs/design/{要件名}/` ディレクトリに以下を作成：
-     - `architecture.md` - アーキテクチャ概要
-     - `dataflow.md` - データフロー図
-     - `interfaces.ts` - TypeScript 型定義
-     - `database-schema.sql` - DB スキーマ
-     - `api-endpoints.md` - API 仕様
+7. **File Creation**
+   - Create the following in `docs/design/{requirement-name}/` directory:
+     - `architecture.md` - Architecture overview
+     - `dataflow.md` - Data flow diagram
+     - `interfaces.ts` - TypeScript type definitions
+     - `database-schema.sql` - Database schema
+     - `api-endpoints.md` - API specifications
 
-## 出力フォーマット例
+## Output Format Examples
 
 ### architecture.md
 
 ```markdown
-# {要件名} アーキテクチャ設計
+# {requirement-name} Architecture Design
 
-## システム概要
+## System Overview
 
-{システムの概要説明}
+{System overview description}
 
-## アーキテクチャパターン
+## Architecture Pattern
 
-- パターン: {選択したパターン}
-- 理由: {選択理由}
+- Pattern: {selected pattern}
+- Reason: {selection reason}
 
-## コンポーネント構成
+## Component Composition
 
-### フロントエンド
+### Frontend
 
-- フレームワーク: {使用フレームワーク}
-- 状態管理: {状態管理方法}
+- Framework: {framework used}
+- State Management: {state management method}
 
-### バックエンド
+### Backend
 
-- フレームワーク: {使用フレームワーク}
-- 認証方式: {認証方法}
+- Framework: {framework used}
+- Authentication Method: {authentication method}
 
-### データベース
+### Database
 
-- DBMS: {使用する DBMS}
-- キャッシュ: {キャッシュ戦略}
+- DBMS: {DBMS to use}
+- Cache: {cache strategy}
 ```
 
 ### dataflow.md
 
-```markdown
-# データフロー図
+````markdown
+# Data Flow Diagram
 
-## ユーザーインタラクションフロー
+## User Interaction Flow
 
-\`\`\`mermaid
+```mermaid
 flowchart TD
-A[ユーザー] --> B[フロントエンド]
+A[User] --> B[Frontend]
 B --> C[API Gateway]
-C --> D[バックエンド]
-D --> E[データベース]
-\`\`\`
-
-## データ処理フロー
-
-\`\`\`mermaid
-sequenceDiagram
-participant U as ユーザー
-participant F as フロントエンド
-participant B as バックエンド
-participant D as データベース
-
-    U->>F: アクション
-    F->>B: APIリクエスト
-    B->>D: クエリ実行
-    D-->>B: 結果返却
-    B-->>F: レスポンス
-    F-->>U: 画面更新
-
-\`\`\`
+C --> D[Backend]
+D --> E[Database]
 ```
+````
+
+## Data Processing Flow
+
+```mermaid
+sequenceDiagram
+participant U as User
+participant F as Frontend
+participant B as Backend
+participant D as Database
+
+    U->>F: Action
+    F->>B: API Request
+    B->>D: Query Execution
+    D-->>B: Result Return
+    B-->>F: Response
+    F-->>U: Screen Update
+
+```
+
+````
 
 ### interfaces.ts
 
 ```typescript
-// エンティティ定義
+// Entity definitions
 export interface User {
   id: string;
   email: string;
@@ -145,7 +147,7 @@ export interface User {
   updatedAt: Date;
 }
 
-// APIリクエスト/レスポンス
+// API request/response
 export interface CreateUserRequest {
   email: string;
   name: string;
@@ -160,12 +162,12 @@ export interface ApiResponse<T> {
     message: string;
   };
 }
-```
+````
 
 ### database-schema.sql
 
 ```sql
--- ユーザーテーブル
+-- User table
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -174,29 +176,32 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- インデックス
+-- Indexes
 CREATE INDEX idx_users_email ON users(email);
 ```
 
 ### api-endpoints.md
 
-```markdown
-# API エンドポイント仕様
+````markdown
+# API Endpoint Specifications
 
-## 認証
+## Authentication
 
 ### POST /auth/login
 
-リクエスト:
-\`\`\`json
-{
-"email": "user@example.com",
-"password": "password"
-}
-\`\`\`
+Request:
 
-レスポンス:
-\`\`\`json
+```json
+{
+  "email": "user@example.com",
+  "password": "password"
+}
+```
+````
+
+Response:
+
+```json
 {
 "success": true,
 "data": {
@@ -204,9 +209,9 @@ CREATE INDEX idx_users_email ON users(email);
 "user": { ... }
 }
 }
-\`\`\`
+```
 
-## ユーザー管理
+## User Management
 
 ### GET /users/:id
 
@@ -215,6 +220,7 @@ CREATE INDEX idx_users_email ON users(email);
 ### PUT /users/:id
 
 ### DELETE /users/:id
+
 ```
 
 ## Post-execution Verification
@@ -223,3 +229,4 @@ CREATE INDEX idx_users_email ON users(email);
 - Display list of created files
 - Display summary of main design points
 - Display message prompting user confirmation
+```
