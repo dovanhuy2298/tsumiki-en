@@ -53,70 +53,48 @@ Please perform **implementation** to make tests created in the Red phase pass.
 
 ## Vietnamese Comment Requirements for Implementation
 
-Implementation code must include the following Vietnamese comments:
+Implementation code should include minimal but essential Vietnamese comments:
 
 ### Function/Method Level Comments
 
 ```javascript
 /**
- * 【Function Overview】: [Explain in Vietnamese what this function does]
- * 【Implementation Approach】: [Explain why this implementation method was chosen]
- * 【Test Support】: [Specify which test case this implementation is for]
- * 🟢🟡🔴 Reliability Level: [To what extent this implementation is based on original materials]
- * @param {type} paramName - [Parameter description]
- * @returns {type} - [Return value description]
+ * Validate JSON file paths and classify valid/invalid paths
+ * @param {string} input - Input file paths
+ * @returns {object} - Classification result
  */
-function {{function_name}}(paramName) {
-  // 【Implementation Content】: [Detailed explanation of the processing being implemented]
+function validatePaths(input) {
+  // Basic input validation
+  if (!input) {
+    throw new Error("Input value is required");
+  }
+
+  // Simple implementation to pass tests
+  return {
+    validPaths: [],
+    invalidPaths: [],
+    errors: [],
+  };
 }
 ```
 
-### Processing Block Level Comments
+### Essential Comments Only
 
 ```javascript
 function processData(input) {
-  // 【Input Validation】: [Reason and method for checking input validity] 🟢🟡🔴
+  // Input validation
   if (!input) {
-    throw new Error("Input value is invalid"); // 【Error Handling】: [Explain why this error is needed] 🟢🟡🔴
+    throw new Error("Input value is invalid");
   }
 
-  // 【Data Processing Start】: [Indicate start of main processing] 🟢🟡🔴
-  // 【Processing Approach】: [Explain how this processing contributes to passing tests] 🟢🟡🔴
+  // Process data and return result
   const result = {
-    // 【Result Structure】: [Explain the structure of return value and its reason]
     validData: [],
     invalidData: [],
     errors: [],
   };
 
-  // 【Result Return】: [Explain reason and content for returning processing results]
   return result;
-}
-```
-
-### Variable/Constant Comments
-
-```javascript
-// 【Constant Definition】: [Reason why this constant is needed and its purpose]
-const MAX_FILE_SIZE = 1024 * 1024; // 【Limit Value】: Set file size limit (1MB)
-
-// 【Variable Initialization】: [Explain why this variable is needed for test passing]
-let processedCount = 0; // 【Counter】: Counter to track number of processed files
-```
-
-### Error Handling Comments
-
-```javascript
-try {
-  // 【Actual Processing Execution】: [Explanation of the part executing actual processing]
-  const data = processFile(filePath);
-} catch (error) {
-  // 【Error Capture】: [Countermeasure policy when errors occur]
-  // 【Test Requirement Support】: [Processing to meet error handling expected in tests]
-  return {
-    success: false,
-    error: error.message, // 【Error Information】: Appropriately return error message verified in tests
-  };
 }
 ```
 
@@ -124,52 +102,52 @@ try {
 
 ```javascript
 /**
- * 【Function Overview】: Validate JSON file paths and classify valid/invalid paths
- * 【Implementation Approach】: Implement only minimal functionality needed to pass test cases
- * 【Test Support】: Implementation to pass test cases created in tdd-red phase
+ * Validate JSON file paths and classify valid/invalid paths
+ * Implementation approach: Minimal functionality to pass test cases
  */
-function {{function_name}}(input) {
-  // 【Input Validation】: Detect invalid input values early to prevent errors
+function validatePaths(input) {
+  // Input validation
   if (!input) {
-    // 【Error Handling】: Support error cases expected in tests
-    throw new Error('Input value is required');
+    throw new Error("Input value is required");
   }
 
-  // 【Minimal Implementation】: Simplest implementation to pass tests
-  // 【Hard-coding Allowed】: Fixed values OK at this stage as improvements planned in refactor phase
-  return {{simple_return_value}};
+  // Minimal implementation to pass tests
+  return {
+    validPaths: [],
+    invalidPaths: [],
+    errors: [],
+  };
 }
 ```
 
 ## Phased Implementation Guidelines
 
 1. **First pass only one test case**
-   - 【Implementation Strategy】: Avoid simultaneous handling of multiple tests as it leads to complexity
-   - 【Quality Assurance】: Ensure quality by implementing one by one reliably
+   - Implementation Strategy: Avoid simultaneous handling of multiple tests
+   - Quality Assurance: Ensure quality by implementing one by one
 2. **Implement in simplest way possible**
-   - 【Simple Implementation】: Complex algorithms will be added in later refactor phase
-   - 【Readability Priority】: Prioritize ease of understanding at this stage
+   - Simple Implementation: Complex algorithms will be added in later refactor phase
+   - Readability Priority: Prioritize ease of understanding at this stage
 3. **File size conscious implementation**
-   - 【800 Line Limit】: Consider file splitting when implementation file exceeds 800 lines
-   - 【Module Design】: Appropriately separate files by functionality
-   - 【Function Division】: Divide long functions into small units for implementation
-   - 【Responsibility Boundaries】: Clearly define responsibility scope of each file
-   - 【Division Strategy】: Separate files by functionality, layer, domain
+   - 800 Line Limit: Consider file splitting when implementation file exceeds 800 lines
+   - Module Design: Appropriately separate files by functionality
+   - Function Division: Divide long functions into small units
+   - Responsibility Boundaries: Clearly define responsibility scope of each file
 4. **Consider code quality standards**
-   - 【Static Analysis Support】: Aim for implementation without lint or typecheck errors
-   - 【Format Consistency】: Implementation matching project's existing format
-   - 【Naming Convention Compliance】: Implementation following project's naming conventions
+   - Static Analysis Support: Aim for implementation without lint or typecheck errors
+   - Format Consistency: Implementation matching project's existing format
+   - Naming Convention Compliance: Implementation following project's naming conventions
 5. **Postpone other test cases**
-   - 【Phased Development】: Follow TDD principles, proceed one step at a time
-   - 【Limited Impact Scope】: Minimize impact of changes
+   - Phased Development: Follow TDD principles, proceed one step at a time
+   - Limited Impact Scope: Minimize impact of changes
 6. **Minimal error handling**
-   - 【Minimal Necessity】: Implement only parts required by tests
-   - 【Future Extensibility】: Detailed error handling will be added in refactor phase
+   - Minimal Necessity: Implement only parts required by tests
+   - Future Extensibility: Detailed error handling will be added in refactor phase
 7. **Mock usage restrictions**
-   - 【Implementation Code Restriction】: Don't use mocks/stubs in implementation code
-   - 【Test Code Only】: Mocks used only in test code
-   - 【Actual Logic Implementation】: Implementation code should describe actual processing
-   - 【Dependency Injection】: Use dependency injection pattern as needed
+   - Implementation Code Restriction: Don't use mocks/stubs in implementation code
+   - Test Code Only: Mocks used only in test code
+   - Actual Logic Implementation: Implementation code should describe actual processing
+   - Dependency Injection: Use dependency injection pattern as needed
 
 ## Please Provide
 

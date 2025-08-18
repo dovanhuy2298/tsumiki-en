@@ -2,7 +2,7 @@
 
 Starting TDD development. Please organize requirements for the following feature:
 
-**【Feature Name】**: {{feature_name}}
+**Feature Name**: {{feature_name}}
 
 ## Preliminary Preparation
 
@@ -24,16 +24,15 @@ After loading completion, start TDD requirements definition work based on prepar
 
 ## TDD Requirements Organization Format
 
-**【Reliability Level Instructions】**:
-For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
+**Reliability Level Instructions**:
+For each item, briefly indicate the verification status with original materials using:
 
-- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
-- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
-- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
+- 🟢 **Green**: Based on existing documents
+- 🟡 **Yellow**: Reasonable inference from documents
+- 🔴 **Red**: Requires speculation
 
 ## 1. Feature Overview (Based on EARS Requirements Definition and Design Documents)
 
-- 🟢🟡🔴 State reliability level for each item
 - What the feature does (extracted from user stories)
 - What problems it solves (extracted from As a / So that)
 - Expected users (extracted from As a)
@@ -43,7 +42,6 @@ For each item, comment on the verification status with original materials (inclu
 
 ## 2. Input/Output Specifications (Based on EARS Functional Requirements and TypeScript Type Definitions)
 
-- 🟢🟡🔴 State reliability level for each item
 - Input parameters (type, range, constraints) - extracted from interfaces.ts
 - Output values (type, format, examples) - extracted from interfaces.ts
 - Input/output relationships
@@ -53,7 +51,6 @@ For each item, comment on the verification status with original materials (inclu
 
 ## 3. Constraint Conditions (Based on EARS Non-functional Requirements and Architecture Design)
 
-- 🟢🟡🔴 State reliability level for each item
 - Performance requirements (extracted from NFR-XXX)
 - Security requirements (extracted from NFR-XXX)
 - Compatibility requirements (extracted from REQ-XXX MUST)
@@ -65,7 +62,6 @@ For each item, comment on the verification status with original materials (inclu
 
 ## 4. Expected Use Cases (Based on EARS Edge Cases and Data Flow)
 
-- 🟢🟡🔴 State reliability level for each item
 - Basic usage patterns (extracted from normal requirements REQ-XXX)
 - Data flow (extracted from dataflow.md)
 - Edge cases (extracted from EDGE-XXX)

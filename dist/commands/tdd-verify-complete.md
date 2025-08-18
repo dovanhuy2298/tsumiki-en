@@ -229,7 +229,7 @@ The following content has been recorded in memo file:
 
 [List of unimplemented test cases]
 
-【Important】No corrections are made in this process.
+**Important**: No corrections are made in this process.
 Content requiring correction is recorded in memo file and will be addressed in later processes.
 
 Completing current record and proceeding to next step.

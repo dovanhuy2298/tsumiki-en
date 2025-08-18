@@ -38,7 +38,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && mkdir -p dist/commands dist/agents && cp ./commands/*.md ./commands/*.sh dist/commands/ 2>/dev/null || true && cp ./agents/*.md dist/agents/ 2>/dev/null || true && tsup",
+    "build": "rimraf dist && mkdirp dist/commands dist/agents && copyfiles \"./commands/*.md\" \"./commands/*.sh\" dist/ && copyfiles \"./agents/*.md\" dist/ && tsup",
     "build:run": "pnpm build && node dist/cli.js",
     "check": "biome check src",
     "fix": "biome check src --write",
@@ -63,6 +63,9 @@
     "@types/node": "24.1.0",
     "@types/react": "19.1.9",
     "@typescript/native-preview": "7.0.0-dev.20250729.2",
+    "copyfiles": "2.4.1",
+    "mkdirp": "3.0.1",
+    "rimraf": "6.0.1",
     "secretlint": "10.2.1",
     "simple-git-hooks": "2.13.0",
     "tsup": "8.5.0",

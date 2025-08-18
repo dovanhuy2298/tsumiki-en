@@ -15,30 +15,30 @@ Execute the following parallel loading and searching using @agent-symbol-searche
 - Check usage methods of TDD-related tools and frameworks
 
 ```
-1. 【Loading】TDD memo file verification
+1. Loading: TDD memo file verification
    - Read tool: `docs/implements/{{task_id}}/{feature_name}-memo.md`
    - Understand existing development history, phase information, verification results
 
-2. 【Loading】Requirements definition document verification
+2. Loading: Requirements definition document verification
    - Read tool: `docs/implements/{{task_id}}/{feature_name}-requirements.md`
    - Understand functional specifications, input/output, constraint conditions
 
-3. 【Loading】Test case definition verification
+3. Loading: Test case definition verification
    - Read tool: `docs/implements/{{task_id}}/{feature_name}-testcases.md`
    - Understand planned test cases, classification, expected values
 
-4. 【Exploration only】Project design document identification
+4. Exploration only: Project design document identification
    - Glob tool: Check existence of `docs/spec/{feature_name}-requirements.md`
    - Glob tool: Identify files in `docs/design/{feature_name}/` directory
    - Record found file paths (do not execute loading)
 
-5. 【Exploration only】Project structure and library file identification
+5. Exploration only: Project structure and library file identification
    - Glob tool: Check existence of `package.json`
    - Glob tool: Understand existing test file structure (`**/*test*.js`, `**/*spec*.js`, etc.)
    - Grep tool: Investigate implementation patterns of similar features (related keyword search)
    - Record found file paths (do not execute loading)
 
-6. 【Exploration only】Task management document identification
+6. Exploration only: Task management document identification
    - Glob tool: Check existence of `docs/tasks/{requirement-name}-tasks.md`
    - Record found file paths (do not execute loading)
 ```

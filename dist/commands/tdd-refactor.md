@@ -78,69 +78,67 @@ Refactor code to improve quality, maintainability, and performance while ensurin
 
 ## Vietnamese Comment Enhancement Requirements for Refactoring
 
-During refactoring, improve existing Vietnamese comments and add new ones:
+During refactoring, improve existing Vietnamese comments and add essential ones:
 
 ### Improved Function/Method Comments
 
 ```javascript
 /**
- * 【Function Overview】: [Detailed explanation of functionality after refactoring]
- * 【Improvement Content】: [Explanation of what improvements were made]
- * 【Design Approach】: [Reason why this design was chosen]
- * 【Performance】: [Performance considerations]
- * 【Maintainability】: [Efforts to make maintenance easier]
- * 🟢🟡🔴 Reliability Level: [To what extent this improvement is based on original materials]
- * @param {type} paramName - [Detailed parameter explanation and constraints]
- * @returns {type} - [Detailed return value explanation and guarantees]
+ * Add two numbers and return result
+ * @param {number} firstNumber - First number to add
+ * @param {number} secondNumber - Second number to add
+ * @returns {number} - Sum of the two numbers
  */
-function improvedFunction(paramName) {
-  // 【Implementation Details】: [Content and reasons for improved implementation]
+function add(firstNumber, secondNumber) {
+  // Input validation
+  if (typeof firstNumber !== "number" || typeof secondNumber !== "number") {
+    throw new Error("Arguments must be numbers");
+  }
+
+  // Return sum
+  return firstNumber + secondNumber;
 }
 ```
 
-### Helper Function/Utility Comments
+### Helper Function Comments
 
 ```javascript
 /**
- * 【Helper Function】: [Role of this function and creation reason]
- * 【Reusability】: [In what situations it can be reused]
- * 【Single Responsibility】: [Scope of responsibility this function handles]
+ * Helper function to validate input
+ * @param {any} input - Input to validate
+ * @returns {boolean} - Whether input is valid
  */
-function helperFunction(input) {
-  // 【Processing Efficiency】: [Efforts to make processing more efficient] 🟢🟡🔴
-  // 【Readability Improvement】: [Mechanism to improve code readability] 🟢🟡🔴
+function validateInput(input) {
+  // Check if input exists and is valid
+  return input != null && input !== "";
 }
 ```
 
-### Constant/Configuration Value Comments
+### Configuration Comments
 
 ```javascript
-// 【Configuration Constant】: [Role of this constant and configuration reason] 🟢🟡🔴
-// 【Adjustability】: [Possibility of future adjustment needs and methods] 🟢🟡🔴
-const IMPROVED_CONSTANT = 100; // 【Optimized】: Optimized based on performance tests 🟢🟡🔴
+// Configuration constants
+const MAX_RETRIES = 3; // Maximum retry attempts
+const TIMEOUT = 5000; // Request timeout in milliseconds
 
-// 【Configuration Object】: [Reason for grouping configurations and management policy]
 const CONFIG = {
-  // 【Each Configuration Item】: [Meaning and impact scope of each configuration value]
-  maxRetries: 3, // 【Retry Count】: Appropriate count based on actual operation experience
-  timeout: 5000, // 【Timeout】: Time setting considering usability
+  maxRetries: MAX_RETRIES,
+  timeout: TIMEOUT,
 };
 ```
 
-### Error Handling Improvement Comments
+### Error Handling Comments
 
 ```javascript
 try {
-  // 【Safe Processing Execution】: [Possibility of exceptions and countermeasures]
+  // Execute risky operation
   const result = riskyOperation();
 } catch (error) {
-  // 【Detailed Error Handling】: [Appropriate processing according to error type]
-  // 【Usability】: [Error handling understandable for users]
+  // Handle specific error types
   if (error.code === "SPECIFIC_ERROR") {
-    // 【Specific Error Handling】: [Reason for processing specialized for this error]
     return handleSpecificError(error);
   }
-  // 【General Error Handling】: [Safe response to unexpected errors]
+  // Handle generic errors
   return handleGenericError(error);
 }
 ```
@@ -148,47 +146,47 @@ try {
 ## Refactoring Process
 
 1. **Confirm all current tests pass**
-   - 【Quality Assurance】: Verify behavior before refactoring
-   - 【Safety Assurance】: Prevent functionality breakdown from changes
-   - 【Execution Method】: Use Task tool to execute tests and analyze results in detail
+   - Quality Assurance: Verify behavior before refactoring
+   - Safety Assurance: Prevent functionality breakdown from changes
+   - Execution Method: Use Task tool to execute tests and analyze results in detail
 2. **Code/Test Exclusion Check**
-   - 【.gitignore Confirmation】: Check if code files that should be verified are not excluded
-   - 【Test Exclusion Confirmation】: Check if tests are not disabled with `describe.skip`, `it.skip`, `test.skip`, etc.
-   - 【Jest Configuration Confirmation】: Check if test files are not excluded in `jest.config.js` or `package.json`'s `testPathIgnorePatterns`, etc.
-   - 【Execution Target Confirmation】: Check if tests and code that should actually be executed are appropriately included in targets
+   - .gitignore Confirmation: Check if code files that should be verified are not excluded
+   - Test Exclusion Confirmation: Check if tests are not disabled with `describe.skip`, `it.skip`, `test.skip`, etc.
+   - Jest Configuration Confirmation: Check if test files are not excluded in `jest.config.js` or `package.json`'s `testPathIgnorePatterns`, etc.
+   - Execution Target Confirmation: Check if tests and code that should actually be executed are appropriately included in targets
 3. **Clean up development-generated files**
-   - 【Unnecessary File Detection】: Detect and delete temporary files created during development
-   - 【Target File Patterns】: Check files matching the following patterns
+   - Unnecessary File Detection: Detect and delete temporary files created during development
+   - Target File Patterns: Check files matching the following patterns
      - `debug-*.js`, `debug-*.ts`: Debug scripts
      - `test-*.js`, `test-*.ts`, `temp-*.js`: Temporary test files
      - `*.tmp`, `*.temp`, `*.bak`, `*.orig`: Temporary/backup files
      - `*~`, `.DS_Store`: Editor/system generated files
      - `test-output-*`, `*.test-output`: Test output files
-   - 【Safety Confirmation】: Check content of each file before deletion to ensure no important code is included
-   - 【Selective Deletion】: Delete only files judged unnecessary, keep necessary files
-   - 【Deletion Log】: Record deleted files and deletion reasons as logs
-   - 【Execution Procedure】:
+   - Safety Confirmation: Check content of each file before deletion to ensure no important code is included
+   - Selective Deletion: Delete only files judged unnecessary, keep necessary files
+   - Deletion Log: Record deleted files and deletion reasons as logs
+   - Execution Procedure:
      1. Use `find . -name "debug-*" -o -name "test-*" -o -name "temp-*" -o -name "*.tmp" -o -name "*.temp" -o -name "*.bak" -o -name "*.orig" -o -name "*~" -o -name ".DS_Store" | grep -v node_modules` to detect files
      2. Check content of each file with Read tool
      3. Delete files judged unnecessary and record deletion reasons
 4. **Conduct Security Review**
-   - 【Vulnerability Inspection】: Identify security holes in entire codebase
-   - 【Input Validation Confirmation】: Confirm defense functions against invalid input values
-   - 【Security Guideline Application】: Apply industry-standard security best practices
+   - Vulnerability Inspection: Identify security holes in entire codebase
+   - Input Validation Confirmation: Confirm defense functions against invalid input values
+   - Security Guideline Application: Apply industry-standard security best practices
 5. **Conduct Performance Review**
-   - 【Computational Complexity Analysis】: Evaluate time and space complexity of algorithms
-   - 【Bottleneck Identification】: Identify problem areas in processing speed and memory usage
-   - 【Optimization Strategy】: Formulate specific performance improvement measures
+   - Computational Complexity Analysis: Evaluate time and space complexity of algorithms
+   - Bottleneck Identification: Identify problem areas in processing speed and memory usage
+   - Optimization Strategy: Formulate specific performance improvement measures
 6. **Apply small improvements one by one**
-   - 【Phased Improvement】: Safe changes with limited impact scope
-   - 【Traceability】: Ensure traceability of changes
+   - Phased Improvement: Safe changes with limited impact scope
+   - Traceability: Ensure traceability of changes
 7. **Execute tests after each improvement**
-   - 【Continuous Verification】: Verify behavior with each improvement
-   - 【Early Detection】: Early detection and correction of problems
-   - 【Execution Method】: Use Task tool to execute tests and confirm impact of improvements
+   - Continuous Verification: Verify behavior with each improvement
+   - Early Detection: Early detection and correction of problems
+   - Execution Method: Use Task tool to execute tests and confirm impact of improvements
 8. **Immediately revert if tests fail**
-   - 【Rapid Recovery】: Quick response when problems occur
-   - 【Stability Maintenance】: Maintain stable system state
+   - Rapid Recovery: Quick response when problems occur
+   - Stability Maintenance: Maintain stable system state
 
 ## Important Notes
 
@@ -216,23 +214,19 @@ function add(a, b) {
   return 5; // Implementation that works for now
 }
 
-// After: Appropriate implementation (with improved Vietnamese comments)
+// After: Appropriate implementation
 /**
- * 【Function Overview】: Add two numbers and return result
- * 【Improvement Content】: Remove hard-coding and implement actual addition processing
- * 【Design Approach】: Design emphasizing input validation and type safety
- * 【Error Handling】: Implement appropriate exception handling for invalid input
+ * Add two numbers and return result
+ * Improvement: Remove hard-coding and implement actual addition processing
+ * Design: Input validation and type safety
  */
 function add(firstNumber, secondNumber) {
-  // 【Input Validation】: Detect non-numeric input early to prevent errors
-  // 【Type Safety】: Implement runtime validation along with TypeScript type checking
+  // Input validation
   if (typeof firstNumber !== "number" || typeof secondNumber !== "number") {
-    // 【Usability】: Provide error messages understandable for developers
     throw new Error("Arguments must be numbers");
   }
 
-  // 【Main Processing】: Simple and reliable addition processing
-  // 【Performance】: Efficient implementation avoiding unnecessary processing
+  // Return sum
   return firstNumber + secondNumber;
 }
 ```
