@@ -1,6 +1,6 @@
 # 3.4 Red-Green-Refactor-Validation Cycle
 
-## Overview of the Extended TDD Cycle
+## Overview of Extended TDD Cycle
 
 At the heart of AITDD is an extended cycle that adds a **Validation** step to traditional TDD (Red-Green-Refactor). This cycle is primarily executed by AI under human supervision, enabling efficient generation of high-quality code.
 
@@ -727,38 +727,38 @@ Once you understand the Red-Green-Refactor-Validation cycle, proceed to [Details
 
 By mastering this cycle, you will be able to efficiently develop high-quality software while making maximum use of AI.
 
-# 3.4 Red-Green-Refactor-Validation サイクル
+# 3.4 Red-Green-Refactor-Validation Cycle
 
-## 拡張 TDD サイクルの概要
+## Overview of Extended TDD Cycle
 
-AITDD の核心は、従来の TDD（Red-Green-Refactor）に**Validation**ステップを追加した拡張サイクルです。このサイクルは主に AI が実行しますが、人間の監督下で行われ、高品質なコードを効率的に生成します。
+The core of AITDD is an extended cycle that adds a **Validation** step to traditional TDD (Red-Green-Refactor). This cycle is primarily executed by AI but conducted under human supervision, efficiently generating high-quality code.
 
 ```mermaid
 graph LR
     A[Red] --> B[Green]
     B --> C[Refactor]
     C --> D[Validation]
-    D --> E{完了判定}
-    E -->|継続| A
-    E -->|完了| F[次の機能]
+    D --> E{Completion Judgment}
+    E -->|Continue| A
+    E -->|Complete| F[Next Feature]
 ```
 
-## Red-Green-Refactor-Validation サイクル詳細
+## Red-Green-Refactor-Validation Cycle Details
 
-### Red フェーズ：テスト失敗の確認
+### Red Phase: Confirm Test Failure
 
-#### 目的
+#### Purpose
 
-- テストケースを実装する
-- テストが期待通りに失敗することを確認する
-- テスト自体の正当性を検証する
+- Implement test cases
+- Confirm tests fail as expected
+- Verify the validity of tests themselves
 
-#### 具体的な作業内容
+#### Specific Work Content
 
-##### 1. テストケースの実装
+##### 1. Test Case Implementation
 
 ```javascript
-// 例：ユーザー登録機能のテスト実装
+// Example: User registration functionality test implementation
 describe("User Registration", () => {
   test("should create user with valid data", async () => {
     const userData = {
@@ -773,14 +773,14 @@ describe("User Registration", () => {
     expect(response.body).toHaveProperty("id");
     expect(response.body.email).toBe(userData.email);
 
-    // データベース確認
+    // Database verification
     const user = await User.findByEmail(userData.email);
     expect(user).toBeTruthy();
     expect(user.password_hash).not.toBe(userData.password);
   });
 
   test("should reject duplicate email", async () => {
-    // 既存ユーザーを事前作成
+    // Pre-create existing user
     await createUser({ email: "existing@example.com" });
 
     const duplicateData = {
@@ -797,7 +797,7 @@ describe("User Registration", () => {
 });
 ```
 
-##### 2. テスト実行と失敗確認
+##### 2. Test Execution and Failure Confirmation
 
 ```bash
 $ npm test
@@ -808,50 +808,50 @@ $ npm test
    Error: Cannot POST /api/users
 ```
 
-##### 3. 失敗理由の確認
+##### 3. Confirm Failure Reasons
 
-- エンドポイントが未実装
-- 必要な依存関係が不足
-- テスト環境の設定不備
+- Endpoint not implemented
+- Missing required dependencies
+- Test environment configuration issues
 
-#### AI による Red フェーズの実行
+#### AI Execution of Red Phase
 
-##### プロンプト例
+##### Prompt Example
 
 ```markdown
-## 指示：Red フェーズの実行
+## Instruction: Execute Red Phase
 
-### 背景
+### Background
 
-- 機能：ユーザー登録 API
-- テストケース仕様：testcases.md 参照
-- 既存コード：src/配下を確認
+- Feature: User registration API
+- Test case specification: See testcases.md
+- Existing code: Check under src/
 
-### 実行内容
+### Tasks
 
-1. testcases.md の各テストケースを Jest テストとして実装
-2. テストを実行し、期待通りに失敗することを確認
-3. 失敗理由を整理して報告
+1. Implement each test case in testcases.md as Jest tests
+2. Run the tests and confirm expected failures
+3. Organize and report the reasons for failures
 
-### 出力形式
+### Output format
 
-- テストコード（完全版）
-- テスト実行結果
-- 失敗理由の分析
-- 次の Green フェーズへの提案
+- Full test code
+- Test execution results
+- Analysis of failure reasons
+- Suggestions for the next Green phase
 ```
 
-### Green フェーズ：最小実装
+### Green Phase: Minimal Implementation
 
-#### 目的
+#### Purpose
 
-- テストを通す最小限の実装を行う
-- 過度な実装を避け、テスト駆動を維持する
-- 次の Refactor フェーズでの改善余地を残す
+- Implement the minimal code to pass the tests
+- Avoid over-implementation and maintain test-driven flow
+- Leave room for improvement in the Refactor phase
 
-#### 具体的な作業内容
+#### Concrete work items
 
-##### 1. 最小限の API 実装
+##### 1. Minimal API implementation
 
 ```javascript
 // routes/users.js
@@ -864,7 +864,7 @@ router.post("/users", async (req, res) => {
   try {
     const { email, password, password_confirmation } = req.body;
 
-    // 基本バリデーション
+    // Basic validation
     if (!email || !password || !password_confirmation) {
       return res.status(400).json({
         error: "validation_failed",
@@ -884,7 +884,7 @@ router.post("/users", async (req, res) => {
       });
     }
 
-    // 重複チェック
+    // Duplicate check
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
       return res.status(400).json({
@@ -893,10 +893,10 @@ router.post("/users", async (req, res) => {
       });
     }
 
-    // パスワードハッシュ化
+    // Hash password
     const password_hash = await bcrypt.hash(password, 10);
 
-    // ユーザー作成
+    // Create user
     const user = await User.create({
       email,
       password_hash,
@@ -916,7 +916,7 @@ router.post("/users", async (req, res) => {
 module.exports = router;
 ```
 
-##### 2. 必要最小限のモデル実装
+##### 2. Minimal model implementation
 
 ```javascript
 // models/User.js
@@ -947,7 +947,7 @@ class User {
 module.exports = User;
 ```
 
-##### 3. テスト実行と成功確認
+##### 3. Run tests and confirm success
 
 ```bash
 $ npm test
@@ -957,53 +957,53 @@ $ npm test
 Tests: 2 passed, 2 total
 ```
 
-#### AI による Green フェーズの実行
+#### Running the Green phase with AI
 
-##### プロンプト例
+##### Example prompt
 
 ```markdown
-## 指示：Green フェーズの実行
+## Instruction: Run the Green phase
 
-### 背景
+### Background
 
-- 失敗中のテスト：[Red フェーズの結果]
-- 要件：requirements.md 参照
-- 既存コード構造：src/配下確認
+- Failing tests: [Results from the Red phase]
+- Requirements: See requirements.md
+- Existing code structure: Check under src/
 
-### 実行内容
+### Tasks
 
-1. 失敗テストを通す最小限の実装
-2. 要件の過度な実装は避ける
-3. テスト実行で全ケース成功を確認
+1. Implement the minimal code to pass failing tests
+2. Avoid over-implementation beyond the test cases
+3. Run tests and confirm success for all cases
 
-### 制約
+### Constraints
 
-- 最小実装原則を遵守
-- テストケース以外の機能は実装しない
-- 既存コードとの整合性を維持
+- Adhere to the principle of minimal implementation
+- Do not implement features outside test cases
+- Maintain consistency with existing code
 
-### 出力形式
+### Output format
 
-- 実装コード（完全版）
-- テスト実行結果
-- 実装方針の説明
+- Full implementation code
+- Test execution results
+- Explanation of implementation policy
 ```
 
-### Refactor フェーズ：コード改善
+### Refactor Phase: Improve Code
 
-#### 目的
+#### Purpose
 
-- コードの品質を向上させる
-- 保守性と可読性を改善する
-- パフォーマンスを最適化する
-- テストは継続して成功させる
+- Improve code quality
+- Enhance maintainability and readability
+- Optimize performance
+- Keep all tests passing
 
-#### 具体的な作業内容
+#### Concrete work items
 
-##### 1. コード構造の改善
+##### 1. Improve code structure
 
 ```javascript
-// services/UserService.js - ビジネスロジックの分離
+// services/UserService.js - Separate business logic
 class UserService {
   constructor(userRepository, passwordHasher) {
     this.userRepository = userRepository;
@@ -1011,13 +1011,13 @@ class UserService {
   }
 
   async createUser({ email, password, password_confirmation }) {
-    // バリデーション
+    // Validation
     this.validateUserInput({ email, password, password_confirmation });
 
-    // 重複チェック
+    // Duplicate check
     await this.checkEmailUniqueness(email);
 
-    // ユーザー作成
+    // Create user
     const password_hash = await this.passwordHasher.hash(password);
     return await this.userRepository.create({ email, password_hash });
   }
@@ -1074,7 +1074,7 @@ class UserService {
   }
 }
 
-// コントローラーの簡素化
+// Simplify controller
 router.post("/users", async (req, res) => {
   try {
     const user = await userService.createUser(req.body);
@@ -1097,7 +1097,7 @@ router.post("/users", async (req, res) => {
 });
 ```
 
-##### 2. エラーハンドリングの改善
+##### 2. Improve error handling
 
 ```javascript
 // errors/ValidationError.js
@@ -1123,7 +1123,7 @@ const errorHandler = (error, req, res, next) => {
 };
 ```
 
-##### 3. テスト実行で品質維持確認
+##### 3. Run tests to confirm quality remains
 
 ```bash
 $ npm test
@@ -1135,73 +1135,73 @@ $ npm test
 Tests: 4 passed, 4 total
 ```
 
-#### AI による Refactor フェーズの実行
+#### Running the Refactor phase with AI
 
-##### プロンプト例
-
-```markdown
-## 指示：Refactor フェーズの実行
-
-### 背景
-
-- 現在のコード：[Green フェーズの成果物]
-- テスト状況：全テスト成功
-- 品質目標：保守性・可読性・パフォーマンス向上
-
-### 実行内容
-
-1. コード構造の改善（責任分離、DRY 原則）
-2. エラーハンドリングの統一
-3. パフォーマンス最適化
-4. コーディング規約の適用
-5. テスト実行で品質維持確認
-
-### 制約
-
-- 既存テストを破綻させない
-- 過度なアーキテクチャ変更は避ける
-- 段階的改善を重視
-
-### 出力形式
-
-- リファクタリング後のコード
-- 改善点の説明
-- テスト実行結果
-```
-
-### Validation フェーズ：包括的検証
-
-#### 目的
-
-- 実装の妥当性を総合的に検証する
-- 品質基準への適合を確認する
-- 追加のテストケースの必要性を評価する
-- 完了判定を行う
-
-#### 具体的な検証項目
-
-##### 1. 実装済みテストケースの確認
+##### Example prompt
 
 ```markdown
-## テストケース実装状況確認
+## Instruction: Run the Refactor phase
 
-### 予定テストケース（testcases.md より）
+### Background
 
-- [x] TC001: 正常なユーザー登録
-- [x] TC002: メールアドレス重複エラー
-- [x] TC003: パスワード不一致エラー
-- [x] TC004: 無効なメールアドレス形式
-- [x] TC005: パスワード強度不足
-- [x] TC006: 必須項目未入力
-- [x] TC007: 境界値テスト - メールアドレス長
-- [ ] TC008: レート制限テスト（未実装）
-- [ ] TC009: データベース接続エラー（未実装）
-- [x] TC010: CSRF トークン検証
+- Current code: [Results of the Green phase]
+- Test status: All tests passing
+- Quality goals: Maintainability, readability, performance
 
-### 実装率：80% (8/10)
+### Tasks
+
+1. Improve code structure (separation of concerns, DRY)
+2. Standardize error handling
+3. Optimize performance
+4. Apply coding standards
+5. Confirm quality by running tests
+
+### Constraints
+
+- Do not break existing tests
+- Avoid excessive architectural changes
+- Emphasize incremental improvements
+
+### Output format
+
+- Refactored code
+- Explanation of improvements
+- Test execution results
 ```
 
-##### 2. 既存テストの回帰確認
+### Validation Phase: Comprehensive Verification
+
+#### Purpose
+
+- Comprehensively verify implementation validity
+- Check conformance to quality standards
+- Evaluate whether additional test cases are necessary
+- Make completion decision
+
+#### Concrete verification items
+
+##### 1. Confirm implementation status of test cases
+
+```markdown
+## Confirm status of test-case implementation
+
+### Planned test cases (from testcases.md)
+
+- [x] TC001: Successful user registration
+- [x] TC002: Duplicate email error
+- [x] TC003: Password mismatch error
+- [x] TC004: Invalid email format
+- [x] TC005: Insufficient password strength
+- [x] TC006: Missing required fields
+- [x] TC007: Boundary test – email length
+- [ ] TC008: Rate limiting test (not implemented)
+- [ ] TC009: Database connection error (not implemented)
+- [x] TC010: CSRF token verification
+
+### Implementation rate: 80% (8/10)
+```
+
+##### 2. Confirm regression of existing tests
 
 ```bash
 $ npm test
@@ -1216,7 +1216,7 @@ Tests: 6 passed, 6 total
 Time: 2.341s
 ```
 
-##### 3. コード品質メトリクス確認
+##### 3. Confirm code-quality metrics
 
 ```bash
 $ npm run quality-check
@@ -1226,232 +1226,232 @@ $ npm run quality-check
 ✅ Dependency Check: No vulnerabilities found
 ```
 
-##### 4. 仕様適合性確認
+##### 4. Confirm conformance to specification
 
 ```markdown
-## 仕様適合性チェック
+## Specification conformance check
 
-### 機能要件
+### Functional requirements
 
-- [x] email/password による新規ユーザー登録
-- [x] 重複 email の検証
-- [x] パスワード強度チェック
-- [x] パスワードハッシュ化（bcrypt）
+- [x] New user registration via email/password
+- [x] Duplicate email validation
+- [x] Password strength check
+- [x] Password hashing (bcrypt)
 
-### 非機能要件
+### Non-functional requirements
 
-- [x] レスポンス時間: 平均 1.2 秒（2 秒以内）
-- [ ] 同時登録: 負荷テスト未実施
-- [x] パスワードハッシュ化必須
+- [x] Response time: average 1.2s (≤ 2s)
+- [ ] Concurrent registration: Load test not yet performed
+- [x] Password hashing is required
 
-### API 仕様
+### API specifications
 
-- [x] POST /api/users エンドポイント
-- [x] 期待されるリクエスト/レスポンス形式
-- [x] 適切な HTTP ステータスコード
+- [x] POST /api/users endpoint
+- [x] Expected request/response format
+- [x] Appropriate HTTP status codes
 
-### データベース設計
+### Database design
 
-- [x] users テーブル設計
-- [x] 適切なインデックス
-- [x] 制約の実装
+- [x] users table design
+- [x] Appropriate indexes
+- [x] Implement constraints
 ```
 
-##### 5. セキュリティ要件確認
+##### 5. Confirm security requirements
 
 ```markdown
-## セキュリティチェック
+## Security check
 
-### パスワード管理
+### Password management
 
-- [x] パスワード平文保存なし
-- [x] bcrypt によるハッシュ化
-- [x] 適切なソルト使用
+- [x] No plaintext password storage
+- [x] Hashing with bcrypt
+- [x] Appropriate salt usage
 
-### 入力検証
+### Input validation
 
-- [x] SQL インジェクション対策
-- [x] XSS 対策
-- [x] CSRF トークン検証
+- [x] SQL injection countermeasures
+- [x] XSS countermeasures
+- [x] CSRF token verification
 
-### アクセス制御
+### Access control
 
-- [x] 適切な HTTP ステータスコード
-- [x] エラー情報の適切な制限
+- [x] Appropriate HTTP status codes
+- [x] Appropriate limitation of error information
 ```
 
-#### AI による Validation フェーズの実行
+#### Running the Validation phase with AI
 
-##### プロンプト例
+##### Example prompt
 
 ```markdown
-## 指示：Validation フェーズの実行
+## Instruction: Run the Validation phase
 
-### 背景
+### Background
 
-- 実装完了コード：[Refactor フェーズの成果物]
-- 要件定義：requirements.md
-- テストケース：testcases.md
-- 既存システム：全体コードベース
+- Completed implementation: [Results of the Refactor phase]
+- Requirements: requirements.md
+- Test cases: testcases.md
+- Existing system: Entire codebase
 
-### 検証項目
+### Verification items
 
-1. testcases.md 記載の全テストケース実装状況確認
-2. 既存テストの回帰テスト実行
-3. requirements.md 要件の充足確認
-4. コード品質メトリクス測定
-5. セキュリティ要件確認
+1. Confirm implementation status of all test cases listed in testcases.md
+2. Run regression tests of existing tests
+3. Confirm fulfillment of requirements in requirements.md
+4. Measure code-quality metrics
+5. Confirm security requirements
 
-### 完了判定基準
+### Completion criteria
 
-- 計画テストケースの 90%以上実装
-- 既存テスト全て成功
-- 重要要件 100%充足
-- 重大なセキュリティ問題なし
+- 90% or higher implementation rate for planned test cases
+- All existing tests pass
+- 100% fulfillment of important requirements
+- No critical security issues
 
-### 出力形式
+### Output format
 
-- 検証結果レポート
-- 未実装テストケース一覧
-- 品質メトリクス
-- 完了/継続の判定理由
+- Verification report
+- List of unimplemented test cases
+- Quality metrics
+- Reasons for completion/continuation decision
 ```
 
-#### Validation フェーズの判定基準
+#### Decision Criteria for the Validation Phase
 
-##### ✅ 完了判定（自動で次ステップ進行）
+##### ✅ Complete (proceed automatically)
 
 ```markdown
-### 完了条件
+### Completion criteria
 
-- 既存テスト状態: すべて成功
-- テストケース実装率: 90%以上
-- 重要要件充足率: 100%
-- コードカバレッジ: 80%以上
-- セキュリティチェック: 重大な問題なし
+- Status of existing tests: All pass
+- Implementation rate for test cases: ≥ 90%
+- Fulfillment rate of important requirements: 100%
+- Code coverage: ≥ 80%
+- Security check: No critical issues
 ```
 
-##### ⚠️ 継続判定（追加実装必要）
+##### ⚠️ Continue (additional implementation needed)
 
 ```markdown
-### 継続条件
+### Continuation criteria
 
-- 既存テスト: 失敗あり
-- テストケース実装率: 90%未満
-- 重要要件: 未充足項目あり
-- 品質メトリクス: 基準値未達
-- セキュリティ: 重大な問題発見
+- Existing tests: Failures present
+- Test-case implementation rate: < 90%
+- Important requirements: Not fully satisfied
+- Quality metrics: Below threshold
+- Security: Critical issues found
 ```
 
-## サイクル全体の管理
+## Managing the Entire Cycle
 
-### プロセス制御
+### Process control
 
-#### 1. サイクル実行の自動化
+#### 1. Automate cycle execution
 
 ```markdown
-## AITDD 実行スクリプト例
+## Example AITDD execution script
 
-### 入力
+### Inputs
 
 - requirements.md
 - testcases.md
-- 既存コードベース
+- Existing codebase
 
-### 実行フロー
+### Execution flow
 
-1. Red: テストケース実装・実行
-2. Green: 最小実装
-3. Refactor: コード改善
-4. Validation: 包括的検証
-5. 判定: 完了/継続の自動判定
+1. Red: Implement and run test cases
+2. Green: Minimal implementation
+3. Refactor: Improve code
+4. Validation: Comprehensive verification
+5. Decision: Automatic completion/continuation
 
-### 出力
+### Outputs
 
-- 実装コード
-- テスト結果
-- 品質レポート
-- 次ステップの推奨事項
+- Implementation code
+- Test results
+- Quality report
+- Recommendations for next steps
 ```
 
-#### 2. 進捗の可視化
+#### 2. Visualize progress
 
 ```markdown
-## 進捗トラッキング
+## Progress tracking
 
-### テストケース進捗
+### Test-case progress
 
-- 実装済み: 8/10 (80%)
-- 成功: 8/8 (100%)
-- 失敗: 0/8 (0%)
+- Implemented: 8/10 (80%)
+- Passed: 8/8 (100%)
+- Failed: 0/8 (0%)
 
-### 品質メトリクス
+### Quality metrics
 
-- カバレッジ: 95%
-- 複雑度: 3.2 (良好)
-- 重複度: 2% (良好)
+- Coverage: 95%
+- Complexity: 3.2 (Good)
+- Duplication: 2% (Good)
 
-### 要件充足度
+### Requirement fulfillment
 
-- 機能要件: 100%
-- 非機能要件: 80%
-- セキュリティ要件: 100%
+- Functional requirements: 100%
+- Non-functional requirements: 80%
+- Security requirements: 100%
 ```
 
-### 人間の介入ポイント
+### Points of Human Intervention
 
-#### 1. 重要な判断が必要な場合
+#### 1. When important decisions are needed
 
-- アーキテクチャの大幅変更
-- セキュリティ要件の解釈
-- パフォーマンス要件の調整
-- ビジネスロジックの複雑な判断
+- Major architectural changes
+- Interpretation of security requirements
+- Adjustment of performance requirements
+- Complex decisions in business logic
 
-#### 2. 品質基準の調整
+#### 2. Adjust quality standards
 
-- テストカバレッジの目標値
-- コード複雑度の許容値
-- パフォーマンス要件の見直し
+- Target for test coverage
+- Acceptable code complexity
+- Review performance requirements
 
-#### 3. プロセスの最適化
+#### 3. Optimize the process
 
-- サイクル実行時間の改善
-- AI 指示の精度向上
-- 自動化範囲の拡大
+- Improve cycle execution time
+- Increase precision of AI instructions
+- Expand scope of automation
 
-## エラー対応とデバッグ
+## Error Handling and Debugging
 
-### よくある問題とその対処法
+### Common problems and countermeasures
 
-#### 1. Red フェーズでテストが正しく失敗しない
+#### 1. Tests do not fail correctly in the Red phase
 
-**原因**: テストケースの実装ミス、環境設定問題
-**対処**: テストケース仕様の再確認、環境の初期化
+**Cause**: Mistakes implementing test cases, environment configuration issues  
+**Countermeasure**: Re-check test-case specifications, re-initialize the environment
 
-#### 2. Green フェーズで過度な実装
+#### 2. Over-implementation in the Green phase
 
-**原因**: 最小実装原則の理解不足
-**対処**: テスト駆動の徹底、実装範囲の明確化
+**Cause**: Lack of understanding of the minimal implementation principle  
+**Countermeasure**: Adhere strictly to test-driven development, clarify implementation scope
 
-#### 3. Refactor フェーズでテストが破綻
+#### 3. Tests break in the Refactor phase
 
-**原因**: リファクタリング中の論理変更
-**対処**: 段階的リファクタリング、継続的テスト実行
+**Cause**: Logical changes during refactoring  
+**Countermeasure**: Refactor incrementally, run tests continuously
 
-#### 4. Validation フェーズで基準未達
+#### 4. Thresholds not met in the Validation phase
 
-**原因**: 要件理解の不足、品質基準の設定ミス
-**対処**: 要件の再確認、基準値の調整
+**Cause**: Insufficient understanding of requirements, misconfigured quality standards  
+**Countermeasure**: Reconfirm requirements, adjust thresholds
 
-## 次のステップ
+## Next Steps
 
-Red-Green-Refactor-Validation サイクルの理解ができたら、次は[Validation ステップの詳細](./05-validation-details.md)でより深い品質管理手法を学びます。
+Once you understand the Red-Green-Refactor-Validation cycle, proceed to [Details of the Validation Step](./05-validation-details.md) to learn deeper quality-management techniques.
 
-### 学習のポイント
+### Learning points
 
-- [ ] 各フェーズの目的と実行内容を理解した
-- [ ] AI と人間の役割分担を把握した
-- [ ] サイクル全体の品質管理手法を習得した
-- [ ] エラー対応の基本パターンを学んだ
+- [ ] Understood purposes and tasks of each phase
+- [ ] Grasped division of roles between AI and humans
+- [ ] Mastered quality management across the entire cycle
+- [ ] Learned basic error-handling patterns
 
-このサイクルをマスターすることで、AI の力を最大限活用しながら高品質なソフトウェアを効率的に開発できるようになります。
+By mastering this cycle, you will be able to efficiently develop high-quality software while making maximum use of AI.

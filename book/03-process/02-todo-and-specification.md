@@ -347,202 +347,200 @@ Once specifications are complete, move on to [Create Test Cases](./03-test-case-
 
 Appropriate specification writing makes subsequent test-case creation and implementation go smoothly.
 
-# 3.2 TODO 作成と仕様策定
+# 3.2 TODO Creation and Specification Development
 
-## TODO 作成：開発の出発点
+## TODO Creation: Starting Point of Development
 
-### TODO の重要性
+### Importance of TODO
 
-AITDD において、適切な TODO 作成は成功の鍵となります。曖昧な TODO は、その後のすべてのステップに悪影響を与えるため、明確で実行可能な TODO を作成することが重要です。
+In AITDD, appropriate TODO creation is the key to success. Ambiguous TODOs negatively affect all subsequent steps, so it's important to create clear and executable TODOs.
 
-### 効果的な TODO 作成の原則
+### Principles of Effective TODO Creation
 
-#### 1. 具体性の確保
-
-```markdown
-❌ 悪い例：「ユーザー管理機能を作る」
-✅ 良い例：「ユーザーの新規登録機能を実装する（email/password 認証）」
-```
-
-#### 2. 適切な粒度
-
-- **大きすぎる**: 1 つの TODO に複数の機能が含まれる
-- **小さすぎる**: 個別のメソッド単位
-- **適切**: 1 つの完結した機能単位
-
-#### 3. 完了条件の明確化
+#### 1. Ensure Specificity
 
 ```markdown
-## TODO: ユーザー登録 API 実装
-
-### 完了条件
-
-- [ ] POST /api/users エンドポイントの実装
-- [ ] email/password のバリデーション
-- [ ] パスワードハッシュ化
-- [ ] データベース保存
-- [ ] レスポンス形式の統一
+❌ Bad example: "Create user management functionality"
+✅ Good example: "Implement user registration functionality (email/password authentication)"
 ```
 
-### TODO 管理ファイルの構造
+#### 2. Appropriate Granularity
 
-#### 基本的なフォーマット
+- **Too large**: One TODO contains multiple functionalities
+- **Too small**: Individual method level
+- **Appropriate**: One complete functionality unit
+
+#### 3. Clarify Completion Criteria
 
 ```markdown
-# プロジェクト TODO 管理
+## TODO: User Registration API Implementation
 
-## 実装予定
+### Completion Criteria
 
-### 高優先度
-
-- [ ] **ユーザー認証機能**
-  - 説明: JWT 認証による認証機能
-  - 完了条件: ログイン/ログアウト/トークン検証
-  - 依存: データベース設計完了
-
-### 中優先度
-
-- [ ] **商品検索機能**
-  - 説明: キーワードとカテゴリによる商品検索
-  - 完了条件: 検索 API + フィルタリング機能
-
-## 進行中
-
-- [x] データベース設計（2024-06-21 完了）
-
-## 完了
-
-- [x] プロジェクト初期セットアップ（2024-06-20 完了）
+- [ ] Implement POST /api/users endpoint
+- [ ] email/password validation
+- [ ] Password hashing
+- [ ] Database storage
+- [ ] Unified response format
 ```
 
-#### ファイル構成の推奨事項
+### TODO Management File Structure
+
+#### Basic Format
+
+```markdown
+# Project TODO Management
+
+## Planned Implementation
+
+### High Priority
+
+- [ ] **User Authentication Functionality**
+  - Description: Authentication functionality using JWT
+  - Completion criteria: Login/logout/token verification
+  - Dependencies: Database design completion
+
+### Medium Priority
+
+- [ ] **Product Search Functionality**
+  - Description: Product search by keyword and category
+  - Completion criteria: Search API + filtering functionality
+
+## In Progress
+
+- [x] Database design (completed 2024-06-21)
+
+## Completed
+
+- [x] Project initial setup (completed 2024-06-20)
+```
+
+#### Recommended File Structure
 
 ```
 doc/
-├── todo.md                    # メインTODO管理
+├── todo.md                    # Main TODO management
 ├── implementation/
-│   ├── user-auth-requirements.md      # 個別機能の詳細仕様
-│   ├── user-auth-testcases.md         # テストケース
+│   ├── user-auth-requirements.md      # Detailed specifications for individual functionality
+│   ├── user-auth-testcases.md         # Test cases
 │   └── search-requirements.md
 └── archive/
-    └── completed-todos.md              # 完了したTODOのアーカイブ
+    └── completed-todos.md              # Archive of completed TODOs
 ```
 
-## 仕様策定：設計の基盤
+## Specification Development: Foundation of Design
 
-### 仕様策定の目的
+### Purpose of Specification Development
 
-TODO から具体的な技術仕様を策定し、実装の方向性を明確にします。この段階での曖昧さは、後のステップで大きな問題となるため、詳細まで検討することが重要です。
+Develop specific technical specifications from TODOs and clarify implementation direction. Ambiguity at this stage becomes a major problem in later steps, so it's important to consider details thoroughly.
 
-### 仕様書のテンプレート
+### Specification Document Template
 
 ```markdown
-# [機能名] 要件定義書
+# [Function Name] Requirements Definition Document
 
-## 概要
+## Overview
 
-機能の目的と概要を簡潔に記述
+Briefly describe the purpose and overview of the functionality
 
-## 機能要件
+## Functional requirements
 
-### 基本機能
+### Basic functions
 
-- 必須となる基本的な機能
+- List the essential basic functions
 
-### 詳細仕様
+### Detailed specifications
 
-- 入力項目とバリデーション
-- 処理の流れ
-- 出力形式
+- Input fields and validation
+- Processing flow
+- Output format
 
-### 非機能要件
+### Non-functional requirements
 
-- パフォーマンス要件
-- セキュリティ要件
-- 可用性要件
+- Performance
+- Security
+- Availability
 
-## 技術仕様
+## Technical specifications
 
-### API 仕様
+### API specifications
 
-- エンドポイント
-- リクエスト/レスポンス形式
-- ステータスコード
+- Endpoints
+- Request/Response format
+- Status codes
 
-### データベース設計
+### Database design
 
-- テーブル設計
-- インデックス
-- 制約
+- Table design
+- Indexes
+- Constraints
 
-### エラーハンドリング
+### Error handling
 
-- エラーケースの定義
-- エラーメッセージ
-- ログ出力方針
+- Define error cases
+- Error messages
+- Logging policy
 
-## 制約事項
+## Constraints
 
-- 技術的制約
-- ビジネス制約
-- 外部依存
+- Technical constraints
+- Business constraints
+- External dependencies
 
-## 参考資料
+## References
 
-- 関連ドキュメント
-- 外部 API 仕様書
+- Related documents
+- External API specifications
 ```
 
-### 具体的な仕様策定例
-
-#### 例：ユーザー登録機能の仕様
+### Concrete example: User registration specification
 
 ```markdown
-# ユーザー登録機能 要件定義書
+# User Registration Requirements Definition
 
-## 概要
+## Overview
 
-新規ユーザーが email と password で登録できる機能
+Allow new users to register with email and password
 
-## 機能要件
+## Functional requirements
 
-### 基本機能
+### Basic functions
 
-- email/password による新規ユーザー登録
-- 重複 email の検証
-- パスワード強度チェック
+- Register new users via email/password
+- Validate duplicate emails
+- Check password strength
 
-### 詳細仕様
+### Detailed specifications
 
-#### 入力項目
+#### Input items
 
-- **email**: 必須、email 形式、最大 254 文字
-- **password**: 必須、8 文字以上、英数字記号を含む
-- **password_confirmation**: 必須、password と一致
+- **email**: required, email format, max 254 characters
+- **password**: required, at least 8 characters, includes letters/numbers/symbols
+- **password_confirmation**: required, must match password
 
-#### バリデーション
+#### Validation
 
-- email 重複チェック（データベース確認）
-- password 強度（大文字/小文字/数字/記号を含む）
-- CSRF トークン検証
+- Duplicate email check (database)
+- Password strength (include uppercase/lowercase/digits/symbols)
+- CSRF token verification
 
-#### 処理フロー
+#### Processing flow
 
-1. 入力値バリデーション
-2. email 重複チェック
-3. password ハッシュ化（bcrypt）
-4. データベース保存
-5. 成功レスポンス返却
+1. Validate input values
+2. Check duplicate email
+3. Hash password (bcrypt)
+4. Save to database
+5. Return success response
 
-### 非機能要件
+### Non-functional requirements
 
-- レスポンス時間: 2 秒以内
-- 同時登録: 100 件/秒まで対応
-- パスワードハッシュ化必須
+- Response time: within 2 seconds
+- Concurrent registrations: up to 100/sec
+- Password hashing required
 
-## 技術仕様
+## Technical specifications
 
-### API 仕様
+### API spec
 ```
 
 POST /api/users
@@ -575,7 +573,7 @@ Response (400):
 
 ````
 
-### データベース設計
+### Database design
 ```sql
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -588,112 +586,112 @@ CREATE TABLE users (
 CREATE INDEX idx_users_email ON users(email);
 ````
 
-### エラーハンドリング
+### Error handling
 
-- **400**: バリデーションエラー、重複 email
-- **429**: レート制限
-- **500**: サーバーエラー
+- **400**: Validation error, duplicate email
+- **429**: Rate limiting
+- **500**: Server error
 
-## 制約事項
+## Constraints
 
-- パスワードは平文保存禁止
-- email 確認機能は今回は含まない
-- ソーシャルログインは今回は含まない
+- Do not store passwords in plain text
+- Email verification is excluded this time
+- Social login is excluded this time
 
 ```
 
-## 人間レビューのポイント
+## Human Review Points
 
-### チェック項目
+### Checklist
 
-#### 1. 完全性の確認
-- [ ] 必要な機能がすべて含まれているか
-- [ ] エッジケースが考慮されているか
-- [ ] エラーハンドリングが十分か
+#### 1. Completeness
+- [ ] Are all required functions included?
+- [ ] Are edge cases considered?
+- [ ] Is error handling sufficient?
 
-#### 2. 実現可能性の検証
-- [ ] 技術的に実装可能か
-- [ ] パフォーマンス要件が現実的か
-- [ ] セキュリティ要件が適切か
+#### 2. Feasibility
+- [ ] Is it technically implementable?
+- [ ] Are performance requirements realistic?
+- [ ] Are security requirements appropriate?
 
-#### 3. 一貫性の確認
-- [ ] 他の機能との整合性
-- [ ] データ設計の一貫性
-- [ ] APIインターフェースの統一性
+#### 3. Consistency
+- [ ] Consistency with other features
+- [ ] Consistency in data design
+- [ ] Unified API interface
 
-#### 4. 保守性の考慮
-- [ ] 将来の拡張性
-- [ ] テストの容易さ
-- [ ] ドキュメント化のしやすさ
+#### 4. Maintainability
+- [ ] Future extensibility
+- [ ] Ease of testing
+- [ ] Ease of documentation
 
-### レビュー時の注意点
+### Notes for review
 
-#### AIの提案を活用する際の注意
-- AIの提案は参考として活用
-- 最終判断は必ず人間が行う
-- プロジェクト固有の要件は人間が追加
+#### Caution when using AI suggestions
+- Use AI suggestions as reference
+- Humans must make final decisions
+- Add project-specific requirements manually
 
-#### 段階的な詳細化
+#### Progressive detailing
 ```
 
-1. 概要レベルの仕様 → レビュー
-2. 詳細仕様の追加 → レビュー
-3. 技術仕様の策定 → レビュー
-4. 最終確認 → 承認
+1. Overview-level specification → Review
+2. Add detailed specifications → Review
+3. Draft technical specifications → Review
+4. Final confirmation → Approval
 
 ````
 
-## 仕様策定のベストプラクティス
+## Best Practices for Writing Specifications
 
-### 1. 明確で曖昧さのない表現
+### 1. Clear, unambiguous expressions
 ```markdown
-❌ 「適切に処理する」
-✅ 「エラー時は400ステータスコードとエラーメッセージを返却する」
+❌ "Handle appropriately"
+✅ "On error, return HTTP 400 with an error message"
 ````
 
-### 2. 具体的な数値の明記
+### 2. Specify concrete numbers
 
 ```markdown
-❌ 「高速に処理する」
-✅ 「2 秒以内にレスポンスを返却する」
+❌ "Process quickly"
+✅ "Return a response within 2 seconds"
 ```
 
-### 3. 制約事項の明確化
+### 3. Clarify constraints
 
 ```markdown
-❌ 「セキュリティに配慮する」
-✅ 「パスワードは bcrypt でハッシュ化し、平文保存は禁止」
+❌ "Consider security"
+✅ "Hash passwords with bcrypt and never store them in plain text"
 ```
 
-### 4. テスタビリティの考慮
+### 4. Consider testability
 
-- 各仕様項目がテスト可能か確認
-- テストデータの準備方法を考慮
-- モックやスタブの必要性を検討
+- Ensure each specification item is testable
+- Consider how to prepare test data
+- Consider needs for mocks and stubs
 
-## 次のステップへの準備
+## Preparation for the Next Step
 
-仕様策定が完了したら、次は[テストケース作成](./03-test-case-creation.md)に進みます。
+Once specifications are complete, move on to [Create Test Cases](./03-test-case-creation.md).
 
-### 成果物の確認
+### Deliverables checklist
 
-- [ ] TODO.md が適切に更新されている
-- [ ] requirements.md が詳細に作成されている
-- [ ] 仕様に曖昧な部分が残っていない
-- [ ] 人間によるレビューが完了している
+- [ ] TODO.md is updated appropriately
+- [ ] requirements.md is written in detail
+- [ ] No ambiguity remains in the specification
+- [ ] Human review is complete
 
-### よくある問題と対策
+### Common problems and countermeasures
 
-#### 仕様が曖昧なまま進んでしまう
+#### Proceeding with ambiguous specs
 
-**対策**: 必ず人間レビューを実施し、疑問点はその場で解決
+**Countermeasure**: Always conduct human review and resolve questions immediately
 
-#### AI の提案に過度に依存する
+#### Over-reliance on AI suggestions
 
-**対策**: AI の提案は参考程度に留め、最終判断は人間が行う
+**Countermeasure**: Treat AI suggestions as reference; humans make final decisions
 
-#### 非機能要件が漏れる
+#### Missing non-functional requirements
 
-**対策**: チェックリストを用いて体系的にレビュー
+**Countermeasure**: Use a checklist for systematic review
 
-適切な仕様策定により、その後のテストケース作成と実装がスムーズに進行します。
+Appropriate specification writing makes subsequent test-case creation and implementation go smoothly.

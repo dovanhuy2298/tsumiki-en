@@ -2,99 +2,99 @@
 
 ## Introduction
 
-In AITDD, the quality of AI output depends heavily on prompt design. With appropriate prompts, you can both improve the quality of AI‑generated code and maximize development efficiency. This chapter covers practical principles and concrete techniques for prompt design.
+In AITDD, AI output quality heavily depends on prompt design. Through appropriate prompt design, we can achieve improved quality of AI-generated code and maximize development efficiency. In this chapter, we will learn practical principles and concrete techniques for prompt design.
 
-## Fundamental Principles of Prompt Design
+## Basic Principles of Prompt Design
 
-### 1. Embrace an Iterative Improvement Cycle
+### 1. Adopt Iterative Improvement Approach
 
-Rather than expecting perfection from a single prompt, AITDD assumes continuous improvement.
+In AITDD, rather than seeking perfect results from a single prompt creation, we design based on the premise of continuous improvement.
 
-**Basic cycle:**
+**Basic Cycle:**
 
-```text
-Create prompt → Execute → Evaluate → Revise → Re‑run
+```
+Prompt Creation → Execution → Result Evaluation → Modification → Re-execution
 ```
 
-**Practical points:**
+**Practical Points:**
 
-- Target ~80% quality for the first run; do not aim for perfection
-- Analyze each result in detail and identify improvements
-- Accumulate small corrections to optimize
-- Keep an improvement log and identify recurring patterns
+- Aim for 80% quality in the first attempt, don't seek perfection
+- Analyze each execution result in detail and identify improvement points
+- Accumulate small modifications to achieve optimization
+- Record improvement logs and understand patterns
 
-### 2. Build in Confidence Scoring
+### 2. Incorporate Confidence Assessment
 
-Have the AI annotate the confidence of its own outputs to efficiently find what needs human review.
+By having AI assess its own output confidence, we can efficiently identify areas that need review.
 
-**Confidence signals:**
+**Confidence Indicators:**
 
-- 🟢 High confidence: Clearly derivable from referenced files
-- 🟡 Medium confidence: Reasonable inference but needs confirmation
-- 🔴 Needs judgment: Based on AI’s own assumption; requires focused review
+- **🟢 High Confidence**: Clearly derivable from reference files
+- **🟡 Medium Confidence**: Based on reasonable inference but requires confirmation
+- **🔴 Requires Judgment**: Generated through independent judgment, requires focused confirmation
 
-### 3. Customize by TDD Step
+### 3. Step-by-Step Customization
 
 Optimize prompts for each TDD step (Red, Green, Refactor, Validation).
 
-**Step characteristics:**
+**Characteristics by Step:**
 
-- Red: Emphasize clarity and coverage of tests
-- Green: Minimal implementation and prevention of unintended changes
-- Refactor: Balance quality improvement with behavior preservation
-- Validation: Comprehensive quality checks and issue discovery
+- **Red**: Emphasize clarity and comprehensiveness of test creation
+- **Green**: Prevent minimal implementation and unintended changes
+- **Refactor**: Balance quality improvement with functionality preservation
+- **Validation**: Comprehensive quality checks and issue discovery
 
 ## Prompt Patterns in AITDD
 
-### Pattern 1: TODO Logging Instruction
+### Pattern 1: TODO Recording Instructions
 
-Ask AI to record items that must be reviewed as a TODO list.
+Pattern for having AI record items to be confirmed in TODO format.
 
-**Base template:**
+**Basic Template:**
 
 ````markdown
-## Example Prompt Instruction
+## Prompt Instruction Example
 
-Execute the following and record the results as a TODO list:
+Please execute the following process and record the results as a TODO list:
 
-**Tasks to run:**
-[Concrete instructions]
+**Execution Content:**
+[Concrete instruction content]
 
-**TODO recording format:**
+**TODO Recording Format:**
 
 ```markdown
 ## [Step Name] Result TODO
 
-### 🟢 High‑confidence items
+### 🟢 High Confidence Items
 
-- [ ] [file](relative/path) concrete verification points
+- [ ] Specific confirmation content for [filename](relative path)
 
-### 🟡 Medium‑confidence items
+### 🟡 Medium Confidence Items
 
-- [ ] Validate inferenced content in [file](relative/path)
+- [ ] Validate appropriateness of estimated content for [filename](relative path)
 
-### 🔴 Items requiring judgment
+### 🔴 Items Requiring Judgment
 
-- [ ] Organization‑specific verification: [file](relative/path)
+- [ ] Detailed confirmation: Organization-specific content for [filename](relative path)
 ```
 ````
 
-**Reference files:** [list of files]
-**Output file:** `./todos/[step-name]-check.md`
+**Reference Files:** [List of specified files]
+**Output File:** `./todos/[step-name]-check.md`
 
 ````
 
-### Pattern 2: Confidence Scoring Instruction
+### Pattern 2: Confidence Assessment Instructions
 
-Make AI explicitly state the rationale and confidence for generated content.
+Pattern for having AI explicitly show the basis and confidence of generated content.
 
-**Base template:**
+**Basic Template:**
 ```markdown
-## Confidence Scoring Instruction
+## Confidence Assessment Instructions
 
-For each generated item, evaluate confidence by the following criteria:
+For each generated content, please assess confidence according to the following criteria:
 
-**Criteria:**
+**Assessment Criteria:**
 - 🟢 Green: Clearly derivable from the specified references
 - 🟡 Yellow: Reasonable inference but needs confirmation
 - 🔴 Red: Based on AI’s own assumption
@@ -334,342 +334,3 @@ The essence of effective prompt design:
 4. **Quality control**: Prevent unintended implementations and clarify references
 
 In the next section, we will learn concrete techniques for visualizing AI inference that leverage these principles.
-
-# 5.1 効果的なプロンプト設計の原則
-
-## はじめに
-
-AITDD において、AI の出力品質はプロンプト設計に大きく依存します。適切なプロンプト設計により、AI 生成コードの品質向上と開発効率の最大化を実現できます。本章では、実践的なプロンプト設計の原則と具体的な手法を学びます。
-
-## プロンプト設計の基本原則
-
-### 1. 反復改善方式の採用
-
-AITDD では、一度のプロンプト作成で完璧な結果を求めるのではなく、継続的な改善を前提とした設計を行います。
-
-**基本サイクル：**
-
-```
-プロンプト作成 → 実行 → 結果評価 → 修正 → 再実行
-```
-
-**実践のポイント：**
-
-- 初回は 80%の品質を目標とし、完璧を求めない
-- 各実行結果を詳細に分析し、改善点を特定
-- 小さな修正を積み重ねて最適化を図る
-- 改善ログを記録し、パターンを把握
-
-### 2. 確信度評価の組み込み
-
-AI に自身の出力に対する確信度を評価させることで、レビューすべき箇所を効率的に特定できます。
-
-**確信度の指標：**
-
-- **🟢 高確信度**: 参照ファイルから明確に導出可能
-- **🟡 中確信度**: 合理的推測に基づくが確認が必要
-- **🔴 要判断**: 独自判断による生成で重点確認が必要
-
-### 3. ステップ別カスタマイズ
-
-TDD の各ステップ（Red、Green、Refactor、Validation）ごとに、プロンプトを最適化します。
-
-**ステップ別の特徴：**
-
-- **Red**: テスト作成の明確性と網羅性を重視
-- **Green**: 最小実装と意図しない変更の防止
-- **Refactor**: 品質向上と機能保持のバランス
-- **Validation**: 総合的な品質チェックと課題発見
-
-## AITDD におけるプロンプトパターン
-
-### パターン 1: TODO 記録指示
-
-AI 生成結果の確認すべき項目を TODO 形式で記録させるパターンです。
-
-**基本テンプレート：**
-
-````markdown
-## プロンプトでの指示例
-
-以下の処理を実行し、結果を TODO リストとして記録してください：
-
-**実行内容：**
-[具体的な指示内容]
-
-**TODO 記録フォーマット：**
-
-```markdown
-## [ステップ名]結果 TODO
-
-### 🟢 高確信度項目
-
-- [ ] [ファイル名](相対パス) の具体的確認内容
-
-### 🟡 中確信度項目
-
-- [ ] [ファイル名](相対パス) の推定内容の妥当性確認
-
-### 🔴 要判断項目
-
-- [ ] 詳細確認: [ファイル名](相対パス) の組織固有内容
-```
-````
-
-**参照ファイル：** [指定するファイルのリスト]
-**出力ファイル：** `./todos/[ステップ名]-check.md`
-
-````
-
-### パターン2: 確信度評価指示
-
-AI生成内容の根拠と確信度を明示させるパターンです。
-
-**基本テンプレート：**
-```markdown
-## 確信度評価指示
-
-各生成内容について、以下の基準で確信度を評価してください：
-
-**評価基準：**
-- 🟢 青信号：参照ファイルから明確に推測可能
-- 🟡 黄信号：合理的推測だが要確認
-- 🔴 赤信号：独自判断による生成
-
-**評価対象：**
-1. 生成したコードの各機能
-2. テストケースの選択理由
-3. 実装方針の決定根拠
-
-**出力形式：**
-- 各項目に信号機マークを付与
-- 根拠となる参照ファイルの箇所を明記
-- 推測理由を簡潔に説明
-````
-
-### パターン 3: 段階的詳細化指示
-
-複雑な実装を段階的に進めるためのパターンです。
-
-**基本テンプレート：**
-
-```markdown
-## 段階的実装指示
-
-以下の順序で段階的に実装を進めてください：
-
-**Phase 1: 基本構造**
-
-- 最小限の動作確認
-- 主要な関数・クラスの骨格
-- 基本的なテストケース
-
-**Phase 2: 機能拡張**
-
-- 具体的な機能実装
-- エラーハンドリング
-- 追加テストケース
-
-**Phase 3: 最適化**
-
-- パフォーマンス改善
-- コード品質向上
-- 総合テスト
-
-**各フェーズ後の確認：**
-
-- テスト実行結果の報告
-- 確信度評価の実施
-- 次フェーズへの課題整理
-```
-
-## 実践的なプロンプト構成要素
-
-### 必須要素チェックリスト
-
-プロンプト作成時に必ず含めるべき要素：
-
-- [ ] **明確な目的の定義**
-
-  - 何を実現したいかの明確な説明
-  - 期待する出力の具体的な形式
-
-- [ ] **参照ファイルの指定**
-
-  - 根拠とすべきファイルの明記
-  - ファイル間の関係性の説明
-
-- [ ] **確信度評価の指示**
-
-  - 信号機システムの適用指示
-  - 評価基準の明確な定義
-
-- [ ] **出力形式の指定**
-
-  - ファイル名と保存場所の指定
-  - マークダウン形式等の詳細指定
-
-- [ ] **制約・注意事項の明記**
-  - 変更してはいけない箇所
-  - 特別な考慮事項
-
-### テンプレート化可能な部分
-
-**標準ヘッダー例：**
-
-```markdown
-## [ステップ名] 実行指示
-
-**目的：** [具体的な目的]
-**参照ファイル：** [ファイルリスト]
-**出力ファイル：** [保存先パス]
-
-**確信度評価：**
-各生成内容について 🟢🟡🔴 で確信度を表示
-
-**制約事項：**
-
-- [重要な制約事項]
-```
-
-### カスタマイズが必要な部分
-
-プロジェクト固有でカスタマイズすべき要素：
-
-1. **ドメイン固有の用語・概念**
-
-   - 業界特有の用語の定義
-   - プロジェクト内での命名規則
-
-2. **技術スタック固有の制約**
-
-   - 使用フレームワークの制約
-   - パフォーマンス要件
-
-3. **組織固有のルール**
-   - コーディング規約
-   - セキュリティガイドライン
-
-## 品質確保のためのプロンプト技法
-
-### 1. 想定外実装の防止
-
-**対策技法：**
-
-```markdown
-## 実装制約の明確化
-
-**変更許可範囲：**
-
-- 変更可能：[具体的なファイル・関数名]
-- 変更禁止：[既存の動作している部分]
-
-**実装方針：**
-
-- 最小限の変更で目的を達成
-- 既存機能への影響を最小化
-- 新規追加を基本とし、既存修正は最小限
-
-**確認チェック：**
-
-- [ ] 指定範囲外の変更が含まれていないか
-- [ ] 既存テストが引き続き成功するか
-- [ ] 意図しない副作用が発生していないか
-```
-
-### 2. 参照元ファイルとの関係性明示
-
-**関係性明示の例：**
-
-```markdown
-## 参照ファイル関係図
-
-**主要参照：**
-
-- `spec.md` → 要件定義の根拠
-- `existing_test.js` → 既存仕様の確認
-- `config.json` → 設定仕様の参照
-
-**派生参照：**
-
-- `utils.js` → 既存ユーティリティの活用
-- `types.ts` → 型定義の整合性確保
-
-**生成時の参照優先度：**
-
-1. 主要参照を最優先
-2. 矛盾する内容は主要参照を採用
-3. 不明な点は明確に質問として記録
-```
-
-### 3. 段階的詳細化の実装
-
-**詳細化戦略：**
-
-```markdown
-## 段階的詳細化プロセス
-
-**Level 1: 骨格作成**
-
-- インターフェース定義
-- 主要関数のシグネチャ
-- 基本的なエラーハンドリング
-
-**Level 2: 機能実装**
-
-- ビジネスロジックの実装
-- 詳細なエラーハンドリング
-- 入力値検証
-
-**Level 3: 最適化・完成**
-
-- パフォーマンス最適化
-- エッジケース対応
-- ドキュメント整備
-
-**各レベルでの確認項目：**
-
-- テスト実行結果
-- 確信度評価
-- 次レベルでの課題
-```
-
-## 実践演習
-
-### 演習 1: 基本プロンプトの作成
-
-以下のシナリオでプロンプトを作成してください：
-
-**シナリオ：** ユーザー認証機能のテストケース作成
-**参照ファイル：** `auth_spec.md`, `user_model.js`
-**期待する出力：** Jest 形式のテストファイル
-
-**作成すべき要素：**
-
-1. 明確な目的定義
-2. 参照ファイルの指定
-3. 確信度評価の指示
-4. 出力形式の指定
-
-### 演習 2: 段階的実装プロンプトの設計
-
-**シナリオ：** REST API エンドポイントの実装
-**要件：** 複雑なデータ処理を含む
-**制約：** 既存のミドルウェアを活用
-
-**設計すべき要素：**
-
-1. 3 段階の実装フェーズ
-2. 各フェーズの成果物
-3. フェーズ間の確認項目
-
-## まとめ
-
-効果的なプロンプト設計の核心は以下の通りです：
-
-1. **反復改善**: 一度で完璧を求めず、継続的な改善を前提とする
-2. **確信度評価**: AI の推測部分を可視化し、効率的なレビューを実現
-3. **ステップ別最適化**: TDD の各段階に応じたプロンプト設計
-4. **品質制御**: 想定外実装の防止と参照元の明確化
-
-次のセクションでは、これらの原則を具体的に活用する AI 推論の可視化技術について詳しく学習します。

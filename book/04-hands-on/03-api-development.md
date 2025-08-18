@@ -782,104 +782,104 @@ Through API development, you learned:
 
 These experiences provide a solid foundation to leverage AITDD effectively in real products.
 
-# 4.3 API 開発の実践
+# 4.3 API Development Practice
 
-## 学習目標
+## Learning Objectives
 
-この章では、RESTful API の開発を通じて、AITDD の実際の Web アプリケーション開発への適用方法を学びます：
+In this chapter, through RESTful API development, you will learn how to apply AITDD to actual web application development:
 
-- 外部依存を含む実装での AITDD 活用
-- 非同期処理とエラーハンドリングの実装
-- HTTP ステータスコードとレスポンス設計
-- API ドキュメントの自動生成
-- 実際のプロダクション環境に近い開発体験
+- AITDD utilization in implementations with external dependencies
+- Implementation of asynchronous processing and error handling
+- HTTP status codes and response design
+- Automatic API documentation generation
+- Development experience close to actual production environment
 
-## プロジェクト概要：タスク管理 API
+## Project Overview: Task Management API
 
-前章で開発したタスク管理システムをベースに、Express.js を使用した RESTful API を構築します。
+Based on the task management system developed in the previous chapter, we will build a RESTful API using Express.js.
 
-### API 仕様概要
+### API Specification Overview
 
 ```http
-GET    /api/tasks       # 全タスク取得
-GET    /api/tasks/:id   # 特定タスク取得
-POST   /api/tasks       # 新規タスク作成
-PUT    /api/tasks/:id   # タスク更新
-DELETE /api/tasks/:id   # タスク削除
+GET    /api/tasks       # Get all tasks
+GET    /api/tasks/:id   # Get specific task
+POST   /api/tasks       # Create new task
+PUT    /api/tasks/:id   # Update task
+DELETE /api/tasks/:id   # Delete task
 ```
 
-### 技術スタック
+### Technology Stack
 
-- **Web フレームワーク**: Express.js
-- **言語**: TypeScript
-- **テスト**: Jest + Supertest
-- **バリデーション**: express-validator
-- **ドキュメント**: OpenAPI (Swagger)
+- **Web Framework**: Express.js
+- **Language**: TypeScript
+- **Testing**: Jest + Supertest
+- **Validation**: express-validator
+- **Documentation**: OpenAPI (Swagger)
 
-## 新たな技術的複雑さ
+## New Technical Complexity
 
-API 開発では前章の CRUD に加えて以下の要素が増加します：
+In API development, in addition to CRUD from the previous chapter, the following elements increase:
 
-**HTTP 関連**：
+**HTTP Related**:
 
-- リクエスト/レスポンス処理
-- ステータスコード管理
-- ヘッダー処理
-- ルーティング設計
+- Request/response processing
+- Status code management
+- Header processing
+- Routing design
 
-**非同期処理**：
+**Asynchronous Processing**:
 
 - Promise/async-await
-- エラーハンドリング
-- タイムアウト処理
+- Error handling
+- Timeout processing
 
-**バリデーション**：
+**Validation**:
 
-- リクエストデータ検証
-- レスポンス形式統一
-- エラーレスポンス標準化
+- Request data validation
+- Response format unification
+- Error response standardization
 
-## 実践ハンズオン
+## Practical Hands-on
 
-### ステップ 1：TODO 作成と API 設計
+### Step 1: TODO Creation and API Design
 
-AITDD での API 開発においても、**3 機能程度の統合限界**は同様に適用されます。そのため、エンドポイントを適切に分割します。
+In AITDD API development, the **3-function integration limit** also applies. Therefore, we appropriately divide endpoints.
 
 ```markdown
-# TODO: タスク管理 API 実装
+# TODO: Task Management API Implementation
 
-## フェーズ 1：基盤構築
+## Phase 1: Foundation Building
 
-- [ ] Express.js プロジェクトセットアップ
-- [ ] TypeScript 設定
-- [ ] 基本的なミドルウェア設定
-- [ ] エラーハンドリングミドルウェア
+- [ ] Express.js project setup
+- [ ] TypeScript configuration
+- [ ] Basic middleware configuration
+- [ ] Error handling middleware
 
-## フェーズ 2：基本 API（3 エンドポイント）
+## Phase 2: Basic API (3 endpoints)
 
-- [ ] GET /api/tasks - 全タスク取得
-- [ ] GET /api/tasks/:id - 単一タスク取得
-- [ ] POST /api/tasks - タスク作成
+- [ ] GET /api/tasks - Get all tasks
+- [ ] GET /api/tasks/:id - Get single task
+- [ ] POST /api/tasks - Create task
 
-## フェーズ 3：拡張 API（残りエンドポイント）
+## Phase 3: Extended API (remaining endpoints)
 
-- [ ] PUT /api/tasks/:id - タスク更新
-- [ ] DELETE /api/tasks/:id - タスク削除
-- [ ] GET /api/tasks?search=xxx - 条件検索
+- [ ] PUT /api/tasks/:id - Update task
+- [ ] DELETE /api/tasks/:id - Delete task
+- [ ] GET /api/tasks?search=xxx - Conditional search
 
-## フェーズ 4：品質向上
+## Phase 4: Quality Improvement
 
-- [ ] OpenAPI 仕様書生成
-- [ ] 入力バリデーション強化
-- [ ] セキュリティヘッダー追加
-- [ ] パフォーマンス最適化
+- [ ] OpenAPI specification generation
+- [ ] Input validation enhancement
+- [ ] Security header addition
+- [ ] Performance optimization
 ```
 
-### ステップ 2：フェーズ 1 - 基盤構築
+### Step 2: Phase 1 - Foundation Building
 
-#### 仕様作成
+#### Create the spec
 
-**AI へのプロンプト**：
+**AI Prompt:**
 
 ```
 Express.jsとTypeScriptを使用したAPIプロジェクトの基盤設定の仕様を作成してください。
@@ -895,7 +895,7 @@ Express.jsとTypeScriptを使用したAPIプロジェクトの基盤設定の仕
 [フェーズ1のTODOを貼り付け]
 ```
 
-**生成された仕様例**：
+**Generated spec example:**
 
 ````markdown
 # タスク管理 API 基盤仕様
@@ -945,53 +945,52 @@ interface APIResponse<T> {
   };
 }
 ```
-
 ````
 
-#### テストケース作成とRed-Green-Refactor-Validation
+#### Test cases and Red-Green-Refactor-Validation
 
-**API基盤のテスト**：
+**API 基盤のテスト**：
+
 ```typescript
-describe('API基盤テスト', () => {
-  test('サーバー起動確認', async () => {
-    const response = await request(app).get('/health');
+describe("API基盤テスト", () => {
+  test("サーバー起動確認", async () => {
+    const response = await request(app).get("/health");
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
   });
 
-  test('CORS設定確認', async () => {
+  test("CORS設定確認", async () => {
     const response = await request(app)
-      .options('/api/tasks')
-      .set('Origin', 'http://localhost:3000')
-      .set('Access-Control-Request-Method', 'GET');
+      .options("/api/tasks")
+      .set("Origin", "http://localhost:3000")
+      .set("Access-Control-Request-Method", "GET");
 
-    expect(response.headers['access-control-allow-origin']).toBeDefined();
+    expect(response.headers["access-control-allow-origin"]).toBeDefined();
   });
 
-  test('JSON解析確認', async () => {
+  test("JSON解析確認", async () => {
     const response = await request(app)
-      .post('/api/test')
-      .send({ test: 'data' })
-      .set('Content-Type', 'application/json');
+      .post("/api/test")
+      .send({ test: "data" })
+      .set("Content-Type", "application/json");
 
     expect(response.status).not.toBe(400); // JSON解析エラーではない
   });
 
-  test('エラーハンドリング確認', async () => {
-    const response = await request(app).get('/api/nonexistent');
+  test("エラーハンドリング確認", async () => {
+    const response = await request(app).get("/api/nonexistent");
     expect(response.status).toBe(404);
     expect(response.body.success).toBe(false);
     expect(response.body.error).toBeDefined();
   });
 });
-````
-````
+```
 
-### ステップ 3：フェーズ 2 - 基本 API 実装
+### Step 3: Phase 2 - Basic API Implementation
 
-#### GET /api/tasks の実装
+#### Implement GET /api/tasks
 
-**仕様**：
+**Spec:**
 
 ````markdown
 ## 全タスク取得 API
@@ -1023,7 +1022,7 @@ GET /api/tasks
 ```
 ````
 
-### ステータスコード
+### Status codes
 
 - 200: 正常取得（空配列含む）
 - 500: サーバーエラー
@@ -1090,7 +1089,7 @@ export class TaskController {
 }
 ```
 
-#### GET /api/tasks/:id の実装
+#### Implement GET /api/tasks/:id
 
 **仕様追加**：
 
@@ -1145,9 +1144,9 @@ POST /api/tasks
 - 500: サーバーエラー
 ````
 
-### ステップ 4：フェーズ 3 - 拡張 API 実装
+### Step 4: Phase 3 - Extended API Implementation
 
-#### 入力バリデーション強化
+#### Strengthen input validation
 
 **express-validator の活用**：
 
@@ -1246,11 +1245,11 @@ deleteTask = async (req: Request, res: Response, next: NextFunction) => {
 };
 ```
 
-### ステップ 5：フェーズ 4 - 品質向上
+### Step 5: Phase 4 - Quality Improvement
 
-#### OpenAPI 仕様書の生成
+#### OpenAPI specification generation
 
-**AI プロンプト例**：
+**AI Prompt example:**
 
 ```
 以下のAPIエンドポイントからOpenAPI 3.0仕様書を生成してください：
@@ -1266,7 +1265,7 @@ deleteTask = async (req: Request, res: Response, next: NextFunction) => {
 4. エラーコードの説明を含める
 ```
 
-**生成された OpenAPI 仕様例**：
+**Generated OpenAPI specification example:**
 
 ```yaml
 openapi: 3.0.0
@@ -1334,32 +1333,32 @@ components:
           format: date-time
 ```
 
-## 複雑な問題の対処法
+## Handling Complex Problems
 
-### 手動実装への切り替え判断
+### When to switch to manual implementation
 
-API 開発において、以下の場合は手動実装を検討します：
+Consider manual implementation in API development when:
 
-**実装方法がイメージできない場合**：
+**You cannot picture the implementation approach:**
 
-- 「カスタムミドルウェアの複雑な認証ロジック」
-- 「WebSocket との統合処理」
-- 「複雑なデータベース最適化」
+- Complex custom auth middleware
+- WebSocket integration
+- Advanced database optimization
 
-**パフォーマンス対応が必要な場合**：
+**Performance work is required:**
 
-- 「大量リクエストの処理最適化」
-- 「メモリ使用量の最適化」
-- 「レスポンス時間の短縮」
+- High-throughput optimization
+- Memory optimization
+- Response latency reduction
 
-### 手動実装時の AI 活用
+### Using AI during manual implementation
 
-完全手動ではなく、以下で AI を活用：
+Not fully manual—use AI for parts:
 
 ```typescript
-// 実装イメージができる部分はAIに依頼
+// Let AI generate helper-like code
 const generateResponseHelper = (data: any, meta: any) => {
-  // この部分はAIで生成可能
+  // This part can be generated by AI
   return {
     success: true,
     data,
@@ -1370,23 +1369,23 @@ const generateResponseHelper = (data: any, meta: any) => {
   };
 };
 
-// 複雑なロジックは手動実装
+// Keep complex logic manual
 const complexAuthMiddleware = (req, res, next) => {
-  // 複雑な認証ロジックは手動で実装
-  // ただし、部分的にAI補完を活用
+  // Implement complex logic manually
+  // However, use AI for partial completion
 };
 ```
 
-## API 開発特有のテスト戦略
+## API Development Specific Test Strategy
 
-### 統合テストパターン
+### Integration test pattern
 
-**エンドツーエンドテスト**：
+End-to-end test:
 
 ```typescript
-describe("API統合テスト", () => {
-  test("タスク管理フロー", async () => {
-    // 1. タスク作成
+describe("API integration tests", () => {
+  test("Task management flow", async () => {
+    // 1. Create
     const createResponse = await request(app).post("/api/tasks").send({
       title: "テストタスク",
       description: "テスト用のタスクです",
@@ -1395,13 +1394,13 @@ describe("API統合テスト", () => {
     expect(createResponse.status).toBe(201);
     const taskId = createResponse.body.data.id;
 
-    // 2. タスク取得確認
+    // 2. Read
     const getResponse = await request(app).get(`/api/tasks/${taskId}`);
 
     expect(getResponse.status).toBe(200);
     expect(getResponse.body.data.title).toBe("テストタスク");
 
-    // 3. タスク更新
+    // 3. Update
     const updateResponse = await request(app).put(`/api/tasks/${taskId}`).send({
       completed: true,
     });
@@ -1409,12 +1408,12 @@ describe("API統合テスト", () => {
     expect(updateResponse.status).toBe(200);
     expect(updateResponse.body.data.completed).toBe(true);
 
-    // 4. タスク削除
+    // 4. Delete
     const deleteResponse = await request(app).delete(`/api/tasks/${taskId}`);
 
     expect(deleteResponse.status).toBe(204);
 
-    // 5. 削除確認
+    // 5. Verify deletion
     const getAfterDeleteResponse = await request(app).get(
       `/api/tasks/${taskId}`
     );
@@ -1424,13 +1423,13 @@ describe("API統合テスト", () => {
 });
 ```
 
-### パフォーマンステスト
+### Performance tests
 
-**負荷テスト**：
+**Load testing**：
 
 ```typescript
-describe("パフォーマンステスト", () => {
-  test("同時リクエスト処理", async () => {
+describe("Performance tests", () => {
+  test("Concurrent requests processing", async () => {
     const requests = Array.from({ length: 100 }, (_, i) =>
       request(app)
         .post("/api/tasks")
@@ -1448,14 +1447,14 @@ describe("パフォーマンステスト", () => {
       expect(response.status).toBe(201);
     });
 
-    expect(endTime - startTime).toBeLessThan(5000); // 5秒以内
+    expect(endTime - startTime).toBeLessThan(5000); // within 5s
   });
 });
 ```
 
-## エラーハンドリングのベストプラクティス
+## Error-handling Best Practices
 
-### 包括的エラー処理
+### Comprehensive error handling
 
 ```typescript
 // middleware/errorHandler.ts
@@ -1465,7 +1464,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  // ログ出力
+  // Logging
   console.error("API Error:", {
     error: error.message,
     stack: error.stack,
@@ -1475,7 +1474,7 @@ export const errorHandler = (
     timestamp: new Date().toISOString(),
   });
 
-  // エラータイプごとの処理
+  // Error type handling
   if (error.name === "TaskNotFoundError") {
     return res.status(404).json({
       success: false,
@@ -1499,7 +1498,7 @@ export const errorHandler = (
     });
   }
 
-  // 未知のエラー
+  // Unknown error
   res.status(500).json({
     success: false,
     error: {
@@ -1511,79 +1510,79 @@ export const errorHandler = (
 };
 ```
 
-## 実践での学習効果
+## Learning Effects
 
-### API 開発での AITDD 効果
+### AITDD benefits in API development
 
-**開発速度の実感**：
+**Development speed:**
 
-- 従来の API 開発：数日〜1 週間
-- AITDD 使用：数時間
-- **大幅な効率化**を実現
+- Traditional API development: days to a week
+- With AITDD: hours
+- **Achieve significant efficiency gains**
 
-**品質の安定性**：
+**Quality stability:**
 
-- 包括的なテストによる品質保証
-- エラーハンドリングの標準化
-- API ドキュメントの自動生成
+- Comprehensive tests ensure quality
+- Standardized error handling
+- Automatic API docs generation
 
-**実践的スキルの習得**：
+**Practical skills:**
 
-- Web 開発での効果的な AI 活用
-- 複雑な統合処理への対応
-- プロダクション品質の実装
+- Effective AI usage in web development
+- Handling complex integrations
+- Production-grade implementation
 
-### 従来開発との違い
+### Differences from traditional development
 
-**設計フェーズ**：
+**Design phase:**
 
-- 従来：詳細設計に時間をかける
-- AITDD：AI と協力して段階的に設計
+- Traditional: Heavy upfront detailed design
+- AITDD: Iteratively designed with AI
 
-**実装フェーズ**：
+**Implementation phase:**
 
-- 従来：手動での詳細実装
-- AITDD：AI 生成コードの品質管理
+- Traditional: Manual detailed implementation
+- AITDD: Quality-managing AI-generated code
 
-**テストフェーズ**：
+**Test phase:**
 
-- 従来：実装後のテスト作成
-- AITDD：テストファーストアプローチ
+- Traditional: Tests after implementation
+- AITDD: Test-first approach
 
-## 次章への準備
+## Preparation for the Next Chapter
 
-この API 開発体験により、以下が身に付きます：
+From this API development experience, you will gain:
 
-1. **Web 開発での AI 活用技術**
-2. **複雑な統合処理の管理方法**
-3. **プロダクション品質の実装技法**
-4. **エラーハンドリングとデバッグ技術**
+1. **AI utilization techniques in web development**
+2. **Managing complex integrations**
+3. **Production-grade implementation techniques**
+4. **Error handling and debugging skills**
 
-次章では、これらの実装過程で発生するエラーやトラブルに対する具体的な対処法を学習します。
+Next, you will learn concrete techniques for handling errors and troubleshooting issues during implementation.
 
-## まとめ
+## Summary
 
-API 開発を通じて以下を習得しました：
+Through API development, you learned:
 
-**技術的成長**：
+**Technical growth:**
 
-- RESTful API 設計の実践
-- 非同期処理とエラーハンドリング
-- TypeScript での型安全な実装
-- 包括的なテスト戦略
+- Practical RESTful API design
+- Asynchronous programming and error handling
+- Type-safe implementation with TypeScript
+- Comprehensive testing strategy
 
-**AITDD 活用技術**：
+**AITDD techniques:**
 
-- 複雑な実装での AI 協調
-- 段階的な機能追加の管理
-- 品質管理の自動化
-- ドキュメント生成の活用
+- AI collaboration in complex implementations
+- Managing incremental feature additions
+- Automating quality management
+- Leveraging documentation generation
 
-**実践的開発力**：
+**Practical development skills:**
 
-- プロダクション品質の実装
-- パフォーマンス考慮の設計
-- セキュリティ対応の実装
-- 運用を考慮した設計
+- Production-quality implementation
+- Performance-aware design
+- Security-conscious implementation
+- Operability-oriented design
 
-これらの経験により、実際のプロダクト開発でも AITDD を効果的に活用できる基盤が整います。
+These experiences provide a solid foundation to leverage AITDD effectively in real products.
