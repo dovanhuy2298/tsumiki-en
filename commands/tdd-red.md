@@ -40,29 +40,22 @@ Create test code following these principles:
 
 ## Vietnamese Comment Requirements
 
-Test code must include the following Vietnamese comments:
+Test code should include minimal but essential Vietnamese comments:
 
 ### Test Case Start Comments
 
 ```javascript
 describe('{{feature_name}}', () => {
   test('{{test_case_name}}', () => {
-    // 【Test Purpose】: [Clearly state in Vietnamese what to verify in this test]
-    // 【Test Content】: [Explain specifically what processing to test]
-    // 【Expected Behavior】: [Explain the result when operating normally]
-    // 🟢🟡🔴 Reliability Level: [To what extent this test content is based on original materials]
-
-    // 【Test Data Preparation】: [Reason why this data is prepared]
-    // 【Initial Condition Setting】: [Explain state before test execution]
+    // Test purpose: Verify basic functionality
+    // Test data preparation
     const input = {{test_input}};
 
-    // 【Actual Processing Execution】: [Explain which functionality/method to call]
-    // 【Processing Content】: [Explain in Vietnamese the content of processing to be executed]
+    // Execute function
     const result = {{function_name}}(input);
 
-    // 【Result Verification】: [Specifically explain what to verify]
-    // 【Expected Value Confirmation】: [Explain expected results and their reasons]
-    expect(result).toBe({{expected_output}}); // 【Confirmation Content】: [Specific item being verified in this verification] 🟢🟡🔴
+    // Verify result
+    expect(result).toBe({{expected_output}});
   });
 });
 ```
@@ -71,24 +64,20 @@ describe('{{feature_name}}', () => {
 
 ```javascript
 beforeEach(() => {
-  // 【Pre-test Preparation】: [Explanation of preparation work done before each test execution]
-  // 【Environment Initialization】: [Reason and method for keeping test environment in clean state]
+  // Setup test environment
 });
 
 afterEach(() => {
-  // 【Post-test Processing】: [Explanation of cleanup work done after each test execution]
-  // 【State Restoration】: [Reason for restoring state to avoid affecting next test]
+  // Cleanup after test
 });
 ```
 
-### Comments for Each expect Statement
-
-Each expect statement must have Vietnamese comments:
+### Essential expect Comments
 
 ```javascript
-expect(result.property).toBe(expectedValue); // 【Confirmation Content】: [Specific item and reason being verified in this verification]
-expect(result.array).toHaveLength(3); // 【Confirmation Content】: [Reason for confirming array length matches expected value]
-expect(result.errors).toContain("error message"); // 【Confirmation Content】: [Reason for confirming specific error message is included]
+expect(result.property).toBe(expectedValue); // Verify property value
+expect(result.array).toHaveLength(3); // Verify array length
+expect(result.errors).toContain("error message"); // Verify error message
 ```
 
 ## Example Test Code to Create
@@ -97,32 +86,31 @@ expect(result.errors).toContain("error message"); // 【Confirmation Content】:
 // Test file: {{test_file_name}}
 describe('{{feature_name}}', () => {
   beforeEach(() => {
-    // 【Pre-test Preparation】: Initialize test environment before each test execution to ensure consistent test conditions
-    // 【Environment Initialization】: Clean reset of file system state to avoid influence from previous tests
+    // Initialize test environment
+    // Clean reset of file system state
   });
 
   afterEach(() => {
-    // 【Post-test Processing】: Delete temporary files and directories created after test execution
-    // 【State Restoration】: Return system to original state to avoid affecting next test
+    // Delete temporary files and directories
+    // Return system to original state
   });
 
   test('{{test_case_name}}', () => {
-    // 【Test Purpose】: {{test_purpose}}
-    // 【Test Content】: {{test_description}}
-    // 【Expected Behavior】: {{expected_behavior}}
-    // 🟢🟡🔴 Reliability Level: [To what extent this test content is based on original materials]
+    // Test purpose: {{test_purpose}}
+    // Test content: {{test_description}}
+    // Expected behavior: {{expected_behavior}}
 
-    // 【Test Data Preparation】: {{test_data_reason}}
-    // 【Initial Condition Setting】: {{initial_condition}}
+    // Prepare test data
+    // Set initial conditions
     const input = {{test_input}};
 
-    // 【Actual Processing Execution】: {{function_description}}
-    // 【Processing Content】: {{process_description}}
+    // Execute function
+    // Process data
     const result = {{function_name}}(input);
 
-    // 【Result Verification】: {{verification_description}}
-    // 【Expected Value Confirmation】: {{expected_result_reason}}
-    expect(result).toBe({{expected_output}}); // 【Confirmation Content】: {{specific_verification_point}}
+    // Verify result
+    // Check expected values
+    expect(result).toBe({{expected_output}});
   });
 });
 ```

@@ -11,12 +11,12 @@ Based on approved requirements definition documents, generate technical design d
 
 ## Execution Content
 
-**【Reliability Level Instructions】**:
-For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
+**Reliability Level Instructions**:
+For each item, briefly indicate the verification status with original materials using:
 
-- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
-- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
-- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
+- 🟢 **Green**: Based on existing documents
+- 🟡 **Yellow**: Reasonable inference from documents
+- 🔴 **Red**: Requires speculation
 
 1. **Requirements Analysis**
 

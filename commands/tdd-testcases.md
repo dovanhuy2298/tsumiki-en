@@ -31,12 +31,11 @@ Design test cases covering the following three categories:
   - **Test Case Overview**: [What normal operation is expected]
   - **Business Value**: [Why this functionality is important]
 - **Input Values**: [Specific values]
-  - **Meaning of Input Data**: [Why this input value was chosen, what it represents]
+  - **Meaning of Input Data**: [Why this input value was chosen]
 - **Expected Results**: [Specific expected values]
   - **Reason for Expected Results**: [Why this result is considered correct]
 - **Test Purpose**: [What to verify]
   - **Verification Points**: [Points to pay special attention to during verification]
-- 🟢🟡🔴 State reliability level of this test case
 
 #### 2.2 Abnormal System Test Cases (Error Handling)
 
@@ -51,7 +50,6 @@ Design test cases covering the following three categories:
   - **System Safety**: [Whether the system can maintain safe state during errors]
 - **Test Purpose**: [Error handling verification]
   - **Quality Assurance Perspective**: [How this test contributes to system quality]
-- 🟢🟡🔴 State reliability level of this test case
 
 #### 2.3 Boundary Value Test Cases (Minimum, maximum, null, etc.)
 
@@ -66,11 +64,10 @@ Design test cases covering the following three categories:
   - **Consistent Behavior**: [Whether behavior is consistent inside and outside boundaries]
 - **Test Purpose**: [Boundary condition verification]
   - **Robustness Confirmation**: [Whether system operates stably under extreme conditions]
-- 🟢🟡🔴 State reliability level of this test case
 
 ## Development Language & Framework
 
-Please also specify the language and test framework to be used for implementation:
+Please specify the language and test framework to be used for implementation:
 
 - **Programming Language**: {{language}}
   - **Reason for Language Selection**: [Why this language was chosen]
@@ -78,65 +75,59 @@ Please also specify the language and test framework to be used for implementatio
 - **Test Framework**: {{test_framework}}
   - **Reason for Framework Selection**: [Why this test framework was chosen]
   - **Test Execution Environment**: [In what environment tests will be executed]
-- 🟢🟡🔴 State reliability level of this content
 
 ## Vietnamese Comment Guidelines for Test Case Implementation
 
-When implementing each test case, please include the following Vietnamese comments:
+When implementing each test case, include minimal but essential Vietnamese comments:
 
 ### Test Case Start Comments
 
 ```javascript
-// 【Test Purpose】: [Clearly state in Vietnamese what to verify in this test]
-// 【Test Content】: [Explain specifically what processing to test]
-// 【Expected Behavior】: [Explain the result when operating normally]
-// 🟢🟡🔴 State reliability level of this content
+// Test purpose: Verify basic functionality
+// Test content: Test normal operation
+// Expected behavior: Function returns expected result
 ```
 
 ### Given (Preparation Phase) Comments
 
 ```javascript
-// 【Test Data Preparation】: [Reason why this data is prepared]
-// 【Initial Condition Setting】: [Explain state before test execution]
-// 【Prerequisite Confirmation】: [Clearly state prerequisites needed for test execution]
+// Prepare test data
+// Set initial conditions
+// Confirm prerequisites
 ```
 
 ### When (Execution Phase) Comments
 
 ```javascript
-// 【Actual Processing Execution】: [Explain which functionality/method to call]
-// 【Processing Content】: [Explain in Vietnamese the content of processing to be executed]
-// 【Execution Timing】: [Explain why execution is at this timing]
+// Execute function
+// Process data
+// Call method
 ```
 
 ### Then (Verification Phase) Comments
 
 ```javascript
-// 【Result Verification】: [Specifically explain what to verify]
-// 【Expected Value Confirmation】: [Explain expected results and their reasons]
-// 【Quality Assurance】: [Explain how this verification contributes to system quality]
+// Verify result
+// Check expected values
+// Validate output
 ```
 
-### Comments for Each expect Statement
+### Essential expect Comments
 
 ```javascript
-// 【Verification Item】: [Specific item being verified in this verification]
-// 🟢🟡🔴 State reliability level of this content
-expect(result.validPaths).toHaveLength(2); // 【Confirmation Content】: Confirm that exactly 2 valid paths are detected
-expect(result.invalidPaths).toContain("nonexistent.json"); // 【Confirmation Content】: Confirm that non-existent file is appropriately classified as invalid path
+expect(result.validPaths).toHaveLength(2); // Verify valid paths count
+expect(result.invalidPaths).toContain("nonexistent.json"); // Verify invalid path detection
 ```
 
 ### Setup & Cleanup Comments
 
 ```javascript
 beforeEach(() => {
-  // 【Pre-test Preparation】: [Explanation of preparation work done before each test execution]
-  // 【Environment Initialization】: [Reason and method for keeping test environment in clean state]
+  // Setup test environment
 });
 
 afterEach(() => {
-  // 【Post-test Processing】: [Explanation of cleanup work done after each test execution]
-  // 【State Restoration】: [Reason for restoring state to avoid affecting next test]
+  // Cleanup after test
 });
 ```
 
