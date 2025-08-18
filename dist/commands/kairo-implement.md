@@ -37,12 +37,12 @@ Implement divided tasks in order, or implement user-specified tasks. Use existin
 
 ## Execution Content
 
-**【Reliability Level Instructions】**:
-For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
+**Reliability Level Instructions**:
+For each item, briefly indicate the verification status with original materials using:
 
-- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
-- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
-- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
+- 🟢 **Green**: Based on existing documents
+- 🟡 **Yellow**: Reasonable inference from documents
+- 🔴 **Red**: Requires speculation
 
 1. **Task Selection**
 
@@ -73,100 +73,100 @@ For each item, comment on the verification status with original materials (inclu
 
    a. **Requirements Definition** - `@task general-purpose tdd-requirements.md`
 
-   ````text
+   ```text
    Task execution: TDD requirements definition phase
    Purpose: Describe detailed task requirements and clarify acceptance criteria
    Command: tdd-requirements.md
-   実行方式: 個別Task実行
-   ```text
+   Execution method: Individual Task execution
+   ```
 
-   b. **テストケース作成** - `@task general-purpose tdd-testcases.md`
+   b. **Test Case Creation** - `@task general-purpose tdd-testcases.md`
 
    ```markdown
-   Task実行: TDDテストケース作成フェーズ
-   目的: 単体テストケースを作成し、エッジケースを考慮する
-   コマンド: tdd-testcases.md
-   実行方式: 個別Task実行
-   ```text
+   Task execution: TDD test case creation phase
+   Purpose: Create unit test cases and consider edge cases
+   Command: tdd-testcases.md
+   Execution method: Individual Task execution
+   ```
 
-   c. **テスト実装** - `@task general-purpose tdd-red.md`
-
-   ```text
-   Task実行: TDDレッドフェーズ
-   目的: 失敗するテストを実装し、テストが失敗することを確認する
-   コマンド: tdd-red.md
-   実行方式: 個別Task実行
-   ```text
-
-   d. **最小実装** - `@task general-purpose tdd-green.md`
+   c. **Test Implementation** - `@task general-purpose tdd-red.md`
 
    ```text
-   Task実行: TDDグリーンフェーズ
-   目的: テストが通る最小限の実装を行い、過度な実装を避ける
-   コマンド: tdd-green.md
-   実行方式: 個別Task実行
-   ```text
+   Task execution: TDD Red phase
+   Purpose: Implement failing tests and confirm that tests fail
+   Command: tdd-red.md
+   Execution method: Individual Task execution
+   ```
 
-   e. **リファクタリング** - `@task general-purpose tdd-refactor.md`
-
-   ```text
-   Task実行: TDDリファクタリングフェーズ
-   目的: コードの品質向上と保守性の改善を行う
-   コマンド: tdd-refactor.md
-   実行方式: 個別Task実行
-   ```text
-
-   f. **品質確認** - `@task general-purpose tdd-verify-complete.md`
+   d. **Minimal Implementation** - `@task general-purpose tdd-green.md`
 
    ```text
-   Task実行: TDD品質確認フェーズ
-   目的: 実装の完成度を確認し、不足があればc-fを繰り返す
-   コマンド: tdd-verify-complete.md
-   実行方式: 個別Task実行
-   ```text
+   Task execution: TDD Green phase
+   Purpose: Implement minimal code to make tests pass and avoid over-implementation
+   Command: tdd-green.md
+   Execution method: Individual Task execution
+   ```
 
-   ### B. **直接作業プロセス**（準備作業タスク用）
-
-   a. **準備作業の実行** - `@task general-purpose direct-work-execute`
+   e. **Refactoring** - `@task general-purpose tdd-refactor.md`
 
    ```text
-   Task実行: 直接作業実行フェーズ
-   目的: ディレクトリ作成、設定ファイル作成、依存関係のインストール、環境設定を行う
-   作業内容:
-   - ディレクトリ作成
-   - 設定ファイル作成
-   - 依存関係のインストール
-   - 環境設定
-   実行方式: 個別Task実行
-   ```text
+   Task execution: TDD Refactoring phase
+   Purpose: Improve code quality and maintainability
+   Command: tdd-refactor.md
+   Execution method: Individual Task execution
+   ```
 
-   b. **作業結果の確認** - `@task general-purpose direct-work-verify`
+   f. **Quality Verification** - `@task general-purpose tdd-verify-complete.md`
 
    ```text
-   Task実行: 直接作業確認フェーズ
-   目的: 作業完了の検証と成果物確認を行う
-   作業内容:
-   - 作業完了の検証
-   - 期待された成果物の確認
-   - 次のタスクへの準備状況確認
-   実行方式: 個別Task実行
-   ````
+   Task execution: TDD quality verification phase
+   Purpose: Confirm implementation completeness and repeat c-f if insufficient
+   Command: tdd-verify-complete.md
+   Execution method: Individual Task execution
+   ```
 
-6. **タスクの完了処理**
-   - タスクのステータスを更新（タスクファイルのチェックボックスにチェックを入れる）
-   - 実装結果をドキュメント化
-   - 次のタスクを提案
+   ### B. **Direct Work Process** (for preparation work tasks)
 
-## 実行フロー
+   a. **Preparation Work Execution** - `@task general-purpose direct-work-execute`
 
-````mermaid
+   ```text
+   Task execution: Direct work execution phase
+   Purpose: Create directories, configuration files, install dependencies, set up environment
+   Work content:
+   - Directory creation
+   - Configuration file creation
+   - Dependency installation
+   - Environment setup
+   Execution method: Individual Task execution
+   ```
+
+   b. **Work Result Verification** - `@task general-purpose direct-work-verify`
+
+   ```text
+   Task execution: Direct work verification phase
+   Purpose: Verify work completion and confirm deliverables
+   Work content:
+   - Work completion verification
+   - Expected deliverable confirmation
+   - Next task preparation status confirmation
+   Execution method: Individual Task execution
+   ```
+
+6. **Task Completion Processing**
+   - Update task status (check checkbox in task file)
+   - Document implementation results
+   - Propose next task
+
+## Execution Flow
+
+```mermaid
 flowchart TD
-    A[タスク選択] --> B{依存関係OK?}
-    B -->|No| C[警告表示]
-    B -->|Yes| D[実装開始]
-    D --> E{タスクタイプ判定}
-    E -->|コード実装| F[TDDプロセス]
-    E -->|準備作業| G[直接作業プロセス]
+    A[Task Selection] --> B{Dependencies OK?}
+    B -->|No| C[Display Warning]
+    B -->|Yes| D[Start Implementation]
+    D --> E{Task Type Determination}
+    E -->|Code Implementation| F[TDD Process]
+    E -->|Preparation Work| G[Direct Work Process]
 
     F --> F1[tdd-requirements]
     F1 --> F2[tdd-testcases]
@@ -174,77 +174,75 @@ flowchart TD
     F3 --> F4[tdd-green]
     F4 --> F5[tdd-refactor]
     F5 --> F6[tdd-verify-complete]
-    F6 --> F7{品質OK?}
+    F6 --> F7{Quality OK?}
     F7 -->|No| F3
-    F7 -->|Yes| H[タスク完了]
+    F7 -->|Yes| H[Task Complete]
 
-    G --> G1[準備作業実行]
-    G1 --> G2[作業結果確認]
+    G --> G1[Execute Preparation Work]
+    G1 --> G2[Verify Work Results]
     G2 --> H
 
-    H --> I{他のタスク?}
+    H --> I{Other Tasks?}
     I -->|Yes| A
-    I -->|No| J[全タスク完了]
-```text
+    I -->|No| J[All Tasks Complete]
+```
 
-## コマンド実行例
+## Command Execution Examples
 
 ```bash
-```bash
-# 全タスクを順番に実装
+# Implement all tasks in order
 $ claude code kairo-implement --all
 
-# 特定のタスクを実装
+# Implement specific task
 $ claude code kairo-implement --task TASK-101
 
-# 並行実行可能なタスクを一覧表示
+# List parallel executable tasks
 $ claude code kairo-implement --list-parallel
 
-# 現在の進捗を表示
+# Display current progress
 $ claude code kairo-implement --status
-```markdown
+```
 
-## 実装タイプ判定基準
+## Implementation Type Determination Criteria
 
-### TDD プロセス（コード実装タスク）
+### TDD Process (Code Implementation Tasks)
 
-以下の条件に当てはまるタスク：
+Tasks that meet the following conditions:
 
-- 新しいコンポーネント、サービス、フック等の実装
-- 既存コードの機能追加・修正
-- ビジネスロジックの実装
-- API 実装
+- New component, service, hook, etc. implementation
+- Existing code functionality addition/modification
+- Business logic implementation
+- API implementation
 
-**例**: TaskService 実装、UI コンポーネント作成、状態管理実装
+**Examples**: TaskService implementation, UI component creation, state management implementation
 
-### 直接作業プロセス（準備作業タスク）
+### Direct Work Process (Preparation Work Tasks)
 
-以下の条件に当てはまるタスク：
+Tasks that meet the following conditions:
 
-- プロジェクト初期化・環境構築
-- ディレクトリ構造作成
-- 設定ファイル作成・更新
-- 依存関係のインストール
-- ツール設定・設定
+- Project initialization/environment setup
+- Directory structure creation
+- Configuration file creation/update
+- Dependency installation
+- Tool setup/configuration
 
-**例**: プロジェクト初期化、データベース設定、開発環境設定
+**Examples**: Project initialization, database setup, development environment setup
 
-## 個別 Task 実行アプローチ
+## Individual Task Execution Approach
 
-### Task 実行の方針
+### Task Execution Policy
 
-各実装ステップを個別の Task として実行することで、以下のメリットが得られます：
+Executing each implementation step as an individual Task provides the following benefits:
 
-1. **独立性**: 各ステップが独立して実行され、エラー発生時の切り分けが容易
-2. **再実行性**: 特定のステップのみ再実行が可能
-3. **並列性**: 依存関係のないステップは並列実行可能
-4. **追跡性**: 各ステップの実行状況と結果が明確に記録される
+1. **Independence**: Each step is executed independently, making error isolation easier
+2. **Re-executability**: Specific steps can be re-executed individually
+3. **Parallelism**: Steps without dependencies can be executed in parallel
+4. **Traceability**: Execution status and results of each step are clearly recorded
 
-### Task 実行パターン
+### Task Execution Pattern
 
 ```bash
-```bash
-# TDDプロセスの場合
+# For TDD process
 @task general-purpose tdd-requirements.md
 @task general-purpose tdd-testcases.md
 @task general-purpose tdd-red.md
@@ -252,147 +250,142 @@ $ claude code kairo-implement --status
 @task general-purpose tdd-refactor.md
 @task general-purpose tdd-verify-complete.md
 
-# 直接作業プロセスの場合
+# For direct work process
 @task general-purpose direct-work-execute
 @task general-purpose direct-work-verify
-```markdown
+```
 
-## 実装時の注意事項
+## Implementation Notes
 
-### TDD プロセス用
+### For TDD Process
 
-1. **テストファースト**
+1. **Test First**
 
-   - 必ずテストを先に書く
-   - テストが失敗することを確認してから実装
+   - Always write tests first
+   - Confirm tests fail before implementation
 
-2. **インクリメンタルな実装**
+2. **Incremental Implementation**
 
-   - 一度に全てを実装しない
-   - 小さなステップで進める
+   - Don't implement everything at once
+   - Proceed with small steps
 
-3. **継続的な品質確認**
-   - 各ステップで品質を確認
-   - 技術的負債を作らない
+3. **Continuous Quality Verification**
+   - Verify quality at each step
+   - Don't create technical debt
 
-### 直接作業プロセス用
+### For Direct Work Process
 
-1. **作業の段階的実行**
+1. **Phased Work Execution**
 
-   - 依存関係を考慮した順序で実行
-   - 各ステップの完了を確認
+   - Execute in order considering dependencies
+   - Confirm completion of each step
 
-2. **設定の検証**
+2. **Configuration Verification**
 
-   - 作成した設定ファイルの動作確認
-   - 環境の正常性チェック
+   - Verify operation of created configuration files
+   - Check environment normality
 
-3. **ドキュメントの更新**
-   - 実装と同時にドキュメントも更新
-   - 他の開発者が理解できるように
+3. **Documentation Updates**
+   - Update documentation along with implementation
+   - Make it understandable for other developers
 
-## 出力フォーマット
+## Output Format
 
-### タスク開始時（TDD プロセス）
-
-```text
-```text
-🚀 タスク TASK-101: ユーザー認証API の実装を開始します
-
-📋 タスク詳細:
-- 要件: REQ-101, REQ-102
-- 依存: TASK-002 ✅
-- 推定時間: 4時間
-- 実装タイプ: TDDプロセス
-
-🔄 TDDプロセスを開始します...
-```text
-```text
-
-### タスク開始時（直接作業プロセス）
+### Task Start (TDD Process)
 
 ```text
-```text
-🚀 タスク TASK-003: データベース設定 の実装を開始します
+🚀 Task TASK-101: Starting implementation of User Authentication API
 
-📋 タスク詳細:
-- 要件: REQ-402, REQ-006
-- 依存: TASK-001 ✅
-- 推定時間: 3時間
-- 実装タイプ: 直接作業プロセス
+📋 Task Details:
+- Requirements: REQ-101, REQ-102
+- Dependencies: TASK-002 ✅
+- Estimated Time: 4 hours
+- Implementation Type: TDD Process
 
-🔧 準備作業を開始します...
-```text
-```text
+🔄 Starting TDD process...
+```
 
-### 各ステップ完了時（TDD）
+### Task Start (Direct Work Process)
 
 ```text
-```text
-✅ Task 1/6: @task tdd-requirements 完了
-   ファイル: /implementation/{要件名}/TASK-101/requirements.md
-   Task実行結果: 要件定義書作成完了
+🚀 Task TASK-003: Starting implementation of Database Setup
 
-🏃 Task 2/6: @task tdd-testcases 実行中...
-   Task実行: TDDテストケース作成フェーズを開始
-```text
+📋 Task Details:
+- Requirements: REQ-402, REQ-006
+- Dependencies: TASK-001 ✅
+- Estimated Time: 3 hours
+- Implementation Type: Direct Work Process
 
-### 各ステップ完了時（直接作業）
+🔧 Starting preparation work...
+```
 
-```text
-✅ Task 1/2: @task direct-work-execute 完了
-   作成ファイル: 8個、設定更新: 3個
-   Task実行結果: 準備作業実行完了
-
-🏃 Task 2/2: @task direct-work-verify 実行中...
-   Task実行: 直接作業確認フェーズを開始
-```markdown
-
-### タスク完了時（TDD）
+### Each Step Completion (TDD)
 
 ```text
-🎉 タスク TASK-101 が完了しました！
+✅ Task 1/6: @task tdd-requirements completed
+   File: /implementation/{requirement-name}/TASK-101/requirements.md
+   Task execution result: Requirements definition document creation completed
 
-✅ タスクファイルのチェックボックスを更新しました
-   - [ ] **タスク完了** → [x] **タスク完了**
+🏃 Task 2/6: @task tdd-testcases in progress...
+   Task execution: Starting TDD test case creation phase
+```
 
-📊 実装サマリー:
-- 実装タイプ: TDDプロセス (個別Task実行)
-- 実行Taskステップ: 6個 (全て成功)
-- 作成ファイル: 12個
-- テストケース: 25個 (全て成功)
-- カバレッジ: 95%
-- 所要時間: 3時間45分
-
-📝 次の推奨タスク:
-- TASK-102: ユーザー管理API
-- TASK-201: ログイン画面（依存関係あり）
-
-続けて実装しますか？ (y/n)
-```text
-
-### タスク完了時（直接作業）
+### Each Step Completion (Direct Work)
 
 ```text
-🎉 タスク TASK-003 が完了しました！
+✅ Task 1/2: @task direct-work-execute completed
+   Created files: 8, Configuration updates: 3
+   Task execution result: Preparation work execution completed
 
-✅ タスクファイルのチェックボックスを更新しました
-   - [ ] **タスク完了** → [x] **タスク完了**
+🏃 Task 2/2: @task direct-work-verify in progress...
+   Task execution: Starting direct work verification phase
+```
 
-📊 実装サマリー:
-- 実装タイプ: 直接作業プロセス (個別Task実行)
-- 実行Taskステップ: 2個 (全て成功)
-- 作成ファイル: 8個
-- 設定更新: 3個
-- 環境確認: 正常
-- 所要時間: 2時間30分
+### Task Completion (TDD)
 
-📝 次の推奨タスク:
-- TASK-004: 状態管理設定
-- TASK-101: TaskService実装（依存関係あり）
+```text
+🎉 Task TASK-101 completed!
 
-続けて実装しますか？ (y/n)
-````
+✅ Updated task file checkbox
+   - [ ] **Task Complete** → [x] **Task Complete**
+
+📊 Implementation Summary:
+- Implementation Type: TDD Process (Individual Task execution)
+- Executed Task Steps: 6 (all successful)
+- Created Files: 12
+- Test Cases: 25 (all successful)
+- Coverage: 95%
+- Time Required: 3 hours 45 minutes
+
+📝 Next Recommended Tasks:
+- TASK-102: User Management API
+- TASK-201: Login Screen (with dependencies)
+
+Continue with implementation? (y/n)
+```
+
+### Task Completion (Direct Work)
+
+```text
+🎉 Task TASK-003 completed!
+
+✅ Updated task file checkbox
+   - [ ] **Task Complete** → [x] **Task Complete**
+
+📊 Implementation Summary:
+- Implementation Type: Direct Work Process (Individual Task execution)
+- Executed Task Steps: 2 (all successful)
+- Created Files: 8
+- Configuration Updates: 3
+- Environment Status: Normal
+- Time Required: 2 hours 30 minutes
+
+📝 Next Recommended Tasks:
+- TASK-004: State Management Setup
+- TASK-101: TaskService Implementation (with dependencies)
+
+Continue with implementation? (y/n)
+```
 
 ## Error Handling
 

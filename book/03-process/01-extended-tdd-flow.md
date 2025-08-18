@@ -242,246 +242,246 @@ In Chapter 3, we will explain each step of this process in detail:
 
 Learn concrete procedures and techniques in each step so that you can actually practice AITDD.
 
-# 3.1 拡張 TDD プロセスの全体フロー
+# 3.1 Extended TDD Process Overall Flow
 
-## AITDD プロセスの概要
+## AITDD Process Overview
 
-AITDD は従来の TDD（Test-Driven Development）に AI の力を組み合わせ、**Validation**ステップを追加した拡張開発手法です。人間と AI が協力することで、高品質なソフトウェアを効率的に開発できます。
+AITDD is an extended development methodology that combines AI power with traditional TDD (Test-Driven Development) and adds a **Validation** step. Through human-AI collaboration, we can efficiently develop high-quality software.
 
-## 全体フローの構造
+## Overall Flow Structure
 
 ```mermaid
 graph TD
-    A[TODO作成] --> B[仕様策定]
-    B --> C[テストケース作成]
-    C --> D[Red-Green-Refactor-Validation サイクル]
-    D --> E{全テスト完了?}
+    A[TODO Creation] --> B[Specification Development]
+    B --> C[Test Case Creation]
+    C --> D[Red-Green-Refactor-Validation Cycle]
+    D --> E{All Tests Complete?}
     E -->|No| D
-    E -->|Yes| F[最終レビュー]
-    F --> G[完了]
+    E -->|Yes| F[Final Review]
+    F --> G[Completion]
 ```
 
-### 基本的なプロセスフロー
+### Basic Process Flow
 
 ```
-TODO作成 → 仕様策定 → テストケース作成 → Red-Green-Refactor-Validation → 最終レビュー
+TODO Creation → Specification Development → Test Case Creation → Red-Green-Refactor-Validation → Final Review
 ```
 
-## 各ステップの詳細
+## Details of Each Step
 
-### 1. TODO 作成（人間が担当）
+### 1. TODO Creation (Human Responsibility)
 
-**目的**: 開発タスクを明確に定義し、適切な作業単位に分割する
+**Purpose**: Clearly define development tasks and divide them into appropriate work units
 
-**作業内容**:
+**Work Content**:
 
-- 機能要件の洗い出し
-- 開発タスクの細分化
-- 優先順位の設定
-- 作業範囲の明確化
+- Identify functional requirements
+- Break down development tasks
+- Set priorities
+- Clarify work scope
 
-**成果物**: TODO.md ファイル
+**Deliverables**: TODO.md file
 
-- 具体的で実装可能な単位のタスクリスト
-- 各タスクの優先度と依存関係
-- 完了条件の定義
+- Task list in concrete, implementable units
+- Priority and dependencies for each task
+- Definition of completion criteria
 
-### 2. 仕様策定（人間が担当・レビュー必須）
+### 2. Specification Development (Human Responsibility - Review Required)
 
-**目的**: TODO から詳細な技術仕様を策定する
+**Purpose**: Develop detailed technical specifications from TODOs
 
-**作業内容**:
+**Work Content**:
 
-- 機能の詳細仕様の定義
-- 入出力の明確化
-- エラーハンドリングの方針策定
-- パフォーマンス要件の設定
+- Define detailed functional specifications
+- Clarify inputs and outputs
+- Establish error handling policies
+- Set performance requirements
 
-**重要ポイント**:
+**Important Points**:
 
-- **人間によるレビューが必須**
-- AI の提案を参考にしつつ、最終判断は人間が行う
-- 仕様の曖昧さを排除する
+- **Human review is mandatory**
+- Use AI suggestions as reference, but humans make final decisions
+- Eliminate specification ambiguity
 
-**成果物**: requirements.md ファイル
+**Deliverables**: requirements.md file
 
-- 機能要件の詳細
-- 技術的制約
-- 品質要件
+- Detailed functional requirements
+- Technical constraints
+- Quality requirements
 
-### 3. テストケース作成（人間が担当・レビュー必須）
+### 3. Test Case Creation (Human Responsibility - Review Required)
 
-**目的**: 仕様に基づいて包括的なテストケースを設計する
+**Purpose**: Design comprehensive test cases based on specifications
 
-**作業内容**:
+**Work Content**:
 
-- 正常系テストケースの設計
-- 異常系テストケースの設計
-- 境界値テストの計画
-- エッジケースの特定
+- Design normal case test cases
+- Design abnormal case test cases
+- Plan boundary value tests
+- Identify edge cases
 
-**重要ポイント**:
+**Important Points**:
 
-- **人間によるレビューが必須**
-- テストケースの網羅性を確保
-- 仕様との整合性を検証
+- **Human review is mandatory**
+- Ensure test case comprehensiveness
+- Verify consistency with specifications
 
-**成果物**: testcases.md ファイル
+**Deliverables**: testcases.md file
 
-- テストケースの一覧
-- 期待する動作の詳細
-- テストデータの定義
+- Test case list
+- Detailed expected behavior
+- Test data definitions
 
-### 4. Red-Green-Refactor-Validation サイクル（主に AI が担当）
+### 4. Red-Green-Refactor-Validation Cycle (Primarily AI Responsibility)
 
-従来の TDD サイクルを拡張し、**Validation**ステップを追加しました。このサイクルはほぼ全て AI が実行しますが、人間の監督下で行われます。
+We extended the traditional TDD cycle by adding a **Validation** step. This cycle is almost entirely executed by AI but conducted under human supervision.
 
-#### Red（テスト失敗）
+#### Red (Test Failure)
 
-- テストケースの実装
-- 期待する失敗の確認
-- テストの実行と失敗確認
+- Implement the test cases
+- Confirm expected failures
+- Run tests and confirm failures
 
-#### Green（最小実装）
+#### Green (Minimal implementation)
 
-- テストを通す最小限の実装
-- AI による自動コード生成
-- テスト成功の確認
+- Implement the minimal code to pass the tests
+- Automatic code generation by AI
+- Confirm test success
 
-#### Refactor（リファクタリング）
+#### Refactor (Refactoring)
 
-- コード品質の改善
-- AI による最適化
-- 可読性とメンテナンス性の向上
+- Improve code quality
+- Optimization by AI
+- Improve readability and maintainability
 
-#### Validation（検証）
+#### Validation (Verification)
 
-- 実装の妥当性検証
-- 品質チェック
-- 追加的な検証項目の確認
+- Validate the soundness of the implementation
+- Perform quality checks
+- Confirm additional verification items
 
-### 5. 最終レビュー（人間が担当）
+### 5. Final Review (Human-driven)
 
-**目的**: 生成されたコード全体の品質と仕様適合性を最終確認する
+**Purpose**: Perform final confirmation of overall code quality and conformance to the specification
 
-**作業内容**:
+**Work items**:
 
-- ソースコードの詳細レビュー
-- 仕様との整合性確認
-- セキュリティチェック
-- パフォーマンス検証
+- Detailed review of the source code
+- Confirm consistency with the specification
+- Security checks
+- Performance verification
 
-**重要ポイント**:
+**Important points**:
 
-- **必ず人間が実施**
-- AI が生成したコードの最終品質保証
-- プロダクション投入前の最後の砦
+- **Must be performed by a human**
+- Final quality gate for AI-generated code
+- The last checkpoint before production
 
-## AI と人間の役割分担
+## AI and Human Role Division
 
-### AI（Claude 等）が担当する領域
+### Areas handled by AI (Claude, etc.)
 
-- **Red-Green-Refactor-Validation サイクルの実行**
+- **Execute the Red-Green-Refactor-Validation cycle**
 
-  - テストケースの実装
-  - プロダクションコードの生成
-  - リファクタリングの実行
-  - 品質検証の支援
+  - Implement test cases
+  - Generate production code
+  - Perform refactoring
+  - Assist quality verification
 
-- **コード生成と最適化**
+- **Code generation and optimization**
 
-  - 効率的なアルゴリズムの実装
-  - コーディング規約に従った実装
-  - 自動的なコード改善
+  - Implement efficient algorithms
+  - Implement according to coding conventions
+  - Automatically improve code
 
-- **自動テスト実行**
-  - テストの実行と結果確認
-  - テストカバレッジの計測
-  - 継続的な品質チェック
+- **Automated test execution**
+  - Run tests and verify results
+  - Measure test coverage
+  - Continuous quality checks
 
-### 人間が担当する領域
+### Areas handled by humans
 
-- **戦略的判断**
+- **Strategic decisions**
 
-  - 仕様策定とレビュー
-  - テストケース設計とレビュー
-  - アーキテクチャ決定
+  - Specification writing and review
+  - Test case design and review
+  - Architecture decisions
 
-- **品質管理**
+- **Quality management**
 
-  - 最終的なソースコードレビュー
-  - セキュリティ要件の確認
-  - ビジネス要件との適合性確認
+  - Final source code review
+  - Confirm security requirements
+  - Confirm alignment with business requirements
 
-- **創造的作業**
-  - 問題解決のアプローチ決定
-  - ユーザー体験の設計
-  - 技術選択の判断
+- **Creative work**
+  - Decide problem-solving approaches
+  - Design user experience
+  - Decide on technology choices
 
-## 従来 TDD との比較
+## Comparison with Traditional TDD
 
-| 項目           | 従来 TDD             | AITDD                             |
-| -------------- | -------------------- | --------------------------------- |
-| **サイクル**   | Red-Green-Refactor   | Red-Green-Refactor-**Validation** |
-| **実装主体**   | 人間                 | **AI**（人間監督下）              |
-| **レビュー**   | 実装後のみ           | **仕様・テスト・最終コード**      |
-| **速度**       | 人間の実装速度に依存 | **AI 支援により大幅に高速化**     |
-| **品質管理**   | 開発者のスキルに依存 | **多層的な品質チェック**          |
-| **学習コスト** | TDD の習得が必要     | **TDD + AI 活用スキル**           |
+| Item                    | Traditional TDD                       | AITDD                                       |
+| ----------------------- | ------------------------------------- | ------------------------------------------- |
+| **Cycle**               | Red-Green-Refactor                    | Red-Green-Refactor-**Validation**           |
+| **Primary implementer** | Human                                 | **AI** (under human supervision)            |
+| **Review**              | After implementation only             | **Specifications, tests, and final code**   |
+| **Speed**               | Depends on human implementation speed | **Significantly faster with AI assistance** |
+| **Quality management**  | Depends on developer skill            | **Multi-layered quality checks**            |
+| **Learning cost**       | Need to learn TDD                     | **TDD + AI utilization skills**             |
 
-## プロセスの利点
+## Process Benefits
 
-### 1. 開発速度の向上
+### 1. Increased development speed
 
-- AI による自動コード生成により実装時間を大幅短縮
-- 反復的なタスクの自動化
-- テスト実行とフィードバックの高速化
+- Significant reduction in implementation time through automatic code generation by AI
+- Automation of repetitive tasks
+- Faster test execution and feedback
 
-### 2. 品質の向上
+### 2. Improved quality
 
-- Validation ステップによる追加的な品質チェック
-- 人間と AI の二重チェック体制
-- 一貫した品質基準の適用
+- Additional quality checks via the Validation step
+- Dual-check system by humans and AI
+- Consistent application of quality standards
 
-### 3. 知識の活用
+### 3. Knowledge utilization
 
-- AI による最新技術やベストプラクティスの活用
-- 経験の浅い開発者でも高品質なコード生成
-- ドメイン知識の自動的な活用
+- Leverage latest technologies and best practices via AI
+- Enable high-quality code generation by less-experienced developers
+- Automatically apply domain knowledge
 
-### 4. 継続的改善
+### 4. Continuous improvement
 
-- AI のフィードバックによる学習効果
-- プロセス自体の継続的最適化
-- チーム全体のスキル向上
+- Learning effects via AI feedback
+- Continuous optimization of the process itself
+- Skill improvement across the team
 
-## 注意点とリスク管理
+## Cautions and Risk Management
 
-### 1. 過度な AI 依存の回避
+### 1. Avoid excessive reliance on AI
 
-- 重要な判断は必ず人間が行う
-- AI の提案を盲目的に受け入れない
-- 技術的理解を継続的に深める
+- Humans must make important decisions
+- Do not blindly accept AI proposals
+- Continuously deepen technical understanding
 
-### 2. 品質管理の強化
+### 2. Strengthen quality management
 
-- 複数段階でのレビュー実施
-- 自動テストとマニュアルテストの併用
-- セキュリティ要件の確実な確認
+- Perform reviews in multiple stages
+- Combine automated and manual tests
+- Ensure security requirements are verified
 
-### 3. プロセスの柔軟性
+### 3. Process flexibility
 
-- プロジェクトに応じたプロセス調整
-- チームのスキルレベルに応じた適用
-- 継続的なプロセス改善
+- Adjust the process for each project
+- Apply according to team skill level
+- Continuously improve the process
 
-## 次のステップ
+## Next Steps
 
-第 3 章では、このプロセスの各ステップを詳細に解説していきます：
+Chapter 3 will explain each step of this process in detail:
 
-- [3.2 TODO 作成と仕様策定](./02-todo-and-specification.md)
-- [3.3 テストケース作成](./03-test-case-creation.md)
-- [3.4 Red-Green-Refactor-Validation サイクル](./04-rgr-validation-cycle.md)
-- [3.5 Validation ステップの詳細](./05-validation-details.md)
+- [3.2 TODO Creation and Specification Development](./02-todo-and-specification.md)
+- [3.3 Test Case Creation](./03-test-case-creation.md)
+- [3.4 Red-Green-Refactor-Validation Cycle](./04-rgr-validation-cycle.md)
+- [3.5 Validation Step Details](./05-validation-details.md)
 
-各ステップで具体的な手順とテクニックを学び、実際に AITDD を実践できるようになりましょう。
+Learn concrete procedures and techniques in each step so that you can actually practice AITDD.

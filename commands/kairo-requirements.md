@@ -11,12 +11,12 @@ Analyze requirement overviews provided by users and create detailed requirements
 
 ## Execution Content
 
-**【Reliability Level Instructions】**:
-For each item, comment on the verification status with original materials (including EARS requirements definition and design documents) using the following signals:
+**Reliability Level Instructions**:
+For each item, briefly indicate the verification status with original materials using:
 
-- 🟢 **Green Signal**: When referring to EARS requirements definition and design documents with minimal speculation
-- 🟡 **Yellow Signal**: When making reasonable speculation based on EARS requirements definition and design documents
-- 🔴 **Red Signal**: When speculation is not based on EARS requirements definition and design documents
+- 🟢 **Green**: Based on existing documents
+- 🟡 **Yellow**: Reasonable inference from documents
+- 🔴 **Red**: Requires speculation
 
 1. **Requirements Analysis**
 
@@ -116,238 +116,238 @@ For each item, comment on the verification status with original materials (inclu
 - EDGE-101: {boundary value case}
 ```
 
-### 2. user-stories.md（詳細なユーザストーリー）
+### 2. user-stories.md (Detailed User Stories)
 
 ````markdown
-# {要件名} ユーザストーリー
+# {requirement-name} User Stories
 
-## 概要
+## Overview
 
-このドキュメントは{要件名}機能の詳細なユーザストーリーを記載します。
+This document describes detailed user stories for {requirement-name} functionality.
 
-## ユーザー種別の定義
+## User Type Definitions
 
-### プライマリユーザー
+### Primary Users
 
-- **エンドユーザー**: {エンドユーザーの詳細説明}
-- **管理者**: {管理者の詳細説明}
-- **開発者**: {開発者の詳細説明}
+- **End User**: {end user detailed description}
+- **Administrator**: {administrator detailed description}
+- **Developer**: {developer detailed description}
 
-### セカンダリユーザー
+### Secondary Users
 
-- **システム管理者**: {システム管理者の詳細説明}
-- **外部システム**: {外部システムの詳細説明}
+- **System Administrator**: {system administrator detailed description}
+- **External System**: {external system detailed description}
 
-## ユーザストーリー
+## User Stories
 
-### 📚 エピック 1: {大きな機能グループ}
+### 📚 Epic 1: {large functionality group}
 
-#### ストーリー 1.1: {具体的なストーリー名}
+#### Story 1.1: {specific story name}
 
-**ユーザストーリー**:
+**User Story**:
 
-- **私は** {ユーザー種別} **として**
-- **{具体的な状況・コンテキスト} において**
-- **{実現したい行動・操作} をしたい**
-- **そうすることで** {得られる価値・解決される問題}
+- **As a** {user type} **I want to**
+- **{specific situation/context}**
+- **{action/operation I want to achieve}**
+- **So that** {value gained/problem solved}
 
-**詳細説明**:
+**Detailed Description**:
 
-- **背景**: {なぜこの機能が必要なのか}
-- **前提条件**: {このストーリーの前提となる状況}
-- **利用シーン**: {具体的な利用場面の例}
-- **期待する体験**: {ユーザーが期待する体験の詳細}
+- **Background**: {why this functionality is needed}
+- **Prerequisites**: {situation that is prerequisite for this story}
+- **Usage Scenarios**: {examples of specific usage scenarios}
+- **Expected Experience**: {detailed experience users expect}
 
-**関連要件**: REQ-001, REQ-002
+**Related Requirements**: REQ-001, REQ-002
 
-**優先度**: 高/中/低
+**Priority**: High/Medium/Low
 
-**見積もり**: {ストーリーポイントまたは工数}
+**Estimate**: {story points or effort}
 
-#### ストーリー 1.2: {具体的なストーリー名}
+#### Story 1.2: {specific story name}
 
-{同様の形式で記載}
+{Document in same format}
 
-### 📚 エピック 2: {大きな機能グループ}
+### 📚 Epic 2: {large functionality group}
 
-{同様の形式で記載}
+{Document in same format}
 
-## ユーザージャーニー
+## User Journey
 
-### ジャーニー 1: {代表的な利用フロー}
+### Journey 1: {representative usage flow}
 
 ```mermaid
 journey
-    title {ユーザージャーニーのタイトル}
-    section {フェーズ1}
-      {アクション1}: 5: {ユーザー種別}
-      {アクション2}: 3: {ユーザー種別}
-    section {フェーズ2}
-      {アクション3}: 4: {ユーザー種別}
-      {アクション4}: 5: {ユーザー種別}
+    title {User Journey Title}
+    section {Phase 1}
+      {Action 1}: 5: {User Type}
+      {Action 2}: 3: {User Type}
+    section {Phase 2}
+      {Action 3}: 4: {User Type}
+      {Action 4}: 5: {User Type}
 ```
 ````
 
-**詳細**:
+**Details**:
 
-1. **{アクション 1}**: {詳細な説明}
-2. **{アクション 2}**: {詳細な説明}
+1. **{Action 1}**: {detailed explanation}
+2. **{Action 2}**: {detailed explanation}
 
-## ペルソナ定義
+## Persona Definitions
 
-### ペルソナ 1: {代表的ユーザー名}
+### Persona 1: {representative user name}
 
-- **基本情報**: {年齢、職業、技術レベル等}
-- **ゴール**: {このユーザーが達成したいこと}
-- **課題**: {現在抱えている問題}
-- **行動パターン**: {典型的な行動の特徴}
-- **利用環境**: {使用するデバイス、環境等}
+- **Basic Information**: {age, occupation, technical level, etc.}
+- **Goals**: {what this user wants to achieve}
+- **Challenges**: {problems currently faced}
+- **Behavior Patterns**: {characteristics of typical behavior}
+- **Usage Environment**: {devices used, environment, etc.}
 
-## 非機能的ユーザー要求
+## Non-functional User Requirements
 
-### ユーザビリティ要求
+### Usability Requirements
 
-- **学習容易性**: {初回利用時の学習コスト}
-- **効率性**: {熟練後の作業効率}
-- **記憶しやすさ**: {再利用時の記憶のしやすさ}
-- **エラー対応**: {エラー時の対応しやすさ}
-- **満足度**: {主観的な満足度}
+- **Learnability**: {learning cost for first-time use}
+- **Efficiency**: {work efficiency after becoming proficient}
+- **Memorability**: {ease of remembering for reuse}
+- **Error Handling**: {ease of handling errors}
+- **Satisfaction**: {subjective satisfaction}
 
-### アクセシビリティ要求
+### Accessibility Requirements
 
-- **視覚**: {視覚障害者への配慮}
-- **聴覚**: {聴覚障害者への配慮}
-- **運動**: {運動機能障害者への配慮}
-- **認知**: {認知障害者への配慮}
+- **Visual**: {consideration for visually impaired}
+- **Auditory**: {consideration for hearing impaired}
+- **Motor**: {consideration for motor function impaired}
+- **Cognitive**: {consideration for cognitively impaired}
 
 ````
 
-### 3. acceptance-criteria.md（受け入れ基準）
+### 3. acceptance-criteria.md (Acceptance Criteria)
 
 ```markdown
-# {要件名} 受け入れ基準
+# {requirement-name} Acceptance Criteria
 
-## 概要
+## Overview
 
-このドキュメントは{要件名}機能の受け入れ基準とテスト項目を記載します。
+This document describes acceptance criteria and test items for {requirement-name} functionality.
 
-## 機能テスト基準
+## Functional Test Criteria
 
-### REQ-001: {要件名} の受け入れ基準
+### REQ-001: {requirement-name} Acceptance Criteria
 
-**Given（前提条件）**:
-- {テスト実行前の状態}
-- {必要な初期データ}
+**Given (Prerequisites)**:
+- {state before test execution}
+- {required initial data}
 
-**When（実行条件）**:
-- {実行するアクション}
-- {入力するデータ}
+**When (Execution Conditions)**:
+- {action to execute}
+- {data to input}
 
-**Then（期待結果）**:
-- {期待される出力・状態}
-- {確認すべき副作用}
+**Then (Expected Results)**:
+- {expected output/state}
+- {side effects to verify}
 
-**テストケース**:
-- [ ] 正常系: {正常なケースの詳細}
-- [ ] 異常系: {異常なケースの詳細}
-- [ ] 境界値: {境界値テストの詳細}
+**Test Cases**:
+- [ ] Normal case: {detailed normal case}
+- [ ] Abnormal case: {detailed abnormal case}
+- [ ] Boundary value: {detailed boundary value test}
 
-### REQ-002: {要件名} の受け入れ基準
+### REQ-002: {requirement-name} Acceptance Criteria
 
-{同様の形式で記載}
+{Document in same format}
 
-## 非機能テスト基準
+## Non-functional Test Criteria
 
-### パフォーマンステスト
+### Performance Tests
 
-**NFR-001: {パフォーマンス要件}**
+**NFR-001: {performance requirement}**
 
-- [ ] 応答時間: {具体的な時間基準}
-- [ ] スループット: {処理量の基準}
-- [ ] 同時接続数: {同時利用者数の基準}
-- [ ] リソース使用量: {CPU・メモリ使用量の基準}
+- [ ] Response time: {specific time criteria}
+- [ ] Throughput: {processing volume criteria}
+- [ ] Concurrent connections: {concurrent user criteria}
+- [ ] Resource usage: {CPU/memory usage criteria}
 
-**テスト方法**:
-- 負荷テストツール: {使用するツール}
-- テストシナリオ: {具体的なテスト手順}
-- 合格基準: {定量的な合格ライン}
+**Test Methods**:
+- Load testing tools: {tools to use}
+- Test scenarios: {specific test procedures}
+- Pass criteria: {quantitative pass criteria}
 
-### セキュリティテスト
+### Security Tests
 
-**NFR-101: {セキュリティ要件}**
+**NFR-101: {security requirement}**
 
-- [ ] 認証: {認証機能のテスト項目}
-- [ ] 認可: {権限制御のテスト項目}
-- [ ] データ保護: {データ暗号化のテスト項目}
-- [ ] 脆弱性: {セキュリティ脆弱性のテスト項目}
+- [ ] Authentication: {authentication function test items}
+- [ ] Authorization: {access control test items}
+- [ ] Data protection: {data encryption test items}
+- [ ] Vulnerabilities: {security vulnerability test items}
 
-## ユーザビリティテスト基準
+## Usability Test Criteria
 
-### UX/UIテスト
+### UX/UI Tests
 
-- [ ] 直感的操作性: {操作の分かりやすさ}
-- [ ] レスポンシブデザイン: {各デバイスでの表示}
-- [ ] アクセシビリティ: {WCAG 2.1準拠}
-- [ ] エラーメッセージ: {分かりやすいエラー表示}
+- [ ] Intuitive operability: {ease of understanding operations}
+- [ ] Responsive design: {display on various devices}
+- [ ] Accessibility: {WCAG 2.1 compliance}
+- [ ] Error messages: {clear error display}
 
-**テスト方法**:
-- ユーザビリティテスト: {実施方法}
-- A/Bテスト: {比較テストの方法}
-- アクセシビリティチェック: {使用するツール}
+**Test Methods**:
+- Usability testing: {implementation method}
+- A/B testing: {comparison test method}
+- Accessibility checks: {tools to use}
 
-## Edgeケーステスト基準
+## Edge Case Test Criteria
 
-### EDGE-001: {エラーケース} の受け入れ基準
+### EDGE-001: {error case} Acceptance Criteria
 
-**テストシナリオ**:
-- {異常な状況の設定}
-- {期待されるエラーハンドリング}
-- {ユーザーへの適切な通知}
+**Test Scenarios**:
+- {abnormal situation setup}
+- {expected error handling}
+- {appropriate user notification}
 
-**合格基準**:
-- [ ] システムがクラッシュしない
-- [ ] 適切なエラーメッセージが表示される
-- [ ] データの整合性が保たれる
-- [ ] 復旧可能な状態を維持する
+**Pass Criteria**:
+- [ ] System doesn't crash
+- [ ] Appropriate error messages are displayed
+- [ ] Data integrity is maintained
+- [ ] Recoverable state is maintained
 
-## 統合テスト基準
+## Integration Test Criteria
 
-### システム間連携テスト
+### System Interoperability Tests
 
-- [ ] 外部API連携: {外部システムとの連携テスト}
-- [ ] データベース連携: {DB操作の整合性テスト}
-- [ ] ファイルシステム: {ファイル操作のテスト}
+- [ ] External API integration: {external system integration tests}
+- [ ] Database integration: {DB operation consistency tests}
+- [ ] File system: {file operation tests}
 
-## リグレッションテスト基準
+## Regression Test Criteria
 
-### 既存機能影響確認
+### Existing Functionality Impact Verification
 
-- [ ] 既存機能の動作確認: {影響範囲の特定と確認}
-- [ ] パフォーマンス劣化確認: {既存機能の性能確認}
-- [ ] セキュリティ設定確認: {セキュリティ機能の継続確認}
+- [ ] Existing functionality operation verification: {identify and verify impact scope}
+- [ ] Performance degradation verification: {verify existing functionality performance}
+- [ ] Security setting verification: {verify security functionality continuity}
 
-## 受け入れテスト実行チェックリスト
+## Acceptance Test Execution Checklist
 
-### テスト実行前
+### Before Test Execution
 
-- [ ] テスト環境の準備完了
-- [ ] テストデータの準備完了
-- [ ] テストツールの準備完了
-- [ ] 実行担当者の確認完了
+- [ ] Test environment preparation complete
+- [ ] Test data preparation complete
+- [ ] Test tools preparation complete
+- [ ] Execution personnel confirmation complete
 
-### テスト実行中
+### During Test Execution
 
-- [ ] 全機能テストの実行
-- [ ] 全非機能テストの実行
-- [ ] 問題発見時の記録
-- [ ] 修正後の再テスト
+- [ ] Execute all functional tests
+- [ ] Execute all non-functional tests
+- [ ] Record problems when discovered
+- [ ] Re-test after fixes
 
-### テスト完了後
+### After Test Completion
 
-- [ ] テスト結果の記録
-- [ ] 残存問題の整理
-- [ ] 受け入れ可否の判定
-- [ ] ステークホルダーへの報告
+- [ ] Record test results
+- [ ] Organize remaining problems
+- [ ] Determine acceptance/rejection
+- [ ] Report to stakeholders
 ````
 
 ## Post-execution Verification

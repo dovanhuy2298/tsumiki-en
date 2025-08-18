@@ -58,209 +58,209 @@ Reverse-engineer requirements definition documents from an existing codebase. An
 ## Output Format Example
 
 ```markdown
-# {プロジェクト名} 要件定義書（逆生成）
+# {Project Name} Requirements Definition Document (Reverse-Generated)
 
-## 分析概要
+## Analysis Overview
 
-**分析日時**: {実行日時}
-**対象コードベース**: {パス}
-**抽出要件数**: {機能要件数}個の機能要件、{非機能要件数}個の非機能要件
-**信頼度**: {分析の信頼度} % （実装カバレッジに基づく）
+**Analysis Date/Time**: {execution timestamp}
+**Target Codebase**: {path}
+**Extracted Requirements**: {functional requirements count} functional requirements, {non-functional requirements count} non-functional requirements
+**Reliability**: {analysis reliability}% (based on implementation coverage)
 
-## システム概要
+## System Overview
 
-### 推定されたシステム目的
+### Estimated System Purpose
 
-{実装された機能から推測されるシステムの目的}
+{System purpose estimated from implemented functionality}
 
-### 対象ユーザー
+### Target Users
 
-{UI コンポーネントや機能から推定されるユーザー種別}
+{User types estimated from UI components and functionality}
 
-## ユーザーストーリー
+## User Stories
 
-### ストーリー 1: ユーザー認証
+### Story 1: User Authentication
 
-- **である** 未登録・既存ユーザー **として**
-- **私は** システムに安全にログイン **をしたい**
-- **そうすることで** 個人的な情報やサービスにアクセスできる
+- **As a** unregistered/existing user **I want to**
+- **safely log into the system**
+- **So that** I can access personal information and services
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `LoginForm.tsx` - ログインフォーム実装
-- `POST /auth/login` - 認証 API 実装
-- `useAuth` フック - 認証状態管理
+- `LoginForm.tsx` - Login form implementation
+- `POST /auth/login` - Authentication API implementation
+- `useAuth` hook - Authentication state management
 
-### ストーリー 2: {その他のストーリー}
+### Story 2: {Other Stories}
 
-{実装された機能から推定される追加のユーザーストーリー}
+{Additional user stories estimated from implemented functionality}
 
-## 機能要件（EARS 記法）
+## Functional Requirements (EARS Notation)
 
-### 通常要件
+### Normal Requirements
 
-#### REQ-001: ユーザー認証
+#### REQ-001: User Authentication
 
-システムは有効なメールアドレスとパスワードでのユーザーログインを提供しなければならない。
+The system must provide user login with valid email address and password.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `auth.service.ts:login()` メソッド
-- `POST /auth/login` エンドポイント
-- JWT トークン発行実装
+- `auth.service.ts:login()` method
+- `POST /auth/login` endpoint
+- JWT token issuance implementation
 
-#### REQ-002: セッション管理
+#### REQ-002: Session Management
 
-システムはログイン後のユーザーセッションを管理しなければならない。
+The system must manage user sessions after login.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- JWT トークンによるセッション管理
-- `useAuth` フックでの状態管理
-- ローカルストレージでのトークン永続化
+- Session management via JWT tokens
+- State management in `useAuth` hook
+- Token persistence in local storage
 
-### 条件付き要件
+### Conditional Requirements
 
-#### REQ-101: 認証失敗時の処理
+#### REQ-101: Authentication Failure Handling
 
-無効な認証情報が提供された場合、システムは適切なエラーメッセージを表示しなければならない。
+When invalid authentication information is provided, the system must display appropriate error messages.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `auth.controller.ts` のエラーハンドリング
-- `LoginForm.tsx` のエラー表示実装
+- Error handling in `auth.controller.ts`
+- Error display implementation in `LoginForm.tsx`
 
-#### REQ-102: トークン期限切れ時の処理
+#### REQ-102: Token Expiration Handling
 
-JWT トークンが期限切れの場合、システムはユーザーを再ログインページにリダイレクトしなければならない。
+When JWT tokens expire, the system must redirect users to the re-login page.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `axios.interceptors` での 401 エラーハンドリング
-- 自動ログアウト機能の実装
+- 401 error handling in `axios.interceptors`
+- Automatic logout functionality implementation
 
-### 状態要件
+### State Requirements
 
-#### REQ-201: ログイン状態での表示
+#### REQ-201: Display in Login State
 
-ユーザーがログイン状態にある場合、システムは認証済みユーザー向けの UI を表示しなければならない。
+When users are in login state, the system must display UI for authenticated users.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `useAuth` フックでの認証状態確認
-- 認証状態による条件分岐レンダリング
+- Authentication state confirmation in `useAuth` hook
+- Conditional rendering based on authentication state
 
-### オプション要件
+### Optional Requirements
 
-#### REQ-301: ログイン状態の記憶
+#### REQ-301: Login State Memory
 
-システムはユーザーのログイン状態を記憶してもよい。
+The system may remember user login state.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- ローカルストレージでのトークン保存
-- 自動ログイン機能の実装
+- Token storage in local storage
+- Auto-login functionality implementation
 
-### 制約要件
+### Constraint Requirements
 
-#### REQ-401: パスワード要件
+#### REQ-401: Password Requirements
 
-システムはパスワードに最小 8 文字の制約を設けなければならない。
+The system must set a minimum 8-character constraint for passwords.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- フロントエンドバリデーション実装
-- `yup` スキーマでの制約定義
+- Frontend validation implementation
+- Constraint definition in `yup` schema
 
-#### REQ-402: レート制限
+#### REQ-402: Rate Limiting
 
-システムはログイン試行に対してレート制限を設けなければならない。
+The system must set rate limits for login attempts.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `express-rate-limit` ミドルウェアの実装
+- `express-rate-limit` middleware implementation
 
-## 非機能要件
+## Non-functional Requirements
 
-### パフォーマンス
+### Performance
 
-#### NFR-001: ログイン応答時間
+#### NFR-001: Login Response Time
 
-システムは通常のログイン処理を 2 秒以内に完了しなければならない。
+The system must complete normal login processing within 2 seconds.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- データベースインデックス設定
-- 効率的なクエリ実装
+- Database index configuration
+- Efficient query implementation
 
-#### NFR-002: 同時ユーザー数
+#### NFR-002: Concurrent Users
 
-システムは同時に 100 ユーザーのアクセスを処理できなければならない。
+The system must handle access from 100 concurrent users.
 
-**推定根拠**:
+**Estimation Basis**:
 
-- 接続プール設定
-- サーバー構成
+- Connection pool configuration
+- Server configuration
 
-### セキュリティ
+### Security
 
-#### NFR-101: 認証トークン暗号化
+#### NFR-101: Authentication Token Encryption
 
-システムは JWT トークンを適切に暗号化しなければならない。
+The system must properly encrypt JWT tokens.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `jsonwebtoken` ライブラリの使用
-- 秘密鍵による署名実装
+- Use of `jsonwebtoken` library
+- Secret key signature implementation
 
-#### NFR-102: HTTPS 通信
+#### NFR-102: HTTPS Communication
 
-システムは本番環境で HTTPS 通信を強制しなければならない。
+The system must enforce HTTPS communication in production environment.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- SSL 設定ファイル
-- HTTPS リダイレクト実装
+- SSL configuration files
+- HTTPS redirect implementation
 
-### ユーザビリティ
+### Usability
 
-#### NFR-201: レスポンシブデザイン
+#### NFR-201: Responsive Design
 
-システムはモバイルデバイスでも利用可能でなければならない。
+The system must be usable on mobile devices.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- CSS メディアクエリの実装
-- レスポンシブ UI コンポーネント
+- CSS media query implementation
+- Responsive UI components
 
-#### NFR-202: アクセシビリティ
+#### NFR-202: Accessibility
 
-システムは基本的なアクセシビリティ要件を満たさなければならない。
+The system must meet basic accessibility requirements.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- ARIA 属性の使用
-- セマンティック HTML 構造
+- Use of ARIA attributes
+- Semantic HTML structure
 
-### 運用性
+### Operational
 
-#### NFR-301: ログ出力
+#### NFR-301: Log Output
 
-システムは重要な操作をログに記録しなければならない。
+The system must log important operations.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- `winston` ログライブラリの使用
-- 構造化ログの実装
+- Use of `winston` logging library
+- Structured logging implementation
 
-#### NFR-302: エラー追跡
+#### NFR-302: Error Tracking
 
-システムは発生したエラーを追跡可能でなければならない。
+The system must be able to track occurred errors.
 
-**実装根拠**:
+**Implementation Basis**:
 
-- エラーハンドリング実装
-- ログ出力による追跡機能
+- Error handling implementation
+- Tracking functionality via log output
 
 ## Edge Cases
 

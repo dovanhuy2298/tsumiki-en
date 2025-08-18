@@ -1,51 +1,32 @@
-# TDD Refactor Phase (Code Improvement)
+# TDD Refactor Phase (Quality Improvement)
 
-Execute the Refactor phase of TDD.
+Improve code quality while maintaining functionality after tests pass.
 
-## Preliminary Preparation
+## Purpose
 
-Prepare development context:
+Refactor code to improve quality, maintainability, and performance while ensuring all tests continue to pass. Focus on code structure, security, and performance optimization.
 
-1. **Search for refactoring-related information using @agent-symbol-searcher and read found files**
+## Prerequisites
 
-   - Search for existing code styles and best practices, and read style guides with Read tool
-   - Identify project-wide architecture patterns, and read design documents with Read tool
-   - Check reusable utility functions and components, and read related files with Read tool
+- Green phase is complete (tests are passing)
+- Implementation code exists
+- Test suite is comprehensive
 
-2. **Direct reading of related files**
-   - `docs/implements/{{task_id}}/{feature_name}-memo.md` - Check existing development history
-   - `docs/implements/{{task_id}}/{feature_name}-requirements.md` - Check requirements definition
-   - `docs/implements/{{task_id}}/{feature_name}-testcases.md` - Check test case definition
-   - `docs/implements/{{task_id}}/{feature_name}-green-phase.md` - Check Green phase implementation
-   - Read related design documents and task files as needed
+## Execution Content
 
-After loading completion, start Refactor phase (code improvement) work based on prepared context information.
+### 1. Code Structure Improvement
 
-## Reliability Level Instructions
+- Apply SOLID principles
+- Improve function and variable naming
+- Organize code into logical sections
+- Remove code duplication
 
-When refactoring, comment on the verification status with original materials for each improvement content using the following signals:
+### 2. Readability Enhancement
 
-- 🟢 **Green Signal**: When referring to original materials with minimal speculation
-- 🟡 **Yellow Signal**: When making reasonable speculation based on original materials
-- 🔴 **Red Signal**: When speculation is not based on original materials
-
-## Objective
-
-Improve the code implemented in the Green phase from the following perspectives. **Tests must continue to pass** as a prerequisite.
-
-## Improvement Perspectives
-
-### 1. Readability Enhancement
-
-- Improve variable and function names
-- Enrich Japanese comments
-- Make code structure more understandable
-
-### 2. Eliminate Duplicate Code (DRY Principle)
-
-- Commonalize similar processes
-- Extract constants
-- Create helper functions
+- Improve code organization
+- Add clear comments
+- Simplify complex logic
+- Use consistent formatting
 
 ### 3. Design Improvement
 
@@ -59,199 +40,193 @@ Improve the code implemented in the Green phase from the following perspectives.
 ### 4. File Size Optimization
 
 - Split and optimize to keep file size under 500 lines
-- 長大なファイルの機能別分割
-- 適切なモジュール境界の設定
+- Split large files by functionality
+- Set appropriate module boundaries
 
-### 5. コード品質の確保
+### 5. Code Quality Assurance
 
-- lint エラーの解消
-- typecheck エラーの解消
-- フォーマットの統一
-- 静的解析ツールのチェッククリア
+- Resolve lint errors
+- Resolve typecheck errors
+- Unify formatting
+- Clear static analysis tool checks
 
-### 6. セキュリティレビュー
+### 6. Security Review
 
-- 脆弱性に繋がる実装の検出と修正
-- 入力値検証の強化
-- SQL インジェクション対策の確認
-- XSS（Cross-Site Scripting）対策の確認
-- CSRF（Cross-Site Request Forgery）対策の確認
-- データ漏洩リスクの回避
-- 認証・認可の適切な実装
+- Detect and fix implementations leading to vulnerabilities
+- Strengthen input validation
+- Confirm SQL injection countermeasures
+- Confirm XSS (Cross-Site Scripting) countermeasures
+- Confirm CSRF (Cross-Site Request Forgery) countermeasures
+- Avoid data leakage risks
+- Proper authentication and authorization implementation
 
-### 7. パフォーマンスレビュー
+### 7. Performance Review
 
-- アルゴリズムの計算量解析
-- メモリ使用量の最適化
-- 不要な処理の削除
-- キャッシュ戦略の検討
-- データベースクエリの最適化
-- ループ処理の効率化
-- 非同期処理の適切な実装
+- Analyze algorithm computational complexity
+- Optimize memory usage
+- Remove unnecessary processing
+- Consider cache strategies
+- Optimize database queries
+- Improve loop processing efficiency
+- Proper asynchronous processing implementation
 
-### 8. エラーハンドリングの充実
+### 8. Error Handling Enhancement
 
-- 入力値の検証
-- 適切なエラーメッセージ
-- 例外処理の改善
+- Input validation
+- Appropriate error messages
+- Exception handling improvement
 
-## リファクタリング時の日本語コメント強化要件
+## Vietnamese Comment Enhancement Requirements for Refactoring
 
-リファクタリングでは既存の日本語コメントを改善し、新たなコメントを追加してください：
+During refactoring, improve existing Vietnamese comments and add essential ones:
 
-### 改善された関数・メソッドのコメント
-
-```javascript
-/**
- * 【機能概要】: [リファクタ後の機能の詳細説明]
- * 【改善内容】: [どのような改善を行ったかを説明]
- * 【設計方針】: [なぜこの設計にしたかの理由]
- * 【パフォーマンス】: [性能面での考慮事項]
- * 【保守性】: [メンテナンスしやすくするための工夫]
- * 🟢🟡🔴 信頼性レベル: [この改善が元資料のどの程度に基づいているか]
- * @param {type} paramName - [パラメータの詳細説明と制約]
- * @returns {type} - [戻り値の詳細説明と保証事項]
- */
-function improvedFunction(paramName) {
-  // 【実装詳細】: [改善された実装の内容と理由]
-}
-```
-
-### ヘルパー関数・ユーティリティのコメント
+### Improved Function/Method Comments
 
 ```javascript
 /**
- * 【ヘルパー関数】: [この関数の役割と作成理由]
- * 【再利用性】: [どのような場面で再利用できるか]
- * 【単一責任】: [この関数が担当する責任の範囲]
+ * Add two numbers and return result
+ * @param {number} firstNumber - First number to add
+ * @param {number} secondNumber - Second number to add
+ * @returns {number} - Sum of the two numbers
  */
-function helperFunction(input) {
-  // 【処理効率化】: [処理を効率化するための工夫] 🟢🟡🔴
-  // 【可読性向上】: [コードの読みやすさを向上させる仕組み] 🟢🟡🔴
+function add(firstNumber, secondNumber) {
+  // Input validation
+  if (typeof firstNumber !== "number" || typeof secondNumber !== "number") {
+    throw new Error("Arguments must be numbers");
+  }
+
+  // Return sum
+  return firstNumber + secondNumber;
 }
 ```
 
-### 定数・設定値のコメント
+### Helper Function Comments
 
 ```javascript
-// 【設定定数】: [この定数の役割と設定理由] 🟢🟡🔴
-// 【調整可能性】: [将来的に調整が必要になる可能性と方法] 🟢🟡🔴
-const IMPROVED_CONSTANT = 100; // 【最適化済み】: パフォーマンステストに基づき最適化 🟢🟡🔴
+/**
+ * Helper function to validate input
+ * @param {any} input - Input to validate
+ * @returns {boolean} - Whether input is valid
+ */
+function validateInput(input) {
+  // Check if input exists and is valid
+  return input != null && input !== "";
+}
+```
 
-// 【設定オブジェクト】: [設定をまとめた理由と管理方針]
+### Configuration Comments
+
+```javascript
+// Configuration constants
+const MAX_RETRIES = 3; // Maximum retry attempts
+const TIMEOUT = 5000; // Request timeout in milliseconds
+
 const CONFIG = {
-  // 【各設定項目】: [それぞれの設定値の意味と影響範囲]
-  maxRetries: 3, // 【リトライ回数】: 実運用での経験に基づく適切な回数
-  timeout: 5000, // 【タイムアウト】: ユーザビリティを考慮した時間設定
+  maxRetries: MAX_RETRIES,
+  timeout: TIMEOUT,
 };
 ```
 
-### エラーハンドリング改善のコメント
+### Error Handling Comments
 
 ```javascript
 try {
-  // 【安全な処理実行】: [例外が発生する可能性と対策]
+  // Execute risky operation
   const result = riskyOperation();
 } catch (error) {
-  // 【詳細エラー処理】: [エラーの種類に応じた適切な処理]
-  // 【ユーザビリティ】: [ユーザーにとって分かりやすいエラー対応]
+  // Handle specific error types
   if (error.code === "SPECIFIC_ERROR") {
-    // 【特定エラー対応】: [このエラーに特化した処理の理由]
     return handleSpecificError(error);
   }
-  // 【一般エラー対応】: [予期しないエラーへの安全な対処]
+  // Handle generic errors
   return handleGenericError(error);
 }
 ```
 
-## リファクタリングの手順
+## Refactoring Process
 
-1. **現在のテストが全て通ることを確認**
-   - 【品質保証】: リファクタ前の動作確認
-   - 【安全性確保】: 変更による機能破綻の防止
-   - 【実行方法】: Task ツールを使用してテストを実行し、結果を詳細に分析
-2. **コード・テスト除外チェック**
-   - 【.gitignore 確認】: 本来確認対象のコードファイルが除外されていないかチェック
-   - 【テスト除外確認】: `describe.skip`, `it.skip`, `test.skip`等でテストが無効化されていないかチェック
-   - 【jest 設定確認】: `jest.config.js`や`package.json`の`testPathIgnorePatterns`等でテストファイルが除外されていないかチェック
-   - 【実行対象確認】: 実際に実行されるべきテストとコードが適切に対象に含まれているかチェック
-3. **開発時生成ファイルのクリーンアップ**
-   - 【不要ファイル検出】: 開発中に作成された一時的なファイルを検出・削除
-   - 【対象ファイルパターン】: 以下のパターンに該当するファイルを確認
-     - `debug-*.js`, `debug-*.ts`: デバッグ用スクリプト
-     - `test-*.js`, `test-*.ts`, `temp-*.js`: 一時テストファイル
-     - `*.tmp`, `*.temp`, `*.bak`, `*.orig`: 一時・バックアップファイル
-     - `*~`, `.DS_Store`: エディタ・システム生成ファイル
-     - `test-output-*`, `*.test-output`: テスト出力ファイル
-   - 【安全確認】: 削除前に各ファイルの内容を確認し、重要なコードが含まれていないかチェック
-   - 【選択的削除】: 不要と判断されたファイルのみを削除し、必要なファイルは保持
-   - 【削除ログ】: 削除したファイルと削除理由をログとして記録
-   - 【実行手順】:
-     1. `find . -name "debug-*" -o -name "test-*" -o -name "temp-*" -o -name "*.tmp" -o -name "*.temp" -o -name "*.bak" -o -name "*.orig" -o -name "*~" -o -name ".DS_Store" | grep -v node_modules` でファイル検出
-     2. 各ファイルの内容を Read ツールで確認
-     3. 不要と判断されたファイルは削除し、削除理由を記録
-4. **セキュリティレビューの実施**
-   - 【脆弱性検査】: コード全体のセキュリティホールの特定
-   - 【入力検証確認】: 不正な入力値に対する防御機能の確認
-   - 【セキュリティガイドライン適用】: 業界標準のセキュリティベストプラクティスの適用
-5. **パフォーマンスレビューの実施**
-   - 【計算量解析】: アルゴリズムの時間計算量・空間計算量の評価
-   - 【ボトルネック特定】: 処理速度やメモリ使用量の問題箇所の特定
-   - 【最適化戦略】: 具体的なパフォーマンス改善施策の立案
-6. **小さな改善を 1 つずつ適用**
-   - 【段階的改善】: 影響範囲を限定した安全な変更
-   - 【トレーサビリティ】: 変更内容の追跡可能性確保
-7. **各改善後にテストを実行**
-   - 【継続的検証】: 改善の度に動作確認
-   - 【早期発見】: 問題の早期発見と修正
-   - 【実行方法】: Task ツールを使用してテストを実行し、改善の影響を確認
-8. **テストが失敗したら即座に戻す**
-   - 【迅速復旧】: 問題発生時の素早い対応
-   - 【安定性維持】: システムの安定した状態を保持
+1. **Confirm all current tests pass**
+   - Quality Assurance: Verify behavior before refactoring
+   - Safety Assurance: Prevent functionality breakdown from changes
+   - Execution Method: Use Task tool to execute tests and analyze results in detail
+2. **Code/Test Exclusion Check**
+   - .gitignore Confirmation: Check if code files that should be verified are not excluded
+   - Test Exclusion Confirmation: Check if tests are not disabled with `describe.skip`, `it.skip`, `test.skip`, etc.
+   - Jest Configuration Confirmation: Check if test files are not excluded in `jest.config.js` or `package.json`'s `testPathIgnorePatterns`, etc.
+   - Execution Target Confirmation: Check if tests and code that should actually be executed are appropriately included in targets
+3. **Clean up development-generated files**
+   - Unnecessary File Detection: Detect and delete temporary files created during development
+   - Target File Patterns: Check files matching the following patterns
+     - `debug-*.js`, `debug-*.ts`: Debug scripts
+     - `test-*.js`, `test-*.ts`, `temp-*.js`: Temporary test files
+     - `*.tmp`, `*.temp`, `*.bak`, `*.orig`: Temporary/backup files
+     - `*~`, `.DS_Store`: Editor/system generated files
+     - `test-output-*`, `*.test-output`: Test output files
+   - Safety Confirmation: Check content of each file before deletion to ensure no important code is included
+   - Selective Deletion: Delete only files judged unnecessary, keep necessary files
+   - Deletion Log: Record deleted files and deletion reasons as logs
+   - Execution Procedure:
+     1. Use `find . -name "debug-*" -o -name "test-*" -o -name "temp-*" -o -name "*.tmp" -o -name "*.temp" -o -name "*.bak" -o -name "*.orig" -o -name "*~" -o -name ".DS_Store" | grep -v node_modules` to detect files
+     2. Check content of each file with Read tool
+     3. Delete files judged unnecessary and record deletion reasons
+4. **Conduct Security Review**
+   - Vulnerability Inspection: Identify security holes in entire codebase
+   - Input Validation Confirmation: Confirm defense functions against invalid input values
+   - Security Guideline Application: Apply industry-standard security best practices
+5. **Conduct Performance Review**
+   - Computational Complexity Analysis: Evaluate time and space complexity of algorithms
+   - Bottleneck Identification: Identify problem areas in processing speed and memory usage
+   - Optimization Strategy: Formulate specific performance improvement measures
+6. **Apply small improvements one by one**
+   - Phased Improvement: Safe changes with limited impact scope
+   - Traceability: Ensure traceability of changes
+7. **Execute tests after each improvement**
+   - Continuous Verification: Verify behavior with each improvement
+   - Early Detection: Early detection and correction of problems
+   - Execution Method: Use Task tool to execute tests and confirm impact of improvements
+8. **Immediately revert if tests fail**
+   - Rapid Recovery: Quick response when problems occur
+   - Stability Maintenance: Maintain stable system state
 
-## 注意事項
+## Important Notes
 
-- **機能的な変更は行わない**（新機能追加は NG）
-- **テストが通らなくなったら即座に修正**
-- **一度に大きな変更をしない**
-- **日本語コメントの品質も向上させる**
-- **品質確認のためのテスト実行時は Task ツールを利用する**
+- **Do not make functional changes** (No new feature additions)
+- **Fix immediately if tests stop passing**
+- **Do not make large changes at once**
+- **Also improve quality of Vietnamese comments**
+- **Use Task tool when executing tests for quality confirmation**
 
-## 提供してください
+## Please Provide
 
-1. **セキュリティレビュー結果**: 脆弱性の有無と対応策
-2. **パフォーマンスレビュー結果**: 性能課題の分析と改善策
-3. **改善されたコード**: リファクタリング後のコード（強化された日本語コメント付き）
-4. **改善ポイントの説明**: 何をどのように改善したか（セキュリティ・パフォーマンス観点を含む）
-5. **テスト実行結果**: Task ツールを使用して全てのテストが引き続き通ることの確認
-6. **品質評価**: 現在のコードの品質レベル（セキュリティ・パフォーマンス評価を含む）
-7. **コメント改善内容**: 日本語コメントをどのように強化したか
+1. **Security Review Results**: Presence/absence of vulnerabilities and countermeasures
+2. **Performance Review Results**: Analysis of performance issues and improvement measures
+3. **Improved Code**: Code after refactoring (with enhanced Vietnamese comments)
+4. **Improvement Point Explanation**: What and how improvements were made (including security and performance perspectives)
+5. **Test Execution Results**: Confirmation that all tests continue to pass using Task tool
+6. **Quality Assessment**: Current code quality level (including security and performance evaluation)
+7. **Comment Improvement Content**: How Vietnamese comments were enhanced
 
-## リファクタリング例
+## Refactoring Examples
 
 ```javascript
-// Before: ハードコーディング
+// Before: Hard-coded
 function add(a, b) {
-  return 5; // とりあえず動く実装
+  return 5; // Implementation that works for now
 }
 
-// After: 適切な実装（改善された日本語コメント付き）
+// After: Appropriate implementation
 /**
- * 【機能概要】: 2つの数値を加算し、結果を返す
- * 【改善内容】: ハードコーディングを削除し、実際の加算処理を実装
- * 【設計方針】: 入力値検証と型安全性を重視した設計
- * 【エラー処理】: 不正な入力に対する適切な例外処理を実装
+ * Add two numbers and return result
+ * Improvement: Remove hard-coding and implement actual addition processing
+ * Design: Input validation and type safety
  */
 function add(firstNumber, secondNumber) {
-  // 【入力値検証】: 数値以外の入力を早期に検出してエラーを防ぐ
-  // 【型安全性】: TypeScriptの型チェックと併せて実行時検証を実施
+  // Input validation
   if (typeof firstNumber !== "number" || typeof secondNumber !== "number") {
-    // 【ユーザビリティ】: 開発者にとって分かりやすいエラーメッセージを提供
-    throw new Error("引数は数値である必要があります");
+    throw new Error("Arguments must be numbers");
   }
 
-  // 【メイン処理】: シンプルで確実な加算処理
-  // 【パフォーマンス】: 不要な処理を避けた効率的な実装
+  // Return sum
   return firstNumber + secondNumber;
 }
 ```
