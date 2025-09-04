@@ -76,72 +76,14 @@ Refactor code to improve quality, maintainability, and performance while ensurin
 - Appropriate error messages
 - Exception handling improvement
 
-## Vietnamese Comment Enhancement Requirements for Refactoring
+## Comment Guidelines
 
-During refactoring, improve existing Vietnamese comments and add essential ones:
+**Enhance existing Vietnamese comments during refactoring:**
 
-### Improved Function/Method Comments
-
-```javascript
-/**
- * Add two numbers and return result
- * @param {number} firstNumber - First number to add
- * @param {number} secondNumber - Second number to add
- * @returns {number} - Sum of the two numbers
- */
-function add(firstNumber, secondNumber) {
-  // Input validation
-  if (typeof firstNumber !== "number" || typeof secondNumber !== "number") {
-    throw new Error("Arguments must be numbers");
-  }
-
-  // Return sum
-  return firstNumber + secondNumber;
-}
-```
-
-### Helper Function Comments
-
-```javascript
-/**
- * Helper function to validate input
- * @param {any} input - Input to validate
- * @returns {boolean} - Whether input is valid
- */
-function validateInput(input) {
-  // Check if input exists and is valid
-  return input != null && input !== "";
-}
-```
-
-### Configuration Comments
-
-```javascript
-// Configuration constants
-const MAX_RETRIES = 3; // Maximum retry attempts
-const TIMEOUT = 5000; // Request timeout in milliseconds
-
-const CONFIG = {
-  maxRetries: MAX_RETRIES,
-  timeout: TIMEOUT,
-};
-```
-
-### Error Handling Comments
-
-```javascript
-try {
-  // Execute risky operation
-  const result = riskyOperation();
-} catch (error) {
-  // Handle specific error types
-  if (error.code === "SPECIFIC_ERROR") {
-    return handleSpecificError(error);
-  }
-  // Handle generic errors
-  return handleGenericError(error);
-}
-```
+- Add JSDoc comments for functions with parameters and return values
+- Add brief comments for complex logic sections
+- Add configuration comments for constants
+- Add error handling comments where needed
 
 ## Refactoring Process
 
@@ -204,29 +146,27 @@ try {
 4. **Improvement Point Explanation**: What and how improvements were made (including security and performance perspectives)
 5. **Test Execution Results**: Confirmation that all tests continue to pass using Task tool
 6. **Quality Assessment**: Current code quality level (including security and performance evaluation)
-7. **Comment Improvement Content**: How Vietnamese comments were enhanced
 
-## Refactoring Examples
+## Refactoring Example
 
 ```javascript
-// Before: Hard-coded
+// Before: Hard-coded implementation
 function add(a, b) {
   return 5; // Implementation that works for now
 }
 
-// After: Appropriate implementation
+// After: Proper implementation with validation
 /**
  * Add two numbers and return result
- * Improvement: Remove hard-coding and implement actual addition processing
- * Design: Input validation and type safety
+ * @param {number} firstNumber - First number to add
+ * @param {number} secondNumber - Second number to add
+ * @returns {number} - Sum of the two numbers
  */
 function add(firstNumber, secondNumber) {
   // Input validation
   if (typeof firstNumber !== "number" || typeof secondNumber !== "number") {
     throw new Error("Arguments must be numbers");
   }
-
-  // Return sum
   return firstNumber + secondNumber;
 }
 ```
