@@ -38,78 +38,30 @@ Create test code following these principles:
 - Actual process execution (When)
 - Result verification (Then)
 
-## Vietnamese Comment Requirements
+## Comment Guidelines
 
-Test code should include minimal but essential Vietnamese comments:
+**Minimal Vietnamese comments only:**
 
-### Test Case Start Comments
+- One comment per test case describing purpose
+- One comment per setup/cleanup block if needed
+- No inline comments unless absolutely necessary for clarity
 
-```javascript
-describe('{{feature_name}}', () => {
-  test('{{test_case_name}}', () => {
-    // Test purpose: Verify basic functionality
-    // Test data preparation
-    const input = {{test_input}};
-
-    // Execute function
-    const result = {{function_name}}(input);
-
-    // Verify result
-    expect(result).toBe({{expected_output}});
-  });
-});
-```
-
-### Setup & Cleanup Comments (as needed)
+## Example Test Code Structure
 
 ```javascript
-beforeEach(() => {
-  // Setup test environment
-});
-
-afterEach(() => {
-  // Cleanup after test
-});
-```
-
-### Essential expect Comments
-
-```javascript
-expect(result.property).toBe(expectedValue); // Verify property value
-expect(result.array).toHaveLength(3); // Verify array length
-expect(result.errors).toContain("error message"); // Verify error message
-```
-
-## Example Test Code to Create
-
-```javascript
-// Test file: {{test_file_name}}
 describe('{{feature_name}}', () => {
   beforeEach(() => {
-    // Initialize test environment
-    // Clean reset of file system state
+    // Setup test environment
   });
 
   afterEach(() => {
-    // Delete temporary files and directories
-    // Return system to original state
+    // Cleanup after test
   });
 
   test('{{test_case_name}}', () => {
-    // Test purpose: {{test_purpose}}
-    // Test content: {{test_description}}
-    // Expected behavior: {{expected_behavior}}
-
-    // Prepare test data
-    // Set initial conditions
+    // {{test_purpose}}
     const input = {{test_input}};
-
-    // Execute function
-    // Process data
     const result = {{function_name}}(input);
-
-    // Verify result
-    // Check expected values
     expect(result).toBe({{expected_output}});
   });
 });
@@ -117,10 +69,9 @@ describe('{{feature_name}}', () => {
 
 ## Please Provide
 
-1. **Test Code**: In executable format with required Vietnamese comments
+1. **Test Code**: In executable format with minimal Vietnamese comments
 2. **Test Execution Command**: How to execute
 3. **Expected Failure Message**: What kind of error will occur
-4. **Comment Explanation**: Intent and purpose of each Vietnamese comment
 
 After test code creation, execute the following:
 
